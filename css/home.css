@@ -1,0 +1,618 @@
+/* Главная. Все отступы и кегли — макетные пиксели Frame 29 через --u.
+   Вертикаль набрана по чернилам букв: для Cy верх капители равен
+   верху строчного бокса + (line-height − font-size)/2 + 0.02em, для
+   DM Mono метки — + 2.76 при кегле 14 и шаге 18. Поэтому отступы ниже
+   не круглые: они выведены из позиций в макете, а не назначены. */
+
+/* --- Шапка ---------------------------------------------------------------
+   Набрана акцентом (лайм) и висит поверх первого экрана. Поле одно и то же
+   со всех сторон — 24. */
+
+.nav {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 20;
+  padding: calc(24 * var(--u));
+  color: var(--accent);
+}
+.nav__in {
+  display: flex;
+  align-items: center;
+}
+.nav__mark {
+  margin-inline-end: calc(18 * var(--u));
+  font-family: var(--display);
+  font-size: var(--fs-nav);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+/* Линейка упирается в первую пилюлю без зазора — как в макете. */
+.nav__rule {
+  flex: 1;
+  height: var(--line);
+  background: currentColor;
+}
+.pills {
+  display: flex;
+  gap: calc(5 * var(--u));
+}
+.pill {
+  display: grid;
+  place-items: center;
+  height: calc(38 * var(--u));
+  padding-inline: calc(16 * var(--u));
+  border: var(--line) solid currentColor;
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: var(--fs-pill);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.pill:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* --- Первый экран --------------------------------------------------------
+   Единственная осевая композиция на странице. Высота не 100vh: в макете
+   имя начинается на 160, а метка 01 — на 541. */
+
+.hero {
+  padding-block-start: calc(185 * var(--u));
+  text-align: center;
+}
+.hero__name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-hero);
+  line-height: calc(100 * var(--u));
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  /* Подпись стоит ниже имени, чем в экспорте: строчный бокс имени короче
+     кегля, поэтому без этого отступа она подлезает под выносные элементы. */
+  margin-block-end: 0;
+}
+.hero__sub {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-sub);
+  line-height: calc(30 * var(--u));
+  letter-spacing: 0;
+  color: var(--accent);
+}
+
+/* --- Общие секции ---------------------------------------------------------
+   Каждая полоса задаёт только свой верхний отступ — от низа предыдущего
+   блока до верха своей метки. Так вертикаль собирается один раз и не
+   расползается от накладывающихся margin. */
+
+.band { padding-block: var(--gap-top) var(--gap-bottom, 0); }
+
+#about     { --gap-top: calc(223 * var(--u)); }
+#expertise { --gap-top: calc(74  * var(--u)); }
+#work      { --gap-top: calc(98  * var(--u)); }
+#clients   { --gap-top: calc(129 * var(--u)); }
+#talk      { --gap-top: calc(121 * var(--u)); --gap-bottom: calc(49 * var(--u)); }
+
+/* Переносы строк в дисплейных блоках расставлены руками под 1200. */
+@media (max-width: 760px) { .display br { display: none; } }
+
+/* --- 01 / About -----------------------------------------------------------
+   В макете это дисплейный набор Cy 48/43, а не моноширинный абзац. */
+
+.lead {
+  margin-block-start: calc(33 * var(--u));
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+
+/* --- 02 / Expertise --------------------------------------------------------
+   Три пункта стоят на общей сетке 3×304 — тех же колонках, что и проекты
+   ниже: 144, 448, 752. Стрелка появляется только на ховере и вынесена из
+   потока (position: absolute), поэтому в покое пункты стоят флашем по
+   колонке, а на ховере уезжает вправо сам текст — место под стрелку не
+   зарезервировано и композиция в покое не расшатана. */
+
+.branches {
+  margin-block-start: calc(35 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+.branch { position: relative; }
+.branch a {
+  display: inline-block;
+  transition:
+    transform var(--dur-ui) var(--ease),
+    color var(--dur-ui) var(--ease);
+}
+/* Сдвиг равен ширине стрелки плюс зазор — текст встаёт ровно туда, где он
+   стоял бы, будь стрелка в потоке. */
+.branch:hover a,
+.branch:focus-within a {
+  transform: translateX(calc(39 * var(--u)));
+  color: var(--accent);
+}
+/* Стрелка — SVG. non-scaling-stroke заставляет считать stroke-width в
+   пикселях экрана, а не в единицах viewBox, поэтому обводка выходит ровно
+   той же толщины, что рамки и линейка шапки, при любом масштабе иконки. */
+.branch__arrow {
+  stroke-width: var(--line-w);
+  vector-effect: non-scaling-stroke;
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 50%;
+  width: calc(29 * var(--u));
+  height: calc(18 * var(--u));
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(-50%) translateX(calc(-10 * var(--u)));
+  transition:
+    opacity var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+.branch:hover .branch__arrow,
+.branch:focus-within .branch__arrow {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* --- 03 / Projects ---------------------------------------------------------
+   Сетка 3×304 с волосяными линиями в 1px. Линейки рисуются правым и
+   нижним краем ячейки, а верхний и левый край — у контейнера: иначе на
+   стыках получалась бы двойная толщина. */
+
+.work {
+  margin-block-start: calc(21 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(3, var(--col));
+  grid-auto-rows: var(--col);
+  border-block-start: var(--line) solid var(--hair);
+  border-inline-start: var(--line) solid var(--hair);
+  width: calc(var(--col) * 3 + var(--line));
+}
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(51 * var(--u)) calc(24 * var(--u)) calc(16 * var(--u));
+  border-inline-end: var(--line) solid var(--hair);
+  border-block-end: var(--line) solid var(--hair);
+  background: var(--bg);
+}
+/* Плашка превью: квадрат 172 под WebGL-объект или превью кейса. */
+.card__media {
+  align-self: center;
+  width: calc(172 * var(--u));
+  height: calc(172 * var(--u));
+  background: var(--thumb);
+  transition: transform var(--dur-ui) var(--ease);
+}
+.card:hover .card__media { transform: scale(1.04); }
+.card__cap {
+  margin-block-start: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(8 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(18 * var(--u));
+}
+.card__cap sup {
+  font-size: 0.65em;
+  vertical-align: super;
+  line-height: 0;
+}
+/* Плашка знака: в макете это всегда квадрат 24×24 по правому краю
+   подписи. Знак вписывается внутрь по contain, поэтому вордмарк
+   (Honor, 2x2) не растягивает плашку и не искажается. */
+.card__chip {
+  flex: none;
+  height: calc(24 * var(--u));
+  width: calc(24 * var(--u));
+  background: var(--fg);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+}
+
+/* --- 04 / Happy clients ----------------------------------------------------
+   Лента бесконечная и обрезается краями экрана — выходит из оболочки
+   на всю ширину. Дорожка продублирована, сдвиг замыкает цикл без шва. */
+
+.ticker {
+  margin-block-start: calc(86 * var(--u));
+  display: grid;
+  gap: calc(57 * var(--u));
+}
+.ticker__row {
+  overflow: hidden;
+  height: calc(112 * var(--u));
+}
+/* Движение управляется скроллом (js/main.js), а не keyframes. */
+.ticker__track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  gap: calc(96 * var(--u));
+  padding-inline-end: calc(96 * var(--u));
+  transform: translateX(0);
+  will-change: transform;
+}
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* Логотипы одноцветные: mask + background-color. Высоты сняты с макета
+   поштучно — знаки выровнены на глаз по оптике, а не по одной высоте. */
+.logo {
+  flex: none;
+  height: var(--h, calc(48 * var(--u)));
+  aspect-ratio: var(--ar, 4);
+  background: var(--logo);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+}
+
+.mark-gazprombank { --src: url("../assets/logos/gazprombank.svg"); --ar: 4.74; --h: calc(52 * var(--u)); }
+.mark-sber        { --src: url("../assets/logos/sber.svg");        --ar: 6.04; --h: calc(30 * var(--u)); }
+.mark-mts         { --src: url("../assets/logos/mts.svg");         --ar: 1;    --h: calc(112 * var(--u)); }
+.mark-honor       { --src: url("../assets/logos/honor.svg");       --ar: 5.2;  --h: calc(34 * var(--u)); }
+.mark-avito       { --src: url("../assets/logos/avito.svg");       --ar: 3.93; --h: calc(34 * var(--u)); }
+.mark-vk          { --src: url("../assets/logos/vk.svg");          --ar: 1;    --h: calc(106 * var(--u)); }
+.mark-zen         { --src: url("../assets/logos/zen.svg");         --ar: 3.24; --h: calc(54 * var(--u)); }
+.mark-2x2         { --src: url("../assets/logos/2x2.svg");         --ar: 2.33; --h: calc(74 * var(--u)); }
+.mark-yandex      { --src: url("../assets/logos/yandex.svg");      --ar: 3.46; --h: calc(45 * var(--u)); }
+
+/* --- 05 / Lets talk ---------------------------------------------------------
+   Миллиметровка 912×494 — ровно 24×13 клеток по 38. Метка стоит вплотную
+   над полем, зазор в макете 1px. */
+
+.graph {
+  background-image:
+    repeating-linear-gradient(to right, var(--graph) 0 1px, transparent 1px var(--graph-cell)),
+    repeating-linear-gradient(to bottom, var(--graph) 0 1px, transparent 1px var(--graph-cell));
+  background-position: 0 0;
+}
+.talk {
+  margin-block-start: calc(1 * var(--u));
+  display: grid;
+  place-items: center;
+  height: calc(494 * var(--u));
+  padding-block-start: calc(12 * var(--u));
+  /* Поле — ровно 24×13 клеток по 38, поэтому градиент рисует линии только
+     по левому и верхнему краю. Замыкающие правую и нижнюю добавляет тень:
+     она не входит в поток и не смещает содержимое. */
+  box-shadow: inset -1px -1px 0 var(--graph);
+  text-align: center;
+}
+.talk em { font-style: normal; color: var(--accent); }
+
+/* --- 06 / Handover ----------------------------------------------------------
+   Инверсная полоса во всю ширину. Заголовок сдвинут во вторую колонку
+   сетки 3×304 и начинается на 4 ниже метки — так в макете. */
+
+.handover { padding-block: calc(84 * var(--u)) calc(154 * var(--u)); }
+.handover__head { gap: 0; align-items: start; }
+.handover__head .display {
+  grid-column: 2 / -1;
+  margin-block-start: calc(12 * var(--u));
+}
+
+.cells {
+  box-sizing: border-box;
+  margin-block-start: calc(116 * var(--u));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(458 * var(--u));
+  border: var(--line) solid currentColor;
+}
+.cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.cell + .cell { border-inline-start: var(--line) solid currentColor; }
+.cell__top {
+  height: calc(303 * var(--u));
+  padding: calc(38 * var(--u)) calc(40 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-cellnum);
+  line-height: 1;
+}
+.cell__foot {
+  flex: 1;
+  padding: calc(27 * var(--u)) calc(24 * var(--u));
+  border-block-start: var(--line) solid currentColor;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+.cell--accent { background: var(--accent); color: var(--ink); }
+
+/* --- Лента слов -------------------------------------------------------------
+   Две строки навстречу, вторая со сдвигом фазы — в макете слова
+   не стоят друг под другом. Кегль 96, шаг строк 119. */
+
+.marquee {
+  padding-block-start: calc(58 * var(--u));
+  overflow: hidden;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-big);
+  line-height: calc(119 * var(--u));
+  letter-spacing: var(--track);
+  white-space: nowrap;
+}
+.marquee__row { overflow: hidden; }
+/* Четыре копии подряд, сдвиг на четверть: одна копия шире экрана на любой
+   ширине (кегль тянется тем же --u), остальные держат запас справа —
+   поэтому ни шва, ни дырки в конце цикла. Втрое быстрее прежнего. */
+.marquee__track {
+  display: inline-flex;
+  animation: marquee var(--marquee-dur) linear infinite;
+}
+@keyframes marquee { to { transform: translateX(-25%); } }
+.marquee__row--back .marquee__track { animation-direction: reverse; }
+.marquee em { font-style: normal; color: var(--accent); }
+
+/* --- Lab ---------------------------------------------------------------------
+   Скобки — отдельные элементы: на hover расходятся, слово остаётся на месте.
+   Зазор зарезервирован сразу, иначе расхождение двигало бы соседние блоки. */
+
+.lab {
+  padding-block: calc(137 * var(--u)) calc(129 * var(--u));
+  text-align: center;
+}
+.lab__link {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-big);
+  line-height: calc(96 * var(--u));
+  letter-spacing: var(--track);
+  color: var(--accent);
+}
+.lab__bracket { transition: transform var(--dur-ui) var(--ease); }
+.lab__bracket--open { transform-origin: right center; }
+.lab__bracket--close { transform-origin: left center; }
+.lab__link:hover .lab__bracket--open { transform: translateX(-0.2em); }
+.lab__link:hover .lab__bracket--close { transform: translateX(0.2em); }
+.lab__word { padding-inline: 0.11em; }
+
+/* --- Футер ---------------------------------------------------------------------
+   Светлая плита со скруглением 24 сверху, набор по центру. */
+
+.footer {
+  border-start-start-radius: calc(24 * var(--u));
+  border-start-end-radius: calc(24 * var(--u));
+  padding-block: calc(192 * var(--u)) calc(65 * var(--u));
+  text-align: center;
+}
+.footer__line {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-footer);
+  line-height: calc(29 * var(--u));
+  letter-spacing: var(--track);
+}
+.footer__note {
+  margin-block-start: calc(61 * var(--u));
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-note);
+  line-height: calc(22 * var(--u));
+  letter-spacing: var(--track);
+}
+
+/* --- Мобильная раскладка ---------------------------------------------------
+   Не сжатый десктоп: --u уже ужимает композицию пропорционально, но ниже
+   760 сетки схлопываются, иначе текст уходит в нечитаемый кегль. */
+
+@media (max-width: 760px) {
+  :root { --u: calc(100vw / 357); }
+
+  .nav { padding-block-start: calc(24 * var(--u)); padding-inline: calc(20 * var(--u)); }
+  .nav__rule { display: none; }
+  .nav__mark { margin-inline-end: auto; }
+  .pills { gap: calc(4 * var(--u)); }
+  .pill--me { display: none; }
+
+  .hero { padding-block-start: calc(300 * var(--u)); }
+  .hero__name { font-size: calc(96 * var(--u)); line-height: calc(80 * var(--u)); }
+
+  .branches { flex-direction: column; width: auto; gap: calc(8 * var(--u)); }
+  .work { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: 100%; }
+  .card { aspect-ratio: 1; }
+  .card__media { width: 56%; height: auto; aspect-ratio: 1; }
+  .handover__head .display { grid-column: 1 / -1; margin-block-start: calc(24 * var(--u)); }
+  .cells { grid-template-columns: 1fr; height: auto; }
+  .cell + .cell { border-inline-start: 0; border-block-start: 1px solid currentColor; }
+  .cell__top { height: calc(200 * var(--u)); }
+}
+
+/* --- Переключатель сетки ----------------------------------------------------
+   QA-инструмент: колонки 912/144/12 поверх страницы, чтобы сверять вёрстку
+   с Figma. По умолчанию скрыт, состояние держит js/main.js классом
+   .show-grid на <html>. */
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+html.show-grid .grid-overlay { opacity: 1; }
+/* Колоночная сетка: 12 колонок линиями, поля 144 (ширина .wrap — 912). */
+.grid-overlay__wrap {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  border-inline-end: 1px solid var(--grid-line);
+}
+.grid-overlay__col { border-inline-start: 1px solid var(--grid-line); }
+
+/* Панель разработчика: переключатели сетки и кривых стоят в один ряд. */
+.devbar {
+  position: fixed;
+  inset-block-end: 1.25rem;
+  inset-inline-end: 1.25rem;
+  z-index: 30;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.grid-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.7rem 0.4rem 0.5rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.grid-switch__track {
+  position: relative;
+  width: 1.9rem;
+  height: 1.1rem;
+  border-radius: 100px;
+  background: var(--hair);
+  transition: background-color 200ms var(--ease-out);
+}
+.grid-switch__knob {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  width: calc(1.1rem - 4px);
+  height: calc(1.1rem - 4px);
+  border-radius: 50%;
+  background: var(--fg);
+  transition: transform 200ms var(--ease-out);
+}
+.grid-switch[aria-pressed="true"] .grid-switch__track { background: var(--accent); }
+.grid-switch[aria-pressed="true"] .grid-switch__knob {
+  transform: translateX(calc(1.9rem - 1.1rem));
+  background: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .grid-switch__label { display: none; }
+  .grid-switch { padding: 0.4rem; }
+}
+
+
+/* --- Панель кривых -----------------------------------------------------------
+   Настройка моторики вживую: кривая и длительность пишутся в --ease,
+   --dur-ui и --dur на <html>, поэтому меняется вся интерактивная анимация
+   разом. Значения держатся в localStorage — это настройка разработчика,
+   а не состояние страницы, поэтому в разметку они не попадают. */
+
+.ease-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.ease-switch[aria-expanded="true"] { background: var(--accent); color: var(--ink); }
+
+.easepanel {
+  position: fixed;
+  inset-block-end: 4.25rem;
+  inset-inline-end: 1.25rem;
+  z-index: 31;
+  width: 19rem;
+  padding: 1rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}
+.easepanel[hidden] { display: none; }
+.easepanel__title {
+  margin-block-end: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.easepanel__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-block-end: 0.75rem;
+}
+.easepanel__preset {
+  padding: 0.25rem 0.5rem;
+  background: none;
+  color: inherit;
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  font: inherit;
+  cursor: pointer;
+}
+.easepanel__preset[aria-pressed="true"] { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+
+/* Кривая и дорожка предпросмотра: точка проезжает по той же --ease,
+   что уходит в страницу, — видно характер, а не только цифры. */
+.easepanel__stage { display: flex; gap: 0.75rem; align-items: stretch; margin-block-end: 0.75rem; }
+.easepanel__curve { flex: none; width: 92px; height: 92px; border: 1px solid var(--hair); border-radius: 6px; }
+.easepanel__curve path { fill: none; stroke: var(--accent); stroke-width: 2; }
+.easepanel__curve line { stroke: var(--hair); stroke-width: 1; }
+.easepanel__demo { flex: 1; position: relative; border: 1px solid var(--hair); border-radius: 6px; overflow: hidden; }
+.easepanel__dot {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 6px;
+  width: 14px;
+  height: 14px;
+  margin-block-start: -7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.easepanel__dot.is-away { transform: translateX(calc(100% + 0px)); }
+
+.easepanel__row { display: grid; grid-template-columns: 2.6rem 1fr 2.6rem; align-items: center; gap: 0.4rem; }
+.easepanel__row input[type="range"] { width: 100%; accent-color: var(--accent); }
+.easepanel__row output { text-align: end; opacity: 0.7; }
+.easepanel__code {
+  margin-block-start: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  border-radius: 6px;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) { .devbar, .easepanel { display: none; } }

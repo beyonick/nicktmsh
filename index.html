@@ -1,0 +1,285 @@
+<!doctype html>
+<!-- Тема макета: data-theme="dark" — вариант Frame 29, "light" — Frame 28.
+     Это один и тот же макет с инвертированной палитрой. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikita Tomash — Creative Technologist</title>
+<meta name="description" content="Art director with eight years in design and a production background in CG. Identity, motion and websites, built by hand.">
+
+<link rel="preload" href="assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__mark" href="#top">nicktmsh</a>
+    <span class="nav__rule" aria-hidden="true"></span>
+    <nav class="pills" aria-label="Main">
+      <a class="pill pill--me" href="#about">me</a>
+      <a class="pill" href="#lab">lab</a>
+      <a class="pill" href="mailto:hello@nicktmsh.ru">&#8594; get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <h1 class="hero__name">nikita tomash</h1>
+    <p class="hero__sub">creative technologist</p>
+  </section>
+
+  <!-- 01 / About -----------------------------------------------------
+       Текст и переносы строк — как в макете (нода 800:1311): три строки
+       дисплейным Cy 48/43. -->
+  <section class="band wrap" id="about">
+    <p class="label rise">01/ About</p>
+    <p class="lead rise" style="--delay:80ms">
+      I&#8217;m an art director with<br>
+      eight years in design and a<br>
+      production background in CG
+    </p>
+  </section>
+
+  <!-- 02 / Expertise --------------------------------------------------- -->
+  <section class="band wrap" id="expertise">
+    <p class="label rise">02/ Expertise</p>
+    <ul class="branches">
+      <li class="branch rise">
+        <svg class="branch__arrow" viewBox="0 0 29 18" aria-hidden="true"><path d="M1 9H27M20 2L27 9L20 16" fill="none" stroke="currentColor" stroke-linecap="square"/></svg>
+        <a href="#work">Web</a>
+      </li>
+      <li class="branch rise" style="--delay:80ms"><a href="#work">Branding</a></li>
+      <li class="branch rise" style="--delay:160ms"><a href="#work">3D &amp; Motion</a></li>
+    </ul>
+  </section>
+
+  <!-- 03 / Projects -----------------------------------------------------
+       Плашка .card__media — место под WebGL-объект или превью кейса.
+       TODO: годы у CG-проектов не подтверждены (03 Клиенты/CG/*/keys.md). -->
+  <section class="band wrap" id="work">
+    <p class="label rise">03/ Projects</p>
+    <ul class="work rise" style="--delay:80ms">
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="MTS Money"></a>
+        <p class="card__cap">
+          <span>MTS Money<sup>2024</sup></span>
+          <span class="card__chip mark-mts" aria-hidden="true"></span>
+        </p>
+      </li>
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="VK Video"></a>
+        <p class="card__cap">
+          <span>VK Video<sup>2024</sup></span>
+          <span class="card__chip mark-vk" aria-hidden="true"></span>
+        </p>
+      </li>
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="Honor"></a>
+        <p class="card__cap">
+          <span>Honor<sup>2024</sup></span>
+          <span class="card__chip mark-honor" aria-hidden="true"></span>
+        </p>
+      </li>
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="2x2 TV Channel"></a>
+        <p class="card__cap">
+          <span>2x2 TV Channel<sup>2024</sup></span>
+          <span class="card__chip mark-2x2" aria-hidden="true"></span>
+        </p>
+      </li>
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="Pervaya Tsifra"></a>
+        <p class="card__cap"><span>Pervaya Tsifra<sup>2025</sup></span></p>
+      </li>
+      <li class="card">
+        <a class="card__media" href="#work" aria-label="Forma Budushchego"></a>
+        <p class="card__cap"><span>Forma Budushchego<sup>2026</sup></span></p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 04 / Happy clients ------------------------------------------------ -->
+  <section class="band" id="clients">
+    <div class="wrap"><p class="label rise">04/ Happy clients</p></div>
+    <div class="ticker">
+      <div class="ticker__row">
+        <div class="ticker__track">
+          <span class="logo mark-gazprombank" role="img" aria-label="Gazprombank"></span>
+          <span class="logo mark-sber" role="img" aria-label="Sber"></span>
+          <span class="logo mark-mts" role="img" aria-label="MTS"></span>
+          <span class="logo mark-honor" role="img" aria-label="Honor"></span>
+          <span class="logo mark-avito" role="img" aria-label="Avito"></span>
+          <span class="logo mark-gazprombank" aria-hidden="true"></span>
+          <span class="logo mark-sber" aria-hidden="true"></span>
+          <span class="logo mark-mts" aria-hidden="true"></span>
+          <span class="logo mark-honor" aria-hidden="true"></span>
+          <span class="logo mark-avito" aria-hidden="true"></span>
+          <span class="logo mark-gazprombank" aria-hidden="true"></span>
+          <span class="logo mark-sber" aria-hidden="true"></span>
+          <span class="logo mark-mts" aria-hidden="true"></span>
+          <span class="logo mark-honor" aria-hidden="true"></span>
+          <span class="logo mark-avito" aria-hidden="true"></span>
+          <span class="logo mark-gazprombank" aria-hidden="true"></span>
+          <span class="logo mark-sber" aria-hidden="true"></span>
+          <span class="logo mark-mts" aria-hidden="true"></span>
+          <span class="logo mark-honor" aria-hidden="true"></span>
+          <span class="logo mark-avito" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="ticker__row ticker__row--back">
+        <div class="ticker__track">
+          <span class="logo mark-vk" role="img" aria-label="VK"></span>
+          <span class="logo mark-zen" role="img" aria-label="Dzen"></span>
+          <span class="logo mark-2x2" role="img" aria-label="2x2"></span>
+          <span class="logo mark-yandex" role="img" aria-label="Yandex"></span>
+          <span class="logo mark-vk" aria-hidden="true"></span>
+          <span class="logo mark-zen" aria-hidden="true"></span>
+          <span class="logo mark-2x2" aria-hidden="true"></span>
+          <span class="logo mark-yandex" aria-hidden="true"></span>
+          <span class="logo mark-vk" aria-hidden="true"></span>
+          <span class="logo mark-zen" aria-hidden="true"></span>
+          <span class="logo mark-2x2" aria-hidden="true"></span>
+          <span class="logo mark-yandex" aria-hidden="true"></span>
+          <span class="logo mark-vk" aria-hidden="true"></span>
+          <span class="logo mark-zen" aria-hidden="true"></span>
+          <span class="logo mark-2x2" aria-hidden="true"></span>
+          <span class="logo mark-yandex" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 / Lets talk ---------------------------------------------------- -->
+  <section class="band wrap" id="talk">
+    <p class="label rise">05/ Lets talk</p>
+    <div class="talk graph rise" style="--delay:80ms">
+      <p class="display">
+        Have a <em>project</em>, or just<br>
+        a feeling about <em>one</em>?
+      </p>
+    </div>
+  </section>
+
+  <!-- 06 / Handover ----------------------------------------------------- -->
+  <section class="invert" id="handover">
+    <div class="wrap handover">
+      <div class="handover__head cols-3">
+        <p class="label rise">06/ Lets talk</p>
+        <h2 class="display rise" style="--delay:80ms">
+          A handover you can<br>
+          live with Design tokens,<br>
+          documentation, and a clear<br>
+          way for you to change<br>
+          the parts that change.
+        </h2>
+      </div>
+
+      <div class="cells rise" style="--delay:160ms">
+        <div class="cell cell--paper graph">
+          <div class="cell__top">01</div>
+          <p class="cell__foot">creative.</p>
+        </div>
+        <div class="cell cell--accent">
+          <div class="cell__top">02</div>
+          <p class="cell__foot">creative.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Лента слов -------------------------------------------------------- -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee__row">
+      <div class="marquee__track">
+        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
+        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
+        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
+        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
+      </div>
+    </div>
+    <div class="marquee__row marquee__row--back">
+      <div class="marquee__track">
+        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
+        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
+        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
+        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab" id="lab">
+    <a class="lab__link" href="#lab">
+      <span class="lab__bracket lab__bracket--open" aria-hidden="true">[</span>
+      <span class="lab__word">Lab</span>
+      <span class="lab__bracket lab__bracket--close" aria-hidden="true">]</span>
+    </a>
+  </section>
+
+  <footer class="footer invert">
+    <p class="footer__line">
+      Nikita Tomash — Art Director Identity,<br>
+      motion and websites, built by hand<br>
+      &copy; 2026
+    </p>
+    <p class="footer__note">This site was designed and coded by me.</p>
+  </footer>
+
+</main>
+
+<!-- Оверлей сетки для проверки вёрстки против Figma (912/144/12 колонок).
+     Скрыт по умолчанию, переключается кнопкой ниже. -->
+<div class="grid-overlay" aria-hidden="true">
+  <div class="grid-overlay__wrap wrap">
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+    <div class="grid-overlay__col"></div><div class="grid-overlay__col"></div>
+  </div>
+</div>
+<div class="devbar">
+  <button type="button" class="grid-switch" aria-pressed="false">
+    <span class="grid-switch__track"><span class="grid-switch__knob"></span></span>
+    <span class="grid-switch__label">grid</span>
+  </button>
+  <button type="button" class="ease-switch" aria-expanded="false" aria-controls="easepanel">ease</button>
+</div>
+
+<!-- Настройка моторики: кривая и длительности уходят в --ease / --dur-ui /
+     --dur на <html>, значения хранятся в localStorage. -->
+<aside class="easepanel" id="easepanel" hidden>
+  <p class="easepanel__title">Моторика и линии</p>
+
+  <div class="easepanel__presets"></div>
+
+  <div class="easepanel__stage">
+    <svg class="easepanel__curve" viewBox="0 0 100 100" aria-hidden="true">
+      <line x1="0" y1="100" x2="100" y2="100"></line>
+      <line x1="0" y1="0" x2="0" y2="100"></line>
+      <path d=""></path>
+    </svg>
+    <div class="easepanel__demo"><span class="easepanel__dot"></span></div>
+  </div>
+
+  <div class="easepanel__row"><span>x1</span><input type="range" data-bez="0" min="0" max="1" step="0.01"><output></output></div>
+  <div class="easepanel__row"><span>y1</span><input type="range" data-bez="1" min="-1" max="2" step="0.01"><output></output></div>
+  <div class="easepanel__row"><span>x2</span><input type="range" data-bez="2" min="0" max="1" step="0.01"><output></output></div>
+  <div class="easepanel__row"><span>y2</span><input type="range" data-bez="3" min="-1" max="2" step="0.01"><output></output></div>
+  <div class="easepanel__row"><span>линия</span><input type="range" data-line min="1" max="5" step="1"><output></output></div>
+  <div class="easepanel__row"><span>hover</span><input type="range" data-dur="ui" min="80" max="1400" step="20"><output></output></div>
+  <div class="easepanel__row"><span>reveal</span><input type="range" data-dur="rise" min="120" max="2000" step="20"><output></output></div>
+
+  <p class="easepanel__code" title="Кликните, чтобы скопировать"></p>
+</aside>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

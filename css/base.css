@@ -1,0 +1,127 @@
+/* --- Шрифты ------------------------------------------------------------
+   Cy — дисплейный, куплен (supertype.de), одно начертание Bold: в макете
+   весь крупный тип им и набран. Inter — текст. DM Mono — метки. */
+
+@font-face {
+  font-family: "Cy";
+  src: url("../assets/fonts/cy-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("../assets/fonts/dm-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("../assets/fonts/dm-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* --- Сброс -------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--text);
+  line-height: 1.5;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;        /* ленты уезжают за края намеренно */
+}
+
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p, figure, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* --- Раскладка ----------------------------------------------------------
+   Колонка контента — 912 макетных единиц по центру: на 1200 это даёт
+   поля 144, как в Figma. Шире 1200 колонка не растёт — фрейм макета
+   именно такой. */
+
+.wrap {
+  width: var(--page);
+  max-width: calc(100% - 48 * var(--u));
+  margin-inline: auto;
+}
+
+/* Три колонки по 304 — сетка проектов и сдвиг заголовка в 06. */
+.cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Дисплейный набор: один кегль 48 и один шаг строк 43 на все секции. */
+.display {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+
+/* Метка секции: 01/ About — DM Mono 14 без трекинга. */
+.label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  letter-spacing: 0;
+  color: inherit;   /* на инвертированной полосе метка тоже переворачивается */
+}
+
+/* Линия QA-сетки. Живёт в base, чтобы её видел и оверлей, и инверсия. */
+:root { --grid-line: rgba(255, 60, 60, 0.45); }
+
+/* Инвертированная полоса: секция 06 и футер идут на встречном материале. */
+.invert {
+  background: var(--fg);
+  color: var(--bg);
+  --thumb: color-mix(in srgb, var(--accent) 10%, var(--fg));
+  --graph: rgba(23, 24, 26, 0.09);
+}
+
+/* --- Движение ------------------------------------------------------------ */
+
+.rise { opacity: 0; transform: translateY(1.25rem); }
+.rise.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
