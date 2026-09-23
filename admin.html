@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- Админка. Локальный инструмент, не часть сайта.
+
+     Работает поверх tools/dev-server.py: читает data/*.json, пишет их
+     обратно и заливает постеры в assets/. Если сервера нет (открыли с
+     обычной статики), панель остаётся рабочей, но вместо записи отдаёт
+     готовый json файлом — данные не теряются ни в одном из случаев.
+
+     На прод не выкладывается: в вёрстке нет ни авторизации, ни защиты,
+     и она ей не нужна — адрес живёт только на 127.0.0.1. -->
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>admin — nicktmsh</title>
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+
+<header class="ad-top">
+  <a class="ad-mark" href="./">nicktmsh</a>
+  <span class="ad-dot" aria-hidden="true">/</span>
+  <span class="ad-where">admin</span>
+
+  <div class="ad-tabs" role="tablist" aria-label="Что редактируем">
+    <button class="ad-tab" type="button" role="tab" data-tab="lab" aria-selected="true">Lab</button>
+    <button class="ad-tab" type="button" role="tab" data-tab="projects" aria-selected="false">Projects</button>
+  </div>
+
+  <p class="ad-status" data-status role="status">загрузка…</p>
+
+  <div class="ad-actions">
+    <button class="ad-btn" type="button" data-download>Скачать json</button>
+    <button class="ad-btn ad-btn--go" type="button" data-save>Сохранить</button>
+  </div>
+</header>
+
+<main class="ad-main">
+
+  <!-- Список записей. Порядок в файле — это порядок на сайте, поэтому
+       стрелки вверх/вниз здесь не удобство, а основной инструмент. -->
+  <aside class="ad-list">
+    <div class="ad-list__top">
+      <p class="ad-list__title" data-list-title>Работы</p>
+      <button class="ad-btn ad-btn--sm" type="button" data-new>+ новая</button>
+    </div>
+    <ol class="ad-items" data-items></ol>
+  </aside>
+
+  <section class="ad-form">
+    <form data-form autocomplete="off"></form>
+  </section>
+
+  <aside class="ad-preview">
+    <p class="ad-list__title">Как это встанет</p>
+    <div class="ad-preview__box" data-preview></div>
+    <p class="ad-hint" data-hint></p>
+  </aside>
+
+</main>
+
+<script src="js/admin.js" type="module"></script>
+</body>
+</html>

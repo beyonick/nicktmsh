@@ -28,18 +28,29 @@
   line-height: 1;
 }
 /* Линейка упирается в первую пилюлю без зазора — как в макете. */
+/* Линейка — тоже рамка, а не залитый блок высотой --line: высоту блока
+   браузер округляет по положению на экране (на 125% выходило то 2, то 3
+   пикселя), рамку — всегда одинаково с обводкой кнопок и сеткой. */
 .nav__rule {
   flex: 1;
-  height: var(--line);
-  background: currentColor;
+  border-block-start: var(--line) solid currentColor;
 }
 .pills {
   display: flex;
   gap: calc(5 * var(--u));
 }
+/* Кнопка. На ховере слева выезжает стрелка (js/main.js ставит её в каждую
+   кнопку): кнопка становится шире и раздвигает соседей — это и есть
+   отклик, заливки на ховере нет.
+
+   Стрелка нарисована рамками, а не SVG: браузер округляет толщину рамок
+   до целых пикселей устройства, линию SVG — нет, и на дробном масштабе
+   экрана (125%, 150%) стрелка выходила толще обводки. Рамка к рамке
+   совпадает при любом масштабе. */
 .pill {
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: calc(38 * var(--u));
   padding-inline: calc(16 * var(--u));
   border: var(--line) solid currentColor;
@@ -50,21 +61,88 @@
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+  transition:
+    background-color var(--dur-ui) var(--ease),
+    color var(--dur-ui) var(--ease),
+    border-color var(--dur-ui) var(--ease);
 }
-.pill:hover {
+.pill__arrow {
+  --head: calc(7 * var(--u));
+  position: relative;
+  flex: none;
+  width: 0;
+  height: calc(10 * var(--u));
+  margin-inline-end: 0;
+  opacity: 0;
+  transform: translateX(calc(-6 * var(--u)));
+  transition:
+    width var(--dur-ui) var(--ease),
+    margin var(--dur-ui) var(--ease),
+    opacity var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+/* Стрелка сайта — одна на кнопки и ветки 02. Древко — верхняя рамка во всю
+   ширину, наконечник — уголок из двух рамок, повёрнутый на 45°; --head —
+   сторона уголка, размер и положение задаёт хозяин. */
+.arrow::before,
+.arrow::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  box-sizing: border-box;
+}
+.arrow::before {
+  inset-inline: 0 calc(var(--head) * 0.15);
+  border-block-start: var(--line) solid currentColor;
+  transform: translateY(-50%);
+}
+/* Центр уголка стоит так, чтобы его вершина (полдиагонали от центра)
+   упиралась ровно в конец древка. */
+.arrow::after {
+  inset-inline-end: calc(var(--head) * 0.36);
+  width: var(--head);
+  height: var(--head);
+  border-block-start: var(--line) solid currentColor;
+  border-inline-end: var(--line) solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  transform-origin: 50% 50%;
+}
+.pill:hover .pill__arrow,
+.pill:focus-visible .pill__arrow {
+  width: calc(16 * var(--u));
+  margin-inline-end: calc(10 * var(--u));
+  opacity: 1;
+  transform: none;
+}
+/* Кнопка без обводки в покое (All work): обводка появляется на ховере —
+   та же, что у кнопок шапки. */
+.pill--ghost {
+  border-color: transparent;
+  color: var(--accent);
+}
+.pill--ghost:hover,
+.pill--ghost:focus-visible { border-color: currentColor; }
+/* Текущий раздел залит акцентом. */
+.pill.is-current {
   background: var(--accent);
   color: var(--bg);
 }
+/* «get in touch» на 357 не помещается рядом с двумя другими пилюлями,
+   поэтому у неё две подписи и переключаются они шириной экрана. */
+.pill__short { display: none; }
 
 /* --- Первый экран --------------------------------------------------------
    Единственная осевая композиция на странице. Высота не 100vh: в макете
-   имя начинается на 160, а метка 01 — на 541. */
+   имя начинается на 160, а метка 01 — на 541. Отступ до метки 01 (223)
+   стоит здесь, у #about он нулевой. */
 
 .hero {
-  padding-block-start: calc(185 * var(--u));
+  position: relative;
+  padding-block: calc(185 * var(--u)) calc(223 * var(--u));
   text-align: center;
+  isolation: isolate;
 }
+
 .hero__name {
   font-family: var(--display);
   font-weight: 700;
@@ -92,8 +170,8 @@
 
 .band { padding-block: var(--gap-top) var(--gap-bottom, 0); }
 
-#about     { --gap-top: calc(223 * var(--u)); }
-#expertise { --gap-top: calc(74  * var(--u)); }
+#about     { --gap-top: 0; }   /* 223 переехали в padding-bottom первого экрана */
+#expertise { --gap-top: calc(74  * var(--u)); --gap-bottom: calc(72 * var(--u)); }
 #work      { --gap-top: calc(98  * var(--u)); }
 #clients   { --gap-top: calc(129 * var(--u)); }
 #talk      { --gap-top: calc(121 * var(--u)); --gap-bottom: calc(49 * var(--u)); }
@@ -130,7 +208,9 @@
   line-height: var(--lh-display);
   letter-spacing: var(--track);
 }
-.branch { position: relative; }
+/* Ячейка сжата до слова: каждая ветка наклоняется своей плоскостью
+   вокруг центра слова, а не пустой части колонки (js/tilt.js). */
+.branch { position: relative; justify-self: start; }
 .branch a {
   display: inline-block;
   transition:
@@ -144,12 +224,11 @@
   transform: translateX(calc(39 * var(--u)));
   color: var(--accent);
 }
-/* Стрелка — SVG. non-scaling-stroke заставляет считать stroke-width в
-   пикселях экрана, а не в единицах viewBox, поэтому обводка выходит ровно
-   той же толщины, что рамки и линейка шапки, при любом масштабе иконки. */
+/* Стрелка — та же, что в кнопках (.arrow), только крупнее. Раньше здесь
+   был SVG, и на масштабе экрана 125% его линия выходила толще рамок:
+   браузер округляет рамку до целых пикселей устройства, а stroke — нет. */
 .branch__arrow {
-  stroke-width: var(--line-w);
-  vector-effect: non-scaling-stroke;
+  --head: calc(10 * var(--u));
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 50%;
@@ -183,6 +262,7 @@
   width: calc(var(--col) * 3 + var(--line));
 }
 .card {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -190,16 +270,59 @@
   border-inline-end: var(--line) solid var(--hair);
   border-block-end: var(--line) solid var(--hair);
   background: var(--bg);
+  overflow: hidden;
 }
-/* Плашка превью: квадрат 172 под WebGL-объект или превью кейса. */
-.card__media {
-  align-self: center;
-  width: calc(172 * var(--u));
-  height: calc(172 * var(--u));
-  background: var(--thumb);
-  transition: transform var(--dur-ui) var(--ease);
+/* Ссылка на кейс — прозрачный слой поверх всей ячейки. */
+.card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
-.card:hover .card__media { transform: scale(1.04); }
+.card__link:focus-visible {
+  outline: var(--line) solid var(--accent);
+  outline-offset: calc(-4 * var(--u));
+}
+.card__cap,
+.card__kicker { position: relative; z-index: 1; }
+
+/* Карточка с цветом бренда: знак по центру ячейки в четверть её ширины.
+   Центрируется полями, а не translate — transform у знака занят
+   наклоном за курсором (js/tilt.js). */
+.card__logo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 25%;
+  height: 25%;
+  margin: auto;
+  background: var(--fg);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+  pointer-events: none;
+}
+/* Чернила (js/spot.js) — один прозрачный WebGL-холст на всю сетку. Лежит
+   первым в сетке, поэтому рамки ячеек, знаки и подписи рисуются поверх.
+   Фон у ячеек снимается: иначе он закрыл бы холст. */
+.work {
+  position: relative;
+  isolation: isolate;
+}
+.work__ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.work.has-ink .card { background: transparent; }
+/* В тёмной теме подпись и знак на чернилах выворачиваются в дополнительный
+   цвет (difference): светлый набор на лайме пропал бы. Вне чернил под ними
+   прозрачно — сетка изолирована, — и цвет остаётся ровно --fg. В светлой
+   теме тёмный набор читается на любых чернилах и так. */
+:root:not([data-theme="light"]) .work.has-ink :is(.card__cap, .card__kicker, .card__logo) {
+  mix-blend-mode: difference;
+}
 .card__cap {
   margin-block-start: auto;
   display: flex;
@@ -214,6 +337,40 @@
   font-size: 0.65em;
   vertical-align: super;
   line-height: 0;
+  margin-inline-start: calc(3 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+.card__title { min-width: 0; }
+
+/* Вторая строка подписи — что именно делал. Место под неё зарезервировано
+   высотой строки, поэтому раскрытие не двигает соседние ячейки: сетка
+   стоит, меняется только содержимое одной ячейки. */
+.card__kicker {
+  margin-block-start: calc(2 * var(--u));
+  font-family: var(--mono);
+  font-size: calc(12 * var(--u));
+  line-height: calc(16 * var(--u));
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  opacity: 0;
+  transform: translateY(calc(-4 * var(--u)));
+  transition:
+    opacity var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+.card:hover .card__kicker,
+.card:focus-within .card__kicker {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ссылка на полный список. Стоит под сеткой в её левом поле — там же,
+   где начинаются метки секций. */
+.work__more {
+  margin-block-start: calc(24 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
 }
 /* Плашка знака: в макете это всегда квадрат 24×24 по правому краю
    подписи. Знак вписывается внутрь по contain, поэтому вордмарк
@@ -285,7 +442,7 @@
   background-position: 0 0;
 }
 .talk {
-  margin-block-start: calc(1 * var(--u));
+  margin-block-start: calc(40 * var(--u));
   display: grid;
   place-items: center;
   height: calc(494 * var(--u));
@@ -296,51 +453,10 @@
   box-shadow: inset -1px -1px 0 var(--graph);
   text-align: center;
 }
+/* Заливки по скроллу здесь нет: вопрос набран сразу в полный цвет.
+   Два акцента — два ключевых слова. */
 .talk em { font-style: normal; color: var(--accent); }
-
-/* --- 06 / Handover ----------------------------------------------------------
-   Инверсная полоса во всю ширину. Заголовок сдвинут во вторую колонку
-   сетки 3×304 и начинается на 4 ниже метки — так в макете. */
-
-.handover { padding-block: calc(84 * var(--u)) calc(154 * var(--u)); }
-.handover__head { gap: 0; align-items: start; }
-.handover__head .display {
-  grid-column: 2 / -1;
-  margin-block-start: calc(12 * var(--u));
-}
-
-.cells {
-  box-sizing: border-box;
-  margin-block-start: calc(116 * var(--u));
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: calc(458 * var(--u));
-  border: var(--line) solid currentColor;
-}
-.cell {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-.cell + .cell { border-inline-start: var(--line) solid currentColor; }
-.cell__top {
-  height: calc(303 * var(--u));
-  padding: calc(38 * var(--u)) calc(40 * var(--u));
-  font-family: var(--mono);
-  font-size: var(--fs-cellnum);
-  line-height: 1;
-}
-.cell__foot {
-  flex: 1;
-  padding: calc(27 * var(--u)) calc(24 * var(--u));
-  border-block-start: var(--line) solid currentColor;
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: var(--fs-display);
-  line-height: var(--lh-display);
-  letter-spacing: var(--track);
-}
-.cell--accent { background: var(--accent); color: var(--ink); }
+.talk em.alt { color: var(--accent-2); }
 
 /* --- Лента слов -------------------------------------------------------------
    Две строки навстречу, вторая со сдвигом фазы — в макете слова
@@ -357,22 +473,50 @@
   white-space: nowrap;
 }
 .marquee__row { overflow: hidden; }
-/* Четыре копии подряд, сдвиг на четверть: одна копия шире экрана на любой
-   ширине (кегль тянется тем же --u), остальные держат запас справа —
-   поэтому ни шва, ни дырки в конце цикла. Втрое быстрее прежнего. */
+/* Четыре копии подряд: одна копия шире экрана на любой ширине (кегль
+   тянется тем же --u), поэтому ни шва, ни дырки в конце цикла. Движение
+   ведёт js/main.js вместе с лентой логотипов — и разворот по скроллу
+   у них общий. */
 .marquee__track {
   display: inline-flex;
-  animation: marquee var(--marquee-dur) linear infinite;
+  will-change: transform;
 }
-@keyframes marquee { to { transform: translateX(-25%); } }
-.marquee__row--back .marquee__track { animation-direction: reverse; }
-.marquee em { font-style: normal; color: var(--accent); }
+/* Слова и пиктограммы белые, подсвечивается то, что под курсором.
+   «creative.» набран акцентом, и акценты чередуются шахматкой: по строке
+   лайм и фиолет идут через копию, нижняя строка начинает со второго.
+   Лента оборачивается на половине дорожки — это ровно две копии, поэтому
+   чередование замыкается без шва. */
+.marquee b,
+.picto { transition: color var(--dur-ui) var(--ease); }
+.marquee b { font-weight: inherit; }
+.marquee b:hover,
+.picto:hover { color: var(--accent); }
+.marquee b[data-tone="1"] { color: var(--accent); }
+.marquee b[data-tone="2"] { color: var(--accent-2); }
 
-/* --- Lab ---------------------------------------------------------------------
-   Скобки — отдельные элементы: на hover расходятся, слово остаётся на месте.
+/* Пиктограмма стоит между словами на средней линии строчных, с полями
+   в ширину пробела. */
+/* Толщина линии — общая для сайта (--line-px), а не доля знака: иначе она
+   тянулась вместе с кеглем и на 1200 выходила вдвое тоньше рамок.
+   non-scaling-stroke считает её в пикселях экрана, а не в единицах
+   viewBox; свойство не наследуется, поэтому стоит на самих фигурах. */
+.picto {
+  flex: none;
+  width: 0.82em;
+  height: 0.82em;
+  margin-inline: 0.32em;
+  vertical-align: -0.06em;
+  overflow: visible;
+  stroke-width: var(--line-px);
+}
+.picto-sprite g > * { vector-effect: non-scaling-stroke; }
+.picto-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* --- Lab: тизер на главной --------------------------------------------------
+   Ведёт на lab.html. Скобки — отдельные элементы: на hover расходятся, слово остаётся на месте.
    Зазор зарезервирован сразу, иначе расхождение двигало бы соседние блоки. */
 
-.lab {
+.lab-teaser {
   padding-block: calc(137 * var(--u)) calc(129 * var(--u));
   text-align: center;
 }
@@ -425,23 +569,39 @@
 @media (max-width: 760px) {
   :root { --u: calc(100vw / 357); }
 
+  /* Дисплейный кегль на телефоне отдельный, а не пересчитанный.
+     --u уже ужимает композицию пропорционально, но 48 макетных единиц на
+     ширине 357 — это те же 13% экрана, и строка из тринадцати знаков
+     уходит за край. Мобильная версия — отдельное решение, а не сжатый
+     десктоп (website.md), поэтому здесь свой набор кеглей. */
+  :root {
+    --fs-display: calc(24 * var(--u));
+    --lh-display: calc(27 * var(--u));
+    --fs-big:     calc(52 * var(--u));
+    --fs-footer:  calc(18 * var(--u));
+    --fs-note:    calc(13 * var(--u));
+    --fs-nav:     calc(20 * var(--u));
+  }
+
   .nav { padding-block-start: calc(24 * var(--u)); padding-inline: calc(20 * var(--u)); }
   .nav__rule { display: none; }
   .nav__mark { margin-inline-end: auto; }
   .pills { gap: calc(4 * var(--u)); }
-  .pill--me { display: none; }
+  .pill { padding-inline: calc(12 * var(--u)); }
+  .pill__long { display: none; }
+  .pill__short { display: inline; }
 
-  .hero { padding-block-start: calc(300 * var(--u)); }
-  .hero__name { font-size: calc(96 * var(--u)); line-height: calc(80 * var(--u)); }
+  .hero { padding-block: calc(280 * var(--u)) calc(150 * var(--u)); }
+  /* Имя набирается в одну строку и на телефоне: холст первого экрана
+     рисует строку целиком через fillText и переносов не знает. Поэтому
+     кегль подбирается под ширину, а не наоборот — 46 единиц дают около
+     80% колонки на любой ширине ниже 760. */
+  .hero__name { font-size: calc(46 * var(--u)); line-height: calc(52 * var(--u)); }
+  .hero__sub { font-size: calc(13 * var(--u)); line-height: calc(20 * var(--u)); }
 
-  .branches { flex-direction: column; width: auto; gap: calc(8 * var(--u)); }
+  .branches { grid-template-columns: 1fr; gap: calc(8 * var(--u)); }
   .work { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: 100%; }
   .card { aspect-ratio: 1; }
-  .card__media { width: 56%; height: auto; aspect-ratio: 1; }
-  .handover__head .display { grid-column: 1 / -1; margin-block-start: calc(24 * var(--u)); }
-  .cells { grid-template-columns: 1fr; height: auto; }
-  .cell + .cell { border-inline-start: 0; border-block-start: 1px solid currentColor; }
-  .cell__top { height: calc(200 * var(--u)); }
 }
 
 /* --- Переключатель сетки ----------------------------------------------------
@@ -615,4 +775,76 @@ html.show-grid .grid-overlay { opacity: 1; }
   cursor: pointer;
 }
 
+/* Панель наклона (js/tilt-panel.js) — тот же материал, стоит левее панели
+   кривых, чтобы обе можно было держать открытыми. */
+.tiltpanel { inset-inline-end: 21.5rem; width: 20rem; }
+.tiltpanel .easepanel__row { grid-template-columns: 6.4rem 1fr 2.8rem; }
+.tiltpanel__head { display: flex; gap: 0.4rem; margin-block-end: 0.6rem; }
+.tiltpanel select {
+  flex: 1;
+  min-width: 0;
+  padding: 0.25rem 0.4rem;
+  background: var(--bg);
+  color: inherit;
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+  font: inherit;
+}
+.is-tilt-picked { outline: 1px dashed var(--accent); outline-offset: 4px; }
+html.is-tilt-picking,
+html.is-tilt-picking * { cursor: crosshair !important; }
+
 @media (max-width: 760px) { .devbar, .easepanel { display: none; } }
+
+/* =============================================================================
+   Блоки, добавленные к макету
+   =============================================================================
+   Композиция Frame 29 не меняется: секции стоят на тех же местах, с теми же
+   метками и тем же кеглем. Добавлено то, чего в макете не было, а на странице
+   не хватало, — вторая строка у веток, цифры у About, контакт под вопросом
+   и техническая графика. Ни один новый кегль не заведён: всё набрано
+   существующими --fs-*.
+   ============================================================================= */
+
+/* --- 01 / About: абзац ------------------------------------------------------ */
+
+.about {
+  max-width: calc(var(--col) * 2 + var(--u) * 24);
+}
+/* Подход одним абзацем — тот же моно, что подзаголовки разделов. */
+.about__note {
+  max-width: calc(var(--col) * 2);
+  margin-block-start: calc(28 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+
+/* --- 04 / Clients: строка контекста ----------------------------------------- */
+
+.clients__note {
+  margin-block-start: calc(40 * var(--u));
+  max-width: calc(var(--col) * 2);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(20 * var(--u));
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+}
+
+/* --- Lab: тизер с перспективной сеткой -------------------------------------- */
+
+.lab-teaser__note {
+  margin-block-start: calc(18 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+
+/* --- Мобильная раскладка добавленных блоков --------------------------------- */
+
+@media (max-width: 760px) {
+  .about { max-width: none; }
+}

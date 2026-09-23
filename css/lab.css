@@ -1,0 +1,265 @@
+/* Lab — вертикальные ролики горизонтальной лентой.
+
+   Реф — mersi-architecture.com/projets/naya: закреплённый кадр во всю
+   высоту экрана, вертикальный скролл ведёт ленту вбок (js/lab.js). Слева
+   вводная панель: метка сверху, текст, крупное [Lab] внизу. Дальше кадры
+   9:16 во всю высоту без подписей — говорит сама работа.
+
+   Заливок-заглушек и графики нет: без файла кадр — пустая рамка с
+   номером. */
+
+.hscroll { position: relative; }
+
+.hscroll__pin {
+  position: sticky;
+  inset-block-start: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* Поле слева совпадает с колонкой контента остальных страниц; справа —
+   такой же хвост, чтобы последняя карточка не упиралась в край экрана. */
+.hscroll__track {
+  --edge: max(calc(24 * var(--u)), calc((100vw - var(--page)) / 2));
+  position: relative;
+  display: flex;
+  gap: calc(24 * var(--u));
+  width: max-content;
+  height: 100%;
+  padding: calc(110 * var(--u)) var(--edge) calc(40 * var(--u));
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.lab-intro {
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--col) * 1.3);
+  padding-inline-end: calc(40 * var(--u));
+}
+.lab-intro__text {
+  margin-block-start: calc(28 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+.lab-intro__count {
+  margin-block-start: calc(16 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+.lab-intro .page-title { margin-block-start: auto; }
+
+.reels {
+  display: flex;
+  gap: calc(24 * var(--u));
+  height: 100%;
+}
+
+.reel { height: 100%; }
+
+.reel__media {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+  border: var(--line) solid var(--hair);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.reel__frame {
+  position: absolute;
+  inset: 0;
+}
+
+.reel__num {
+  position: absolute;
+  inset-block-start: calc(14 * var(--u));
+  inset-inline-start: calc(16 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: 1;
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+  pointer-events: none;
+}
+
+.reel__video,
+.reel__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-ui) var(--ease);
+}
+.reel:hover .reel__video,
+.reel:hover .reel__poster { transform: scale(1.03); }
+
+/* Ярлык «файла нет» в просмотре работы. */
+.reel__hold {
+  padding: calc(4 * var(--u)) calc(8 * var(--u));
+  border: var(--line) solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Кнопка лежит поверх кадра целиком: кликабельна вся карточка, но в
+   DOM это честная кнопка с именем — для клавиатуры и скринридера. */
+.reel__open {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.reel__open:focus-visible {
+  outline: var(--line) solid var(--accent);
+  outline-offset: calc(-2 * var(--u));
+}
+
+/* Последняя карточка ленты — выход в Instagram. В макете это карточка,
+   а не ссылка строкой: поток не должен заканчиваться обрывом. */
+.reel--more .reel__more {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+  padding: calc(16 * var(--u));
+  border: var(--line) solid var(--hair);
+  text-align: center;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(20 * var(--u));
+  color: var(--accent);
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.reel--more .reel__more:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* --- Просмотр -------------------------------------------------------------
+   Нативный <dialog>: модальность, возврат фокуса и Esc достаются
+   бесплатно и работают правильнее любой самодельной реализации. */
+
+.viewer {
+  width: min(calc(100vw - 48px), calc(1100 * var(--u)));
+  max-width: none;
+  max-height: calc(100vh - 48px);
+  padding: 0;
+  border: var(--line) solid var(--hair);
+  border-radius: calc(12 * var(--u));
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+}
+.viewer::backdrop {
+  background: color-mix(in srgb, var(--ink) 86%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.viewer[open] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(300 * var(--u));
+}
+
+.viewer__stage {
+  display: grid;
+  place-items: center;
+  min-height: calc(420 * var(--u));
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+}
+.viewer__video {
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  display: block;
+}
+
+.viewer__side {
+  padding: calc(32 * var(--u));
+  border-inline-start: var(--line) solid var(--hair);
+  align-content: start;
+  display: grid;
+  gap: calc(12 * var(--u));
+}
+.viewer__title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: calc(32 * var(--u));
+  line-height: calc(34 * var(--u));
+  letter-spacing: var(--track);
+}
+.viewer__meta {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: var(--accent);
+}
+.viewer__desc {
+  font-family: var(--text);
+  font-size: calc(15 * var(--u));
+  line-height: calc(24 * var(--u));
+  color: color-mix(in srgb, var(--fg) 75%, var(--bg));
+}
+
+.viewer__close,
+.viewer__nav {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: calc(38 * var(--u));
+  height: calc(38 * var(--u));
+  border: var(--line) solid currentColor;
+  border-radius: 100px;
+  background: var(--bg);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.viewer__close:hover,
+.viewer__nav:hover { background: var(--accent); color: var(--bg); }
+
+.viewer__close { inset-block-start: calc(16 * var(--u)); inset-inline-end: calc(16 * var(--u)); }
+.viewer__nav--prev { inset-block-end: calc(16 * var(--u)); inset-inline-start: calc(16 * var(--u)); }
+.viewer__nav--next { inset-block-end: calc(16 * var(--u)); inset-inline-start: calc(62 * var(--u)); }
+
+/* --- Мобильная раскладка --------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .hscroll__track { padding-block-start: calc(150 * var(--u)); }
+  .lab-intro { width: 78vw; }
+  .lab-intro__text { font-size: calc(26 * var(--u)); line-height: calc(38 * var(--u)); }
+  .lab-intro__count { font-size: calc(22 * var(--u)); line-height: calc(30 * var(--u)); }
+
+  .viewer {
+    width: 100vw;
+    max-height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+  .viewer[open] {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .viewer__stage { min-height: 0; }
+  .viewer__side {
+    border-inline-start: 0;
+    border-block-start: var(--line) solid var(--hair);
+    padding: calc(20 * var(--u));
+  }
+}

@@ -6,108 +6,102 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nikita Tomash — Creative Technologist</title>
-<meta name="description" content="Art director with eight years in design and a production background in CG. Identity, motion and websites, built by hand.">
+<meta name="description" content="I design it, render it and write the code that puts it on screen. Eight years in design, a production background in CG. Identity, motion and websites, built by hand.">
 
 <link rel="preload" href="assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/vectors.css">
 <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 
+<a class="skip" href="#about">Skip to content</a>
+
 <header class="nav">
   <div class="nav__in">
-    <a class="nav__mark" href="#top">nicktmsh</a>
+    <a class="nav__mark" href="./">nicktmsh</a>
     <span class="nav__rule" aria-hidden="true"></span>
     <nav class="pills" aria-label="Main">
-      <a class="pill pill--me" href="#about">me</a>
-      <a class="pill" href="#lab">lab</a>
-      <a class="pill" href="mailto:hello@nicktmsh.ru">&#8594; get in touch</a>
+      <a class="pill" href="work.html">work</a>
+      <a class="pill" href="lab.html">lab</a>
+      <a class="pill" href="mailto:hello@nicktmsh.ru">
+        <span class="pill__long">get in touch</span>
+        <span class="pill__short">talk</span>
+      </a>
     </nav>
   </div>
 </header>
 
 <main id="top">
 
+  <!-- 00 / Первый экран ------------------------------------------------
+       Имя и подпись в одной обёртке: js/tilt.js наклоняет их одной
+       плоскостью, как на рефе. -->
   <section class="hero wrap">
-    <h1 class="hero__name">nikita tomash</h1>
-    <p class="hero__sub">creative technologist</p>
+    <div class="hero__title">
+      <h1 class="hero__name">nikita tomash</h1>
+      <p class="hero__sub">creative technologist</p>
+    </div>
   </section>
 
   <!-- 01 / About -----------------------------------------------------
-       Текст и переносы строк — как в макете (нода 800:1311): три строки
-       дисплейным Cy 48/43. -->
+       Три строки дисплейным Cy 48/43, переносы расставлены руками; под
+       ними — строка моно: подход в одном абзаце. -->
   <section class="band wrap" id="about">
     <p class="label rise">01/ About</p>
-    <p class="lead rise" style="--delay:80ms">
-      I&#8217;m an art director with<br>
-      eight years in design and a<br>
-      production background in CG
-    </p>
+    <div class="about">
+      <p class="lead" data-fill>
+        I design it, render it<br>
+        and write the code that<br>
+        puts it on screen.
+      </p>
+      <p class="about__note rise" style="--delay:120ms">
+        Eight years in design, a production background in CG. Every image comes
+        with the system that makes it, every experiment is built to survive
+        a deadline, and every direction I set, I carry out.
+      </p>
+    </div>
   </section>
 
-  <!-- 02 / Expertise --------------------------------------------------- -->
+  <!-- 02 / Expertise ---------------------------------------------------
+       Три ветки на той же сетке 3×304, что и проекты ниже. -->
   <section class="band wrap" id="expertise">
     <p class="label rise">02/ Expertise</p>
     <ul class="branches">
       <li class="branch rise">
-        <svg class="branch__arrow" viewBox="0 0 29 18" aria-hidden="true"><path d="M1 9H27M20 2L27 9L20 16" fill="none" stroke="currentColor" stroke-linecap="square"/></svg>
-        <a href="#work">Web</a>
+        <span class="branch__arrow arrow" aria-hidden="true"></span>
+        <a href="work.html?branch=web">Web</a>
       </li>
-      <li class="branch rise" style="--delay:80ms"><a href="#work">Branding</a></li>
-      <li class="branch rise" style="--delay:160ms"><a href="#work">3D &amp; Motion</a></li>
+      <li class="branch rise" style="--delay:80ms">
+        <span class="branch__arrow arrow" aria-hidden="true"></span>
+        <a href="work.html?branch=branding">Branding</a>
+      </li>
+      <li class="branch rise" style="--delay:160ms">
+        <span class="branch__arrow arrow" aria-hidden="true"></span>
+        <a href="work.html?branch=motion">3D &amp; Motion</a>
+      </li>
     </ul>
   </section>
 
   <!-- 03 / Projects -----------------------------------------------------
-       Плашка .card__media — место под WebGL-объект или превью кейса.
-       TODO: годы у CG-проектов не подтверждены (03 Клиенты/CG/*/keys.md). -->
+       Сетка рисуется из data/projects.json (js/home.js): шесть проектов
+       с featured: true. Разметки здесь нет намеренно — иначе добавление
+       кейса требовало бы правки трёх файлов. -->
   <section class="band wrap" id="work">
     <p class="label rise">03/ Projects</p>
-    <ul class="work rise" style="--delay:80ms">
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="MTS Money"></a>
-        <p class="card__cap">
-          <span>MTS Money<sup>2024</sup></span>
-          <span class="card__chip mark-mts" aria-hidden="true"></span>
-        </p>
-      </li>
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="VK Video"></a>
-        <p class="card__cap">
-          <span>VK Video<sup>2024</sup></span>
-          <span class="card__chip mark-vk" aria-hidden="true"></span>
-        </p>
-      </li>
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="Honor"></a>
-        <p class="card__cap">
-          <span>Honor<sup>2024</sup></span>
-          <span class="card__chip mark-honor" aria-hidden="true"></span>
-        </p>
-      </li>
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="2x2 TV Channel"></a>
-        <p class="card__cap">
-          <span>2x2 TV Channel<sup>2024</sup></span>
-          <span class="card__chip mark-2x2" aria-hidden="true"></span>
-        </p>
-      </li>
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="Pervaya Tsifra"></a>
-        <p class="card__cap"><span>Pervaya Tsifra<sup>2025</sup></span></p>
-      </li>
-      <li class="card">
-        <a class="card__media" href="#work" aria-label="Forma Budushchego"></a>
-        <p class="card__cap"><span>Forma Budushchego<sup>2026</sup></span></p>
-      </li>
-    </ul>
+    <ul class="work rise" style="--delay:80ms" data-featured aria-busy="true"></ul>
+    <p class="work__more rise" style="--delay:160ms">
+      <a class="pill pill--ghost" href="work.html">All work</a>
+    </p>
   </section>
 
   <!-- 04 / Happy clients ------------------------------------------------ -->
   <section class="band" id="clients">
-    <div class="wrap"><p class="label rise">04/ Happy clients</p></div>
+    <div class="wrap">
+      <p class="label rise">04/ Happy clients</p>
+    </div>
     <div class="ticker">
       <div class="ticker__row">
         <div class="ticker__track">
@@ -154,72 +148,94 @@
         </div>
       </div>
     </div>
+    <div class="wrap">
+      <p class="clients__note rise">Commercial work for Russia&#8217;s largest banks, telecoms and platforms — in-house, through agencies, and direct.</p>
+    </div>
   </section>
 
-  <!-- 05 / Lets talk ---------------------------------------------------- -->
+  <!-- 05 / Lets talk ----------------------------------------------------
+       Миллиметровка из макета, а поверх неё — поле векторов: в каждом узле
+       сетки направление, которое разворачивается к курсору. Единственное
+       место на странице, где графика ловит мышь. -->
   <section class="band wrap" id="talk">
     <p class="label rise">05/ Lets talk</p>
-    <div class="talk graph rise" style="--delay:80ms">
+    <div class="talk graph rise" style="--delay:80ms" data-vg="field">
       <p class="display">
         Have a <em>project</em>, or just<br>
-        a feeling about <em>one</em>?
+        a feeling about <em class="alt">one</em>?
       </p>
     </div>
   </section>
 
-  <!-- 06 / Handover ----------------------------------------------------- -->
-  <section class="invert" id="handover">
-    <div class="wrap handover">
-      <div class="handover__head cols-3">
-        <p class="label rise">06/ Lets talk</p>
-        <h2 class="display rise" style="--delay:80ms">
-          A handover you can<br>
-          live with Design tokens,<br>
-          documentation, and a clear<br>
-          way for you to change<br>
-          the parts that change.
-        </h2>
-      </div>
-
-      <div class="cells rise" style="--delay:160ms">
-        <div class="cell cell--paper graph">
-          <div class="cell__top">01</div>
-          <p class="cell__foot">creative.</p>
-        </div>
-        <div class="cell cell--accent">
-          <div class="cell__top">02</div>
-          <p class="cell__foot">creative.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Лента слов -------------------------------------------------------- -->
+  <!-- Лента слов -------------------------------------------------------
+       Между словами — пиктограммы тонкой линией (реф: vectors-group.com).
+       Нарисованы один раз символами и подставляются через <use>: в ленте
+       по двадцать четыре копии, и каждая правка знака — в одном месте. -->
   <section class="marquee" aria-hidden="true">
+    <svg class="picto-sprite" width="0" height="0">
+      <symbol id="p-orbit" viewBox="0 0 100 100">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="50" cy="50" r="40"/>
+          <circle cx="50" cy="50" r="27" stroke-dasharray="5 5"/>
+          <rect x="37" y="37" width="26" height="26"/>
+          <line x1="1" y1="50" x2="99" y2="50"/>
+          <polyline points="6,45 1,50 6,55"/>
+          <polyline points="94,45 99,50 94,55"/>
+          <circle cx="27.1" cy="17.2" r="3"/>
+          <circle cx="63.5" cy="73.4" r="3"/>
+        </g>
+      </symbol>
+      <symbol id="p-burst" viewBox="0 0 100 100">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="50" cy="50" r="40"/>
+          <circle cx="50" cy="50" r="29" stroke-dasharray="5 4"/>
+          <circle cx="50" cy="50" r="18" stroke-dasharray="4 4"/>
+          <circle cx="50" cy="50" r="6"/>
+          <line x1="6" y1="6" x2="94" y2="94"/>
+          <line x1="94" y1="6" x2="6" y2="94"/>
+          <polyline points="6,14 6,6 14,6"/>
+          <polyline points="86,6 94,6 94,14"/>
+          <polyline points="94,86 94,94 86,94"/>
+          <polyline points="14,94 6,94 6,86"/>
+        </g>
+      </symbol>
+      <symbol id="p-half" viewBox="0 0 100 100">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="50" cy="36" r="18" stroke-dasharray="4 4"/>
+          <path d="M18 56 H82 A32 32 0 0 1 18 56 Z"/>
+          <line x1="50" y1="4" x2="50" y2="97"/>
+          <polyline points="45,9 50,4 55,9"/>
+          <polyline points="45,92 50,97 55,92"/>
+        </g>
+      </symbol>
+    </svg>
     <div class="marquee__row">
       <div class="marquee__track">
-        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
-        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
-        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
-        <span>technology.&#160;<em>creative.</em>&#160;usable.&#160;</span>
+        <span><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg><b data-tone="1">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg></span>
+        <span><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg><b data-tone="2">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg></span>
+        <span><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg><b data-tone="1">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg></span>
+        <span><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg><b data-tone="2">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg></span>
       </div>
     </div>
     <div class="marquee__row marquee__row--back">
       <div class="marquee__track">
-        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
-        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
-        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
-        <span><em>creative.</em>&#160;usable.&#160;technology.&#160;</span>
+        <span><b data-tone="2">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg></span>
+        <span><b data-tone="1">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg></span>
+        <span><b data-tone="2">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg></span>
+        <span><b data-tone="1">creative.</b><svg class="picto"><use href="#p-burst"/></svg><b>usable.</b><svg class="picto"><use href="#p-half"/></svg><b>technological.</b><svg class="picto"><use href="#p-orbit"/></svg></span>
       </div>
     </div>
   </section>
 
-  <section class="lab" id="lab">
-    <a class="lab__link" href="#lab">
+  <!-- Lab: тизер. Перспективная сетка сходится ровно за словом — точка
+       схода работает указателем, а не фоном. -->
+  <section class="lab-teaser" id="lab" data-para="0.35">
+    <a class="lab__link" href="lab.html">
       <span class="lab__bracket lab__bracket--open" aria-hidden="true">[</span>
       <span class="lab__word">Lab</span>
       <span class="lab__bracket lab__bracket--close" aria-hidden="true">]</span>
     </a>
+    <p class="lab-teaser__note rise">Houdini and TouchDesigner, ongoing &#8594;</p>
   </section>
 
   <footer class="footer invert">
@@ -281,5 +297,9 @@
 </aside>
 
 <script src="js/main.js" defer></script>
+<script src="js/vectors.js" type="module"></script>
+<script src="js/motion.js" type="module"></script>
+<script src="js/home.js" type="module"></script>
+<script src="js/tilt-panel.js" type="module"></script>
 </body>
 </html>

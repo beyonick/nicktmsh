@@ -104,21 +104,106 @@ ul { padding: 0; list-style: none; }
   --graph: rgba(23, 24, 26, 0.09);
 }
 
+/* Ссылка «к содержимому»: первая в порядке табуляции, видна только с
+   клавиатуры. Шапка на сайте фиксированная, и без неё клавиатурный
+   пользователь на каждой странице проходит навигацию заново. */
+
+.skip {
+  position: fixed;
+  inset-block-start: calc(24 * var(--u));
+  inset-inline-start: calc(24 * var(--u));
+  z-index: 40;
+  padding: calc(10 * var(--u)) calc(16 * var(--u));
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: var(--fs-pill);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: translateY(calc(-200%));
+  transition: transform var(--dur-ui) var(--ease);
+}
+.skip:focus-visible { transform: none; }
+
+/* Подчёркивание на служебных ссылках внутри текста: на сайте нет синих
+   ссылок, поэтому текстовая ссылка обязана быть отмечена линией. */
+.under {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+  transition: color var(--dur-ui) var(--ease);
+}
+.under:hover { color: var(--accent); }
+
 /* --- Движение ------------------------------------------------------------ */
 
-.rise { opacity: 0; transform: translateY(1.25rem); }
+/* Разбитый на слова набор: маска + слово внутри неё. Проявление играет
+   js/motion.js через WAAPI, здесь только исходное состояние и геометрия
+   маски.
+
+   Вертикальный внутренний отступ с равным отрицательным внешним — это не
+   хак, а необходимость: overflow: hidden срезает выносные элементы (g, y,
+   р) ровно по строчному боксу. Отступ расширяет маску, отрицательный
+   margin возвращает слову его место в потоке. */
+
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+}
+.w__in {
+  display: inline-block;
+  will-change: transform;
+}
+/* До первого кадра слова уже спрятаны: иначе набор успевает мигнуть
+   целиком и только потом уехать под маску. */
+.is-split .w__in { transform: translateY(105%); opacity: 0; }
+
+/* Заливка по скроллу (js/motion.js): на блоке --p — сколько букв залито,
+   у буквы --i — её номер. Край мягкий, на пять букв. Акцентные слова
+   наливаются акцентом и в покое уже чуть подкрашены им. */
+.is-fill {
+  --fill-to: var(--fg);
+  --fill-dim: color-mix(in srgb, var(--fg) 24%, var(--bg));
+}
+.is-fill em {
+  --fill-to: var(--accent);
+  --fill-dim: color-mix(in srgb, var(--accent) 30%, var(--bg));
+}
+.fw { white-space: nowrap; }
+.fc {
+  color: color-mix(
+    in srgb,
+    var(--fill-to) clamp(0%, calc((var(--p, 0) - var(--i)) * 20%), 100%),
+    var(--fill-dim)
+  );
+}
+
+/* translate, а не transform: transform на заголовках занят наклоном
+   (js/tilt.js), и два эффекта на одном свойстве перетирали бы друг друга. */
+.rise { opacity: 0; translate: 0 1.25rem; }
 .rise.is-in {
   opacity: 1;
-  transform: none;
+  translate: none;
   transition:
     opacity var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-out);
+    translate var(--dur) var(--ease-out);
   transition-delay: var(--delay, 0ms);
 }
 
+/* Наклон вращает плоскость вокруг её центра. Набор по левому краю
+   сжимается до ширины строки — иначе центр уезжает в пустую часть
+   колонки, и короткий заголовок болтается на длинном плече. */
+.page-title { width: fit-content; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .rise { opacity: 1; transform: none; transition: none; }
+  .rise { opacity: 1; translate: none; transition: none; }
+  .is-split .w__in { transform: none; opacity: 1; }
+  .w { overflow: visible; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

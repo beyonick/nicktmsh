@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab — Nikita Tomash</title>
+<meta name="description" content="Ongoing experiments in Houdini and TouchDesigner. Not client work — this is where the techniques come from before they end up in one.">
+
+<link rel="preload" href="assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/lab.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__mark" href="./">nicktmsh</a>
+    <span class="nav__rule" aria-hidden="true"></span>
+    <nav class="pills" aria-label="Main">
+      <a class="pill" href="work.html">work</a>
+      <a class="pill is-current" href="lab.html" aria-current="page">lab</a>
+      <a class="pill" href="mailto:hello@nicktmsh.ru">
+        <span class="pill__long">get in touch</span>
+        <span class="pill__short">talk</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Горизонтальная лента (реф: mersi-architecture.com/projets/naya).
+       Секция высотой в длину ленты, внутри неё закреплённый кадр —
+       вертикальный скролл ведёт ленту вбок (js/lab.js). -->
+  <section class="hscroll" data-hscroll>
+    <div class="hscroll__pin" data-pin>
+      <div class="hscroll__track" data-track>
+        <header class="lab-intro">
+          <p class="label rise">01/ Lab</p>
+          <p class="lab-intro__text rise" style="--delay:80ms" data-intro></p>
+          <p class="lab-intro__count rise" style="--delay:120ms" data-count></p>
+          <h1 class="page-title page-title--lab rise" style="--delay:160ms">
+            <span class="lab__bracket lab__bracket--open" aria-hidden="true">[</span><span class="lab__word">Lab</span><span class="lab__bracket lab__bracket--close" aria-hidden="true">]</span>
+          </h1>
+        </header>
+        <ul class="reels" data-reels aria-busy="true"></ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer invert">
+    <p class="footer__line">
+      Nikita Tomash — Art Director Identity,<br>
+      motion and websites, built by hand<br>
+      &copy; 2026
+    </p>
+    <p class="footer__note">This site was designed and coded by me.</p>
+  </footer>
+
+</main>
+
+<!-- Просмотр ролика во весь экран. Разметка лежит в html, а не
+     собирается в js: диалог должен существовать до первого клика,
+     иначе фокус некуда возвращать. -->
+<dialog class="viewer" data-viewer aria-label="Lab piece">
+  <button class="viewer__close" type="button" data-close aria-label="Close">&#215;</button>
+  <div class="viewer__stage" data-stage></div>
+  <div class="viewer__side">
+    <p class="viewer__title" data-viewer-title></p>
+    <p class="viewer__meta" data-viewer-meta></p>
+    <p class="viewer__desc" data-viewer-desc></p>
+  </div>
+  <button class="viewer__nav viewer__nav--prev" type="button" data-prev aria-label="Previous">&#8592;</button>
+  <button class="viewer__nav viewer__nav--next" type="button" data-next aria-label="Next">&#8594;</button>
+</dialog>
+
+<script src="js/main.js" defer></script>
+<script src="js/motion.js" type="module"></script>
+<script src="js/lab.js" type="module"></script>
+</body>
+</html>

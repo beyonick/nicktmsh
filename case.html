@@ -1,0 +1,56 @@
+<!doctype html>
+<!-- Один шаблон на все кейсы: содержимое приходит из data/projects.json
+     по ?p=<slug>. Отдельная страница на проект появится тогда, когда
+     появится причина — пока что это была бы пятнадцать раз скопированная
+     вёрстка с одним отличающимся абзацем. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case — Nikita Tomash</title>
+<meta name="description" content="Project case by Nikita Tomash.">
+
+<link rel="preload" href="assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/vectors.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__mark" href="./">nicktmsh</a>
+    <span class="nav__rule" aria-hidden="true"></span>
+    <nav class="pills" aria-label="Main">
+      <a class="pill is-current" href="work.html">work</a>
+      <a class="pill" href="lab.html">lab</a>
+      <a class="pill" href="mailto:hello@nicktmsh.ru">
+        <span class="pill__long">get in touch</span>
+        <span class="pill__short">talk</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" data-case aria-busy="true"></main>
+
+<footer class="footer invert">
+  <p class="footer__line">
+    Nikita Tomash — Art Director Identity,<br>
+    motion and websites, built by hand<br>
+    &copy; 2026
+  </p>
+  <p class="footer__note">This site was designed and coded by me.</p>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script src="js/vectors.js" type="module"></script>
+<script src="js/motion.js" type="module"></script>
+<script src="js/case.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+{
+  "updated": "2026-09-23",
+  "branches": {
+    "web": "Web",
+    "branding": "Branding",
+    "motion": "3D & Motion"
+  },
+  "projects": [
+    {
+      "slug": "",
+      "title": "Yandex Music ",
+      "titleRu": "Яндекс музыка Итоги года 2025",
+      "client": "Yandex Music",
+      "year": 2025,
+      "branch": "motion",
+      "kicker": "",
+      "role": "3D Generalist",
+      "summary": "",
+      "capabilities": [],
+      "cover": "",
+      "logo": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": []
+    },
+    {
+      "slug": "m",
+      "title": "MTZ",
+      "titleRu": "МТЗ",
+      "client": "",
+      "year": 2026,
+      "branch": "motion",
+      "kicker": "Houdini simulation",
+      "role": "3D Generalist",
+      "summary": "",
+      "capabilities": [],
+      "cover": "",
+      "logo": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": false,
+      "status": "done",
+      "body": [],
+      "todo": []
+    },
+    {
+      "slug": "pervaya-tsifra",
+      "title": "Pervaya Tsifra",
+      "titleRu": "Первая Цифра",
+      "client": "Первая Цифра",
+      "year": 2025,
+      "branch": "branding",
+      "kicker": "Logo, branding, mascot, print, web",
+      "role": "Art direction, full cycle",
+      "summary": "A full identity for a digital services company: mark, type system, mascot, print and the site it all had to live on.",
+      "capabilities": [
+        "Art direction",
+        "Identity",
+        "Mascot",
+        "Print",
+        "Web"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": "https://1-cifra.ru/",
+      "linkLabel": "1-cifra.ru",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Positioning, mark, type system, colour, mascot and the printed set were decided together rather than handed between three people.",
+        "The brand shipped: the live site is the proof, not a mockup."
+      ],
+      "todo": [
+        "2-3 решения — конкретные развилки",
+        "Обложка assets/work/pervaya-tsifra-cover.webp"
+      ]
+    },
+    {
+      "slug": "smallteatrik",
+      "title": "Small Puppet Theatre",
+      "titleRu": "Маленький театрик кукол",
+      "client": "Маленький театрик кукол, Геленджик",
+      "year": 2026,
+      "branch": "web",
+      "kicker": "Web design and front-end",
+      "role": "Design and hand-written front-end",
+      "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
+      "capabilities": [
+        "Art direction",
+        "Web design",
+        "Hand-written front-end"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": "https://smallteatrik.vercel.app/",
+      "linkLabel": "smallteatrik.vercel.app",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
+        "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
+      ],
+      "todo": [
+        "Обложка assets/work/smallteatrik-cover.webp"
+      ]
+    },
+    {
+      "slug": "mts-money",
+      "title": "MTS Money",
+      "titleRu": "МТС Деньги",
+      "client": "МТС Деньги",
+      "year": null,
+      "branch": "motion",
+      "kicker": "3D creative production",
+      "role": "3D illustrator at MTS Money",
+      "summary": "3D illustration for fintech products across digital and marketing platforms — expressive volume kept inside a minimal, UI-friendly system.",
+      "capabilities": [
+        "3D illustration",
+        "Lookdev",
+        "Rendering"
+      ],
+      "cover": null,
+      "logo": "assets/logos/mts.svg",
+      "color": "#E30611",
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Designed high-quality 3D illustrations for fintech products across digital and marketing platforms, holding one visual style across the whole set.",
+        "Visual metaphors for a wide range of services — banking features, office access, travel bookings, mobility.",
+        "Scenes built and rendered in Cinema 4D with Redshift."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Роль: арт-дирекция или исполнение — уточнить",
+        "Обложка: положить assets/work/mts-money-cover.webp"
+      ]
+    },
+    {
+      "slug": "vk-video",
+      "title": "VK Video",
+      "titleRu": "VK Видео",
+      "client": "VK Видео",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Promotional videos",
+      "role": null,
+      "summary": "Promotional films for VK Video.",
+      "capabilities": [
+        "Art direction",
+        "3D motion",
+        "Motion design"
+      ],
+      "cover": null,
+      "logo": "assets/logos/vk.svg",
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Год не подтверждён",
+        "Роль не заполнена",
+        "Текст кейса: на старом сайте страница только с видео",
+        "Обложка: положить assets/work/vk-video-cover.webp"
+      ]
+    },
+    {
+      "slug": "2x2",
+      "title": "2x2 TV Channel",
+      "titleRu": "Телеканал 2x2",
+      "client": "2x2",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Broadcast idents",
+      "role": "Art direction, end to end",
+      "summary": "Two seasonal idents for the 2x2 TV channel — one built on speed, one on light.",
+      "capabilities": [
+        "Art direction",
+        "Motion and graphic design",
+        "3D motion"
+      ],
+      "cover": null,
+      "logo": "assets/logos/2x2.svg",
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Summer ident: a high-speed night drive. A sports car races the highway with a stylised logo set into its hood; flowing smoke carries the speed.",
+        "Winter ident: light and atmosphere. Headlights throw the 2x2 logo onto a wall — dramatic lighting, raw urban texture, a moody doomer tone."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Обложка assets/work/2x2-cover.webp"
+      ]
+    },
+    {
+      "slug": "honor",
+      "title": "Honor",
+      "titleRu": "Honor",
+      "client": "Honor",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Product commercials",
+      "role": "Execution to the agency storyboard and art",
+      "summary": "Two product films — Honor X8c and Honor Pad 10 — built on clean geometry, refined materials and precise camera work.",
+      "capabilities": [
+        "3D motion",
+        "Lookdev",
+        "Lighting",
+        "Compositing"
+      ],
+      "cover": null,
+      "logo": "assets/logos/honor.svg",
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Honor X8c — a brand film exploring the product through clean geometry and refined materials. Slim silhouette, camera system, surface detail. Role: modelling, shading, fluid simulations, photorealistic rendering, compositing.",
+        "Honor Pad 10 — a fast product film on the key features. Macro shots on design, display and material; soft controlled light and precise animation. Role: lookdev, lighting, camera animation, compositing, final rendering."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Обложка: положить assets/work/honor-cover.webp"
+      ]
+    },
+    {
+      "slug": "dzen",
+      "title": "Dzen",
+      "titleRu": "Дзен",
+      "client": "Дзен",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Motion design",
+      "role": null,
+      "summary": "An animated piece and a key visual for Dzen.",
+      "capabilities": [
+        "Storyboarding",
+        "Illustration",
+        "Animation",
+        "3D"
+      ],
+      "cover": null,
+      "logo": "assets/logos/zen.svg",
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [
+        "An animated piece created for Dzen. Role: storyboarding, illustration, animation.",
+        "Key visual for Dzen. Role: modelling, shading, animation."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Обложка: положить assets/work/dzen-cover.webp"
+      ]
+    },
+    {
+      "slug": "waydeal",
+      "title": "WayDeal",
+      "titleRu": "WayDeal",
+      "client": "WayDeal",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Logo, branding, web design",
+      "role": null,
+      "summary": "Mark, identity and web design for WayDeal.",
+      "capabilities": [
+        "Identity",
+        "Web design"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Год не подтверждён",
+        "Текст кейса: на старом сайте страница только с картинками",
+        "Обложка: положить assets/work/waydeal-cover.webp"
+      ]
+    },
+    {
+      "slug": "interactive",
+      "title": "Interactive Installations",
+      "titleRu": "Интерактив",
+      "client": "Personal project",
+      "year": 2021,
+      "branch": "motion",
+      "kicker": "Installations, generative content",
+      "role": "Everything — concept, systems, visuals, sound",
+      "summary": "Around twenty audiovisual experiments on interactive and generative installation content: voice input, motion tracking, audio-driven sync.",
+      "capabilities": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live",
+        "Generative systems"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "In autumn 2021 I ran a series of audiovisual experiments on interactive and generative installation content. It ended at around twenty pieces, each examining a different interaction method — voice input, motion tracking, audio-driven synchronisation.",
+        "Three workstations: an MSI Creator for real-time visuals in Notch VFX, a laptop generating audio in Ableton Live, and an HP NUC running TouchDesigner for input and system integration. Everything spoke OSC."
+      ],
+      "todo": [
+        "Обложка assets/work/interactive-cover.webp"
+      ]
+    },
+    {
+      "slug": "logos",
+      "title": "Commercial Logos",
+      "titleRu": "Логотипы",
+      "client": "Разные заказчики",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Logos",
+      "role": "Design",
+      "summary": "A set of commercial marks made outside full identity projects.",
+      "capabilities": [
+        "Logo design"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Годы не подтверждены",
+        "Список заказчиков",
+        "Обложка: положить assets/work/logos-cover.webp"
+      ]
+    },
+    {
+      "slug": "forma-budushchego",
+      "title": "Forma Budushchego",
+      "titleRu": "Форма Будущего",
+      "client": "Форма Будущего",
+      "year": 2026,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": "Art direction, full cycle: mark, identity, site",
+      "summary": "Mark, identity and the site, decided as one language rather than in sequence.",
+      "capabilities": [
+        "Art direction",
+        "Identity",
+        "Web"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе",
+        "Сайт пишется кодом позже — тогда кейс вернёт ветку web",
+        "Текст, решения, обложка"
+      ]
+    },
+    {
+      "slug": "tempus-watch",
+      "title": "Tempus Watch",
+      "titleRu": "Tempus Watch",
+      "client": "Tempus Watch",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": null,
+      "summary": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе — данных пока нет",
+        "Заполнить: год, роль, объём работ, текст, обложка"
+      ]
+    },
+    {
+      "slug": "zhenya",
+      "title": "Zhenya",
+      "titleRu": "Женя",
+      "client": "Женя",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": null,
+      "summary": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе — данных пока нет",
+        "Уточнить, что за проект и как он называется на сайте",
+        "Заполнить: год, роль, объём работ, текст, обложка"
+      ]
+    },
+    {
+      "slug": "insurance",
+      "title": "Insurance Practice",
+      "titleRu": "Сайт про страхование",
+      "client": "Частная практика",
+      "year": null,
+      "branch": "web",
+      "kicker": "Website",
+      "role": null,
+      "summary": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе — данных пока нет",
+        "Название на сайт: имя практики, а не «сайт мамы»",
+        "Заполнить: год, объём работ, текст, обложка"
+      ]
+    }
+  ]
+}

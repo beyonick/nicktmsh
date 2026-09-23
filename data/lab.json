@@ -1,0 +1,217 @@
+{
+  "updated": "2026-09-22",
+  "intro": "Ongoing experiments in Houdini and TouchDesigner. Not client work — this is where the techniques come from before they end up in one.",
+  "instagram": "https://www.instagram.com/nicktmsh",
+  "items": [
+    {
+      "slug": "damaged",
+      "title": "Damaged",
+      "date": "2026-03-17",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 17",
+      "video": "",
+      "poster": "",
+      "description": "Mardini day 17, prompt: damaged. Destruction on a fixed budget of one evening.",
+      "published": true,
+      "todo": [
+        "Постер: положить assets/lab/damaged-poster.webp"
+      ]
+    },
+    {
+      "slug": "volumetric",
+      "title": "Volumetric",
+      "date": "2026-03-29",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 29",
+      "video": "",
+      "poster": "",
+      "description": "Mardini day 29, prompt: volumetric. Light doing the modelling instead of geometry.",
+      "published": true,
+      "todo": [
+        "Постер: положить assets/lab/volumetric-poster.webp"
+      ]
+    },
+    {
+      "slug": "motion-blur",
+      "title": "Motion Blur",
+      "date": "2026-03-30",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 30",
+      "video": "",
+      "poster": "",
+      "description": "Mardini day 30, prompt: motion blur. Speed read from a single frame.",
+      "published": true,
+      "todo": [
+        "Постер: положить assets/lab/motion-blur-poster.webp"
+      ]
+    },
+    {
+      "slug": "splash",
+      "title": "Splash",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание: что исследовал и зачем",
+        "Видео в Selectel + постер"
+      ]
+    },
+    {
+      "slug": "rock",
+      "title": "Rock",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "grass",
+      "title": "Grass",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "smoke",
+      "title": "Smoke",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "alien-alloy",
+      "title": "Alien Alloy",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "На старом сайте слаг box, файл Alien_Alloy_Growth — уточнить название",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "ribbons",
+      "title": "Ribbons",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "rubber-dreams",
+      "title": "Rubber Dreams",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "На старом сайте слаг gold, файл Rubber_Dreams_in_Liquid — уточнить название",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "flowers-on-spline",
+      "title": "Flowers on Spline",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "На старом сайте слаг beyopillow — уточнить название",
+        "Описание",
+        "Видео + постер"
+      ]
+    },
+    {
+      "slug": "heart",
+      "title": "Heart",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание",
+        "Видео + постер"
+      ]
+    }
+  ]
+}

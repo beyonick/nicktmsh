@@ -1,53 +1,37 @@
-// Проявление по входу во вьюпорт. Блоками, не построчно — это спокойнее
-// и читается как уверенность, а не как эффект (см. website.md, секция 02).
+// Ленты, QA-оверлей сетки и панель кривых. Проявление блоков и набора
+// живёт в js/motion.js — здесь его больше нет, чтобы один и тот же класс
+// .rise не заводился двумя наблюдателями сразу.
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const risers = document.querySelectorAll(".rise");
-
-if (reduced || !("IntersectionObserver" in window)) {
-  risers.forEach((el) => el.classList.add("is-in"));
-} else {
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
-      }
-    },
-    { rootMargin: "0px 0px -12% 0px" }
-  );
-  risers.forEach((el) => io.observe(el));
-}
 
 function clamp(v, min, max) {
   return v < min ? min : v > max ? max : v;
 }
 
-// Лента клиентов: живёт своей жизнью и вдобавок слушает скролл — не один
-// или другой, а оба слоя разом. Верхняя строка (.ticker__row) — знак +1,
-// нижняя (--back) — −1, так они всегда едут навстречу друг другу.
+// Ленты клиентов и слов: живут своей жизнью и вдобавок слушают скролл —
+// не один или другой, а оба слоя разом. Строки --back едут встречно
+// основным. Лента слов по умолчанию идёт влево, лента логотипов — вправо.
 //
-// Скорость общая с лентой слов: 102 макетных пикселя в секунду
-// (--marquee-speed). У ленты слов расстояние задано в процентах и тянется
-// вместе с --u, поэтому ей достаточно постоянной длительности; здесь
-// позиция считается в пикселях, поэтому базовую скорость домножаем на
-// текущий --u — иначе на широком экране логотипы ползли бы медленнее слов.
+// Скорость общая: 102 макетных пикселя в секунду (--marquee-speed).
+// Позиция считается в пикселях, поэтому базовую скорость домножаем на
+// текущий --u — иначе на широком экране ленты ползли бы медленнее.
 //
 // Скролл не бьёт по позиции напрямую: его скорость сглаживается
 // экспоненциальным фильтром, а разворот направления — вторым, более
 // ленивым. Поэтому рывок колеса не дёргает ленту, а подталкивает её.
 //
-// Контент в каждой .ticker__track продублирован, поэтому половина
-// scrollWidth — один цикл: по ней и оборачиваем позицию.
-const tickerTracks = document.querySelectorAll(".ticker__track");
+// Контент в каждой дорожке повторяется, поэтому половина scrollWidth —
+// целое число циклов: по ней и оборачиваем позицию.
+const tickerTracks = document.querySelectorAll(".ticker__track, .marquee__track");
 
 if (tickerTracks.length && !reduced) {
   const tracks = Array.from(tickerTracks, (track) => ({
     track,
     half: 0,
     x: 0,
-    dir: track.closest(".ticker__row--back") ? -1 : 1,
+    dir:
+      (track.closest(".ticker__row--back, .marquee__row--back") ? -1 : 1) *
+      (track.closest(".marquee") ? -1 : 1),
   }));
 
   const readSpeed = () => {
@@ -69,6 +53,9 @@ if (tickerTracks.length && !reduced) {
   };
   measure();
   window.addEventListener("resize", measure);
+  // Ширина ленты слов зависит от Cy: до загрузки шрифта цикл посчитан по
+  // подменному гротеску, и на обороте был бы виден шов.
+  if (document.fonts) document.fonts.ready.then(measure);
 
   const SMOOTH_VEL = 0.14; // постоянная времени фильтра скорости скролла, сек
   const SMOOTH_DIR = 0.45; // разворот направления — заметно ленивее
@@ -121,6 +108,42 @@ if (tickerTracks.length && !reduced) {
     { passive: true }
   );
 }
+
+// Толщина линии для SVG и холстов (--line-px). Рамку браузер округляет
+// вниз до целых пикселей устройства, stroke и lineWidth холста — нет: на
+// масштабе экрана 125% рамка в 2px выходит двумя пикселями, а линия
+// пиктограммы — двумя с половиной. Здесь то же округление делается руками,
+// и всё, что не рамка, получает ровно ту толщину, что у рамок.
+function snapLine() {
+  const root = document.documentElement;
+  const w = Number.parseFloat(getComputedStyle(root).getPropertyValue("--line-w")) || 2;
+  const dpr = window.devicePixelRatio || 1;
+  // +0.01 — страховка от 2.9999 при делении: иначе floor срезал бы пиксель.
+  const px = Math.max(1, Math.floor(w * dpr + 0.01)) / dpr;
+  root.style.setProperty("--line-px", `${px}px`);
+}
+snapLine();
+// Масштаб страницы (Ctrl +/−) меняет devicePixelRatio и присылает resize.
+window.addEventListener("resize", snapLine);
+
+// Кнопки: стрелка слева, появляется на ховере и раздвигает кнопку.
+// Ставится скриптом, а не в разметке: часть кнопок собирают work.js и
+// case.js, и правило обязано доходить и до них. Сама стрелка нарисована
+// в CSS рамками (.arrow) — теми же, что обводка кнопки.
+const ARROW = '<span class="pill__arrow arrow" aria-hidden="true"></span>';
+
+function armPills(root) {
+  root.querySelectorAll(".pill:not([data-armed])").forEach((pill) => {
+    pill.setAttribute("data-armed", "");
+    pill.insertAdjacentHTML("afterbegin", ARROW);
+  });
+}
+armPills(document);
+new MutationObserver((records) => {
+  for (const r of records) {
+    for (const n of r.addedNodes) if (n.nodeType === 1) armPills(n.parentElement || n);
+  }
+}).observe(document.body, { childList: true, subtree: true });
 
 // Переключатель сетки: QA-оверлей колонок поверх страницы.
 const gridSwitch = document.querySelector(".grid-switch");
@@ -186,6 +209,7 @@ if (easePanel && easeSwitch) {
     // Множитель к --u: сама --line собирается из него в tokens.css, поэтому
     // одним свойством меняются и рамки, и линейка шапки, и stroke стрелки.
     root.style.setProperty("--line-w", String(ease.line));
+    snapLine();
 
     // Кривая рисуется в системе 0,0 слева внизу, поэтому y инвертируется.
     const [x1, y1, x2, y2] = ease.bez;

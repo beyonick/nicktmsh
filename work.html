@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work — Nikita Tomash</title>
+<meta name="description" content="Selected and full work: identity, motion and websites by Nikita Tomash.">
+
+<link rel="preload" href="assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__mark" href="./">nicktmsh</a>
+    <span class="nav__rule" aria-hidden="true"></span>
+    <nav class="pills" aria-label="Main">
+      <a class="pill is-current" href="work.html" aria-current="page">work</a>
+      <a class="pill" href="lab.html">lab</a>
+      <a class="pill" href="mailto:hello@nicktmsh.ru">
+        <span class="pill__long">get in touch</span>
+        <span class="pill__short">talk</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head wrap">
+    <p class="label rise">01/ Work</p>
+    <h1 class="page-title" data-split data-delay="80">Selected work</h1>
+    <p class="page-sub" data-split data-delay="220">
+      Identity, motion and websites. Case pages carry what I decided and why —
+      not just the final frame.
+    </p>
+
+    <!-- Фильтр по веткам и вид. Оба живут в адресе (?branch=, ?view=) —
+         ссылка на «только веб» должна открываться напрямую, в том числе
+         из секции Expertise. -->
+    <div class="work-bar rise" style="--delay:160ms">
+      <nav class="filters" data-filters aria-label="Filter by branch"></nav>
+      <nav class="filters" data-views aria-label="View">
+        <button type="button" class="pill" data-view="grid" aria-pressed="false">grid</button>
+        <button type="button" class="pill" data-view="list" aria-pressed="false">list</button>
+      </nav>
+    </div>
+  </section>
+
+  <section class="band wrap">
+    <ul class="rows" data-rows aria-busy="true" aria-live="polite"></ul>
+    <p class="rows__note" data-count></p>
+  </section>
+
+  <footer class="footer invert">
+    <p class="footer__line">
+      Nikita Tomash — Art Director Identity,<br>
+      motion and websites, built by hand<br>
+      &copy; 2026
+    </p>
+    <p class="footer__note">This site was designed and coded by me.</p>
+  </footer>
+
+</main>
+
+<script src="js/main.js" defer></script>
+<script src="js/motion.js" type="module"></script>
+<script src="js/work.js" type="module"></script>
+</body>
+</html>

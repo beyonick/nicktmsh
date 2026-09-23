@@ -1,0 +1,310 @@
+/* Админка. Инструмент, а не витрина.
+
+   Материал общий с сайтом — те же токены, тот же моно, тот же акцент,
+   те же волосяные линии. Но плотность другая: здесь нужно видеть много
+   полей сразу, поэтому кегли фиксированы в rem и не тянутся за --u.
+   Макетная единица управляет композицией сайта, а не плотностью рабочей
+   панели: на 27 дюймах поля не должны раздуться вместе с экраном. */
+
+.admin {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* --- Верхняя панель -------------------------------------------------------- */
+
+.ad-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-block-end: 1px solid var(--hair);
+}
+
+.ad-mark {
+  font-family: var(--display);
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.ad-dot { opacity: 0.4; }
+.ad-where { opacity: 0.6; }
+
+.ad-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-inline-start: 1rem;
+}
+.ad-tab {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.ad-tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+/* Статус — единственное место, где панель разговаривает. Цветом
+   отличаются только три состояния: сохранено, надо сохранить, сломалось. */
+.ad-status {
+  margin-inline-start: auto;
+  padding-inline-end: 0.5rem;
+  opacity: 0.65;
+}
+.ad-status[data-kind="ok"] { color: var(--accent); opacity: 1; }
+.ad-status[data-kind="warn"] { color: #e8c341; opacity: 1; }
+.ad-status[data-kind="err"] { color: #ff6b5e; opacity: 1; }
+
+.ad-actions { display: flex; gap: 0.4rem; }
+
+.ad-btn {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.ad-btn:hover { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+.ad-btn--go {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.ad-btn--go:hover { background: color-mix(in srgb, var(--accent) 80%, var(--fg)); }
+.ad-btn--sm { padding: 0.25rem 0.6rem; font-size: 0.75rem; }
+
+/* --- Три колонки -----------------------------------------------------------
+   Список, форма, превью. Скроллятся независимо: правка длинного кейса не
+   должна уводить список работ за верхний край. */
+
+.ad-main {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr) 19rem;
+  min-height: 0;
+}
+.ad-list,
+.ad-form,
+.ad-preview {
+  min-height: 0;
+  overflow: auto;
+  padding: 1rem;
+}
+.ad-list { border-inline-end: 1px solid var(--hair); }
+.ad-preview { border-inline-start: 1px solid var(--hair); }
+
+.ad-list__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.75rem;
+}
+.ad-list__title {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* --- Список записей --------------------------------------------------------- */
+
+.ad-items { margin: 0; padding: 0; list-style: none; }
+
+.ad-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-block-end: 1px solid color-mix(in srgb, var(--hair) 60%, transparent);
+}
+.ad-item.is-current { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+
+.ad-item__pick {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.5rem 0.25rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ad-item__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Метка состояния. Черновик приглушён, вынесенное на главную — акцентом:
+   в списке из пятнадцати строк должно быть видно, что реально на сайте. */
+.ad-item__flag {
+  flex: none;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.ad-item__flag[data-kind="home"] { color: var(--accent); opacity: 1; }
+.ad-item__flag[data-kind="live"] { opacity: 0.75; }
+
+.ad-item__tools { display: flex; gap: 0.1rem; padding-inline-end: 0.25rem; }
+
+.ad-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease);
+}
+.ad-icon:hover { opacity: 1; background: color-mix(in srgb, var(--fg) 12%, transparent); }
+
+/* --- Форма ------------------------------------------------------------------- */
+
+.ad-form form {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 46rem;
+}
+
+.ad-row { display: grid; gap: 0.25rem; }
+.ad-row--flag {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ad-row--flag .ad-hint { grid-column: 2; }
+
+.ad-label {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  opacity: 0.6;
+}
+.ad-hint { font-size: 0.6875rem; opacity: 0.45; }
+
+.ad-input {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  color: inherit;
+  font: inherit;
+}
+.ad-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.ad-input--area { resize: vertical; line-height: 1.6; }
+
+.ad-check {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent);
+}
+
+/* Поле файла: путь остаётся редактируемым текстом. Ролики лежат в
+   Selectel, и вписать урл руками должно быть так же просто, как
+   перетащить локальный постер. */
+.ad-file { display: grid; gap: 0.4rem; }
+
+.ad-drop {
+  display: grid;
+  place-items: center;
+  padding: 0.9rem;
+  border: 1px dashed var(--hair);
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: border-color var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease);
+}
+.ad-drop.is-over,
+.ad-drop:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  opacity: 1;
+}
+.ad-drop__input { display: none; }
+
+/* --- Превью -------------------------------------------------------------------
+   Не декорация: пропорция кадра здесь та же, что в сетке Lab, поэтому
+   сразу видно, что горизонтальный ролик в вертикальную ячейку не встанет. */
+
+.ad-preview__box { display: grid; gap: 0.35rem; }
+
+.ad-reel {
+  aspect-ratio: 9 / 16;
+  display: grid;
+  place-items: center;
+  background: var(--thumb);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.6875rem;
+  opacity: 0.9;
+}
+.ad-reel video,
+.ad-reel img { width: 100%; height: 100%; object-fit: cover; }
+
+.ad-card {
+  aspect-ratio: 1;
+  background: var(--thumb) center / cover no-repeat;
+  border-radius: 4px;
+}
+
+.ad-reel__title {
+  font-family: var(--display);
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+.ad-reel__meta { font-size: 0.6875rem; opacity: 0.55; }
+
+.ad-preview .ad-hint { display: block; margin-block-start: 0.75rem; }
+
+/* --- Узкий экран ---------------------------------------------------------------
+   Панель рассчитана на монитор. На узком она не ломается, но превью
+   уезжает вниз: одновременно видеть список, форму и кадр здесь незачем. */
+
+@media (max-width: 1100px) {
+  .ad-main { grid-template-columns: 14rem minmax(0, 1fr); }
+  .ad-preview { display: none; }
+}
+
+@media (max-width: 760px) {
+  .ad-main { grid-template-columns: 1fr; grid-auto-rows: min-content; }
+  .ad-list { border-inline-end: 0; border-block-end: 1px solid var(--hair); }
+  .ad-top { flex-wrap: wrap; }
+  .ad-status { order: 10; width: 100%; margin-inline-start: 0; }
+}

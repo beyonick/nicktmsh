@@ -1,0 +1,122 @@
+/* Векторная графика.
+
+   Второй материал страницы после чернил в первом экране: тонкая
+   техническая линия. Толщина у неё та же, что у линейки шапки и рамок
+   ячеек, — --line. Отдельной толщины у декора нет: две разные тонкие
+   линии на одном экране читаются как ошибка вёрстки, а не как приём.
+
+   Вся графика лежит под контентом и не ловит события. Исключение —
+   поле стрелок: ему нужен курсор, поэтому у него pointer-events: auto. */
+
+.vg-canvas,
+.vg-grid,
+.vg-corners {
+  position: absolute;
+  inset: 0;
+  /* Отрицательный z-index, а не нулевой. Позиционированный слой с z-index
+     0 кладётся поверх обычного содержимого блока, и текст пришлось бы
+     поднимать правилом на всех его детей — а такое правило ломает любого
+     ребёнка, которому нужна своя раскладка (ярлык в углу ячейки Lab
+     переставал быть absolute). С isolation: isolate у хозяина слой уходит
+     под содержимое, но остаётся над его фоном, и в детей лезть не нужно. */
+  z-index: -1;
+  pointer-events: none;
+}
+
+.vg-canvas { width: 100%; height: 100%; display: block; }
+
+/* Блок, который держит графику, — система координат для неё и отдельный
+   контекст наложения, иначе графика провалится под фон страницы. */
+[data-vg] {
+  position: relative;
+  isolation: isolate;
+}
+
+/* --- Угловые метки ------------------------------------------------------------
+   Кадрирование: четыре уголка, отведённые от края блока. Не рамка — рамка
+   закрывает блок, а метки только показывают, где он кончается. */
+
+.vg-corners i {
+  position: absolute;
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  border: 0 solid var(--accent);
+  opacity: 0.55;
+}
+.vg-corners i:nth-child(1) {
+  inset-block-start: 0; inset-inline-start: 0;
+  border-block-start-width: var(--line); border-inline-start-width: var(--line);
+}
+.vg-corners i:nth-child(2) {
+  inset-block-start: 0; inset-inline-end: 0;
+  border-block-start-width: var(--line); border-inline-end-width: var(--line);
+}
+.vg-corners i:nth-child(3) {
+  inset-block-end: 0; inset-inline-start: 0;
+  border-block-end-width: var(--line); border-inline-start-width: var(--line);
+}
+.vg-corners i:nth-child(4) {
+  inset-block-end: 0; inset-inline-end: 0;
+  border-block-end-width: var(--line); border-inline-end-width: var(--line);
+}
+
+/* --- Перспективная сетка ------------------------------------------------------
+   Точка схода вверху по центру. Стоит только там, где под ней нет текста:
+   сетка под набором — это шум, а не глубина. */
+
+.vg-grid {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  transform: translateY(var(--shift, 0));
+}
+.vg-grid line {
+  stroke: var(--hair);
+  stroke-width: 0.12;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- Линейка с тиками ---------------------------------------------------------
+   Измерительная шкала вместо обычного разделителя. Тики рисует градиент,
+   поэтому в разметке это один пустой элемент. */
+
+.vg-rule {
+  position: relative;
+  height: calc(18 * var(--u));
+  border-block-start: var(--line) solid var(--hair);
+}
+.vg-rule::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: calc(7 * var(--u));
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--hair) 0 1px,
+    transparent 1px calc(38 * var(--u))
+  );
+}
+/* Каждый пятый тик длиннее — шкала читается без подписей. */
+.vg-rule::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: calc(13 * var(--u));
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--accent) 0 1px,
+    transparent 1px calc(190 * var(--u))
+  );
+  opacity: 0.7;
+}
+
+/* --- Поле стрелок -------------------------------------------------------------
+   Единственная графика, которой нужен курсор. */
+
+[data-vg="field"] .vg-canvas { pointer-events: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-grid { transform: none; }
+}

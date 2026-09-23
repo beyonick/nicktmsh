@@ -1,0 +1,235 @@
+/* Внутренние разделы: Work, кейс, Lab.
+
+   Общий материал с главной — те же токены, та же колонка 912, те же
+   волосяные линии и тот же дисплейный кегль. Ничего нового здесь не
+   вводится: если на внутренней странице появляется свой кегль или свой
+   отступ, сайт начинает выглядеть как два сайта.
+
+   Заголовок раздела набран кеглем 96 (--fs-big) — тем же, что лента слов
+   и слово Lab на главной. Имя в герое крупнее (128), и это единственное
+   место с таким кеглем: первый экран обязан оставаться самым крупным
+   событием страницы. */
+
+/* --- Шапка раздела --------------------------------------------------------
+   Верхний отступ тот же, что у первого экрана главной: перелистывая
+   разделы, человек не должен видеть, как прыгает верх страницы. */
+
+.page-head {
+  padding-block: calc(185 * var(--u)) 0;
+}
+
+.page-title {
+  margin-block-start: calc(28 * var(--u));
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-big);
+  line-height: calc(96 * var(--u));
+  letter-spacing: var(--track);
+}
+
+.page-sub {
+  max-width: calc(var(--col) * 2);
+  margin-block-start: calc(24 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+
+/* Фильтр веток слева, вид справа. Пилюли те же, что в шапке, — другого
+   вида кнопок на сайте нет и не нужно. */
+.work-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: calc(16 * var(--u));
+  margin-block-start: calc(40 * var(--u));
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(5 * var(--u));
+  color: var(--accent);
+}
+.filters .pill {
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: var(--fs-pill);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.pill.is-current,
+.filters .pill.is-current {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* --- Список проектов -------------------------------------------------------
+   Два вида. Сетка — те же квадраты, что на главной (.work в home.css).
+   Список — строки: линия рисуется верхним краем строки, последняя
+   добавляет нижнюю — на стыках иначе получилась бы двойная толщина. */
+
+#main .work { margin-block-start: calc(40 * var(--u)); }
+
+.rows {
+  margin-block-start: calc(40 * var(--u));
+  border-block-end: var(--line) solid var(--hair);
+}
+.row {
+  border-block-start: var(--line) solid var(--hair);
+}
+.row__link {
+  display: grid;
+  grid-template-columns: calc(48 * var(--u)) minmax(0, 1.7fr) minmax(0, 1.1fr) auto calc(40 * var(--u));
+  align-items: baseline;
+  gap: calc(16 * var(--u));
+  padding-block: calc(26 * var(--u));
+  transition: background-color var(--dur-ui) var(--ease);
+}
+.row__link:hover,
+.row__link:focus-visible {
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+.row__num,
+.row__kicker,
+.row__branch {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(18 * var(--u));
+}
+.row__num { color: color-mix(in srgb, var(--fg) 45%, var(--bg)); }
+.row__kicker { color: color-mix(in srgb, var(--fg) 62%, var(--bg)); }
+.row__branch {
+  justify-self: end;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Название проекта мельче дисплейного кегля секций: в строке оно стоит
+   рядом с тремя другими колонками, и на 48 двухсловные названия рвутся
+   на две строки, а строка списка обязана быть одной строкой. Кегль тот
+   же, что у цифр в About, — нового в систему не заводится. */
+.row__title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: calc(34 * var(--u));
+  line-height: calc(38 * var(--u));
+  letter-spacing: var(--track);
+}
+.row__title sup {
+  font-family: var(--mono);
+  font-size: calc(13 * var(--u));
+  letter-spacing: 0;
+  vertical-align: super;
+  line-height: 0;
+  margin-inline-start: calc(6 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+
+/* Стрелка появляется на ховере и место под себя занимает всегда —
+   иначе строка дёргалась бы по ширине. */
+.row__arrow {
+  justify-self: end;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(calc(-8 * var(--u)));
+  transition:
+    opacity var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+.row__link:hover .row__arrow,
+.row__link:focus-visible .row__arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.rows__note,
+.empty {
+  margin-block-start: calc(24 * var(--u));
+  padding-block-end: calc(120 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+
+/* --- Кейс ------------------------------------------------------------------ */
+
+.case { padding-block: calc(64 * var(--u)) calc(140 * var(--u)); }
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(180 * var(--u)), 1fr));
+  gap: calc(24 * var(--u));
+  margin: 0 0 calc(56 * var(--u));
+  padding-block-end: calc(40 * var(--u));
+  border-block-end: var(--line) solid var(--hair);
+}
+.meta__term {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+.meta__value {
+  margin: calc(6 * var(--u)) 0 0;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(20 * var(--u));
+}
+
+.case__p {
+  max-width: calc(var(--col) * 2);
+  font-family: var(--text);
+  font-size: calc(18 * var(--u));
+  line-height: calc(28 * var(--u));
+}
+.case__p + .case__p { margin-block-start: calc(20 * var(--u)); }
+.case__p--empty { color: color-mix(in srgb, var(--fg) 62%, var(--bg)); }
+
+.case__link { margin-block-end: calc(48 * var(--u)); color: var(--accent); }
+
+.case-next {
+  padding-block: calc(56 * var(--u)) calc(120 * var(--u));
+  border-block-start: var(--line) solid var(--hair);
+}
+.case-next__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(24 * var(--u));
+  margin-block-start: calc(16 * var(--u));
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+  transition: color var(--dur-ui) var(--ease);
+}
+.case-next__link:hover { color: var(--accent); }
+.case-next__arrow { color: var(--accent); }
+
+/* --- Мобильная раскладка --------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .page-head { padding-block-start: calc(180 * var(--u)); }
+  .page-title { font-size: calc(40 * var(--u)); line-height: calc(42 * var(--u)); }
+  .page-sub { max-width: none; }
+
+  .row__link {
+    grid-template-columns: calc(40 * var(--u)) 1fr auto;
+    row-gap: calc(6 * var(--u));
+  }
+  .row__kicker { grid-column: 2 / -1; }
+  .row__branch { grid-column: 2 / -1; justify-self: start; }
+  .row__arrow { display: none; }
+
+  .case__p { max-width: none; }
+}
