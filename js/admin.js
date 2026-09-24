@@ -89,6 +89,7 @@ const TABS = {
       { name: "link", label: "Живой сайт", type: "url" },
       { name: "linkLabel", label: "Подпись ссылки", type: "text" },
       { name: "body", label: "Текст кейса", type: "paras", hint: "пустая строка разделяет абзацы" },
+      { name: "media", label: "Галерея кейса", type: "media", hint: "порядок, ширина и подписи картинок и видео — в конструкторе" },
       { name: "todo", label: "Что осталось заполнить", type: "lines", hint: "по пункту на строку; на сайт не выводится" },
       { name: "status", label: "Статус", type: "select", options: ["done", "in-progress"] },
       { name: "featured", label: "На главной", type: "bool", hint: "в сетке главной шесть мест" },
@@ -442,6 +443,8 @@ function commit(item, name, value) {
 function field(f, item) {
   const value = item[f.name];
 
+  if (f.type === "media") return mediaField(f, item);
+
   if (f.type === "bool") {
     const input = document.createElement("input");
     input.type = "checkbox";
@@ -564,6 +567,264 @@ function field(f, item) {
   };
 
   return row(f.label, input, f.hint);
+}
+
+/* --- Конструктор галереи -------------------------------------------------------
+   Галерея кейса правится вживую: та же сетка на шесть долей, что на
+   странице кейса (css/pages.css), файлы перетаскиваются мышью, у каждого —
+   ширина (вся строка / половина / треть), подпись и удаление. Правки
+   сразу ложатся в item.media; «Сохранить» пишет их в projects.json, как
+   любое другое поле.
+
+   Новые файлы: путь в Selectel (work/<slug>/файл.webp) или полный адрес —
+   или файл с диска, который dev-сервер положит в assets/work/. Тяжёлое
+   видео лучше в Selectel: репозиторий не для этого. */
+
+const MEDIA_VIDEO = /\.(mp4|webm|mov)(\?|$)/i;
+const MEDIA_SIZES = [
+  ["full", "1/1"],
+  ["half", "1/2"],
+  ["third", "1/3"],
+];
+
+function mediaUrl(path) {
+  if (!path) return "";
+  return /^(https?:|assets\/)/.test(path) ? path : (doc.mediaBase || "") + path;
+}
+
+function mediaSize(it, i) {
+  return MEDIA_SIZES.some(([k]) => k === it.size) ? it.size : i === 0 ? "full" : "half";
+}
+
+function mediaThumb(it, cls) {
+  const src = mediaUrl(it.src);
+  let node;
+  if (MEDIA_VIDEO.test(src)) {
+    node = document.createElement("video");
+    node.src = src;
+    if (it.poster) node.poster = mediaUrl(it.poster);
+    node.muted = true;
+    node.loop = true;
+    node.playsInline = true;
+    node.preload = "metadata";
+    // Играет только под курсором: в кейсе бывает по пятнадцать роликов.
+    node.onmouseenter = () => node.play().catch(() => {});
+    node.onmouseleave = () => node.pause();
+  } else {
+    node = document.createElement("img");
+    node.src = src;
+    node.alt = "";
+    node.loading = "lazy";
+  }
+  node.className = cls;
+  node.draggable = false;
+  node.onerror = () => node.classList.add("is-broken");
+  return node;
+}
+
+function mediaField(f, item) {
+  const box = document.createElement("div");
+  box.className = "ad-media";
+
+  const strip = document.createElement("div");
+  strip.className = "ad-media__strip";
+  const media = item.media || [];
+  media.slice(0, 12).forEach((it) => strip.append(mediaThumb(it, "ad-media__thumb")));
+  if (!media.length) strip.append(note("файлов пока нет"));
+
+  const open = document.createElement("button");
+  open.type = "button";
+  open.className = "ad-btn";
+  open.textContent = `Открыть конструктор · ${media.length}`;
+  open.onclick = () => openBuilder(item);
+
+  box.append(strip, open);
+
+  // Не <label>, как у остальных полей: клик по миниатюре внутри label
+  // «нажимал» бы кнопку конструктора.
+  const wrap = document.createElement("div");
+  wrap.className = "ad-row";
+  const l = document.createElement("span");
+  l.className = "ad-label";
+  l.textContent = f.label;
+  wrap.append(l, box);
+  if (f.hint) wrap.append(note(f.hint));
+  return wrap;
+}
+
+function openBuilder(item) {
+  if (!Array.isArray(item.media)) item.media = [];
+  const media = item.media;
+
+  const dlg = document.createElement("dialog");
+  dlg.className = "ad-builder";
+
+  const head = document.createElement("div");
+  head.className = "ad-builder__head";
+  const title = document.createElement("p");
+  title.className = "ad-builder__title";
+
+  const addPath = document.createElement("button");
+  addPath.type = "button";
+  addPath.className = "ad-btn";
+  addPath.textContent = "+ путь или ссылка";
+  addPath.onclick = () => {
+    const v = prompt(
+      "Путь в Selectel (work/<slug>/файл.webp), путь на сайте (assets/…) или полный адрес. Несколько — через пробел."
+    );
+    if (!v) return;
+    v.split(/\s+/).map((x) => x.trim()).filter(Boolean).forEach((src) => media.push({ src }));
+    changed();
+  };
+
+  const addFile = document.createElement("label");
+  addFile.className = "ad-btn";
+  addFile.textContent = "+ файл с диска";
+  const picker = document.createElement("input");
+  picker.type = "file";
+  picker.accept = "image/*,video/*";
+  picker.multiple = true;
+  picker.hidden = true;
+  picker.onchange = async () => {
+    for (const file of picker.files) {
+      const stem = file.name.replace(/\.[^.]+$/, "");
+      const saved = await upload(file, `${item.slug || slugify(item.title)}-${stem}`);
+      if (saved) media.push({ src: saved });
+    }
+    picker.value = "";
+    changed();
+  };
+  addFile.append(picker);
+
+  const done = document.createElement("button");
+  done.type = "button";
+  done.className = "ad-btn ad-btn--go";
+  done.textContent = "Готово";
+  done.onclick = () => dlg.close();
+
+  head.append(title, addPath, addFile, done);
+
+  const hint = document.createElement("p");
+  hint.className = "ad-hint ad-builder__hint";
+  hint.textContent =
+    "Тащи карточку, чтобы поменять порядок. 1/1 — вся строка, 1/2 — половина, 1/3 — треть. Так же встанет на странице кейса. Изменения сохраняются кнопкой «Сохранить» в шапке.";
+
+  const grid = document.createElement("ol");
+  grid.className = "ad-builder__grid";
+
+  let dragFrom = -1;
+
+  function render() {
+    grid.replaceChildren();
+    media.forEach((it, i) => {
+      const li = document.createElement("li");
+      li.className = `ad-tile ad-tile--${mediaSize(it, i)}`;
+      li.draggable = true;
+
+      const bar = document.createElement("div");
+      bar.className = "ad-tile__bar";
+      const num = document.createElement("span");
+      num.className = "ad-tile__num";
+      num.textContent = String(i + 1).padStart(2, "0");
+      bar.append(num);
+      for (const [key, label] of MEDIA_SIZES) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "ad-tile__size";
+        b.textContent = label;
+        b.setAttribute("aria-pressed", String(mediaSize(it, i) === key));
+        b.onclick = () => {
+          it.size = key;
+          changed();
+        };
+        bar.append(b);
+      }
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "ad-tile__del";
+      del.title = "Убрать из галереи";
+      del.textContent = "×";
+      del.onclick = () => {
+        media.splice(i, 1);
+        changed();
+      };
+      bar.append(del);
+
+      const frame = document.createElement("div");
+      frame.className = "ad-tile__frame";
+      frame.append(mediaThumb(it, "ad-tile__media"));
+
+      const cap = document.createElement("input");
+      cap.className = "ad-input ad-tile__cap";
+      cap.placeholder = "подпись (необязательно)";
+      cap.value = it.caption || "";
+      cap.oninput = () => {
+        if (cap.value.trim()) it.caption = cap.value;
+        else delete it.caption;
+        markDirty();
+      };
+      // Выделение текста в подписи не должно утаскивать карточку.
+      cap.onfocus = () => (li.draggable = false);
+      cap.onblur = () => (li.draggable = true);
+
+      const path = document.createElement("p");
+      path.className = "ad-tile__path";
+      path.textContent = it.src;
+      path.title = it.src;
+
+      li.append(bar, frame, cap, path);
+
+      li.ondragstart = (e) => {
+        dragFrom = i;
+        li.classList.add("is-dragging");
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", String(i));
+      };
+      li.ondragend = () => {
+        dragFrom = -1;
+        grid
+          .querySelectorAll(".ad-tile")
+          .forEach((t) => t.classList.remove("is-dragging", "is-before", "is-after"));
+      };
+      li.ondragover = (e) => {
+        if (dragFrom < 0) return;
+        e.preventDefault();
+        const r = li.getBoundingClientRect();
+        const after = e.clientX > r.left + r.width / 2;
+        li.classList.toggle("is-after", after);
+        li.classList.toggle("is-before", !after);
+      };
+      li.ondragleave = () => li.classList.remove("is-before", "is-after");
+      li.ondrop = (e) => {
+        e.preventDefault();
+        if (dragFrom < 0) return;
+        const r = li.getBoundingClientRect();
+        let to = i + (e.clientX > r.left + r.width / 2 ? 1 : 0);
+        const [moved] = media.splice(dragFrom, 1);
+        if (dragFrom < to) to--;
+        media.splice(to, 0, moved);
+        dragFrom = -1;
+        changed();
+      };
+
+      grid.append(li);
+    });
+    title.textContent = `Галерея · ${item.title || "без названия"} · ${media.length}`;
+  }
+
+  function changed() {
+    markDirty();
+    render();
+  }
+
+  dlg.append(head, hint, grid);
+  dlg.addEventListener("close", () => {
+    dlg.remove();
+    renderForm();
+  });
+  document.body.append(dlg);
+  render();
+  dlg.showModal();
 }
 
 /* --- Превью ------------------------------------------------------------------ */

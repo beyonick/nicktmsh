@@ -165,10 +165,8 @@
   <section class="band wrap" id="talk">
     <p class="label rise">05/ Lets talk</p>
     <div class="me">
-      <!-- Фото чёрно-белое; под жидкостью за курсором проступает цветная
-           версия (js/spot.js, режим data-ink-reveal) — те же чернила, что
-           в сетке проектов. Плоскость фото наклоняется за курсором (tilt). -->
-      <figure class="me__photo rise" data-ink-reveal="assets/me/nikita-tomash-color.webp">
+      <!-- Фото чёрно-белое, плоскость наклоняется за курсором (js/tilt.js). -->
+      <figure class="me__photo rise">
         <img src="assets/me/nikita-tomash.webp" alt="Nikita Tomash" width="720" height="720" loading="lazy" decoding="async">
       </figure>
       <div class="me__text rise" style="--delay:80ms">
@@ -263,8 +261,8 @@
   </section>
 
   <!-- Подвал: светлая плита. Векторная графика в духе vectors-group:
-       измерительная линейка по колонкам сетки, проволочная сфера в угловых
-       метках (доворачивается за курсором) и живые координаты курсора.
+       измерительная линейка по колонкам сетки, роза векторов в угловых
+       метках (стрелки расходятся и сходятся) и живые координаты курсора.
        Иконки контактов собирает js/contact.js, графику — js/vectors.js. -->
   <footer class="footer invert">
     <div class="footer__in wrap">
@@ -274,7 +272,7 @@
       </div>
       <div class="footer__grid">
         <div class="footer__object" data-vg="corners" aria-hidden="true">
-          <div class="footer__solid" data-vg="solid:spiral"></div>
+          <div class="footer__compass" data-vg="compass"></div>
         </div>
         <div class="footer__body">
           <p class="footer__line">

@@ -20,11 +20,17 @@ function meta(term, value) {
 }
 
 /* Галерея. Файлы лежат в Selectel, в json — путь от mediaBase (или
-   полный адрес). Видео определяется по расширению: без звука, по кругу,
-   играет только на экране — роликов в кейсе бывает с десяток. Файл,
-   который не загрузился, убирается целиком, а не оставляет пустую рамку:
-   так кейс не ломается, пока медиа ещё не залиты. */
+   полный адрес; путь с assets/ — файл самого сайта). Видео определяется по
+   расширению: без звука, по кругу, играет только на экране — роликов в
+   кейсе бывает с десяток. Файл, который не загрузился, убирается целиком,
+   а не оставляет пустую рамку: так кейс не ломается, пока медиа ещё не
+   залиты.
+
+   Ширина — поле size: full (вся строка), half (половина), third (треть).
+   Без него первый файл во всю строку, остальные по два. Раскладку и
+   порядок собирает конструктор в админке. */
 const VIDEO = /\.(mp4|webm|mov)(\?|$)/i;
+const SIZES = ["full", "half", "third"];
 
 const player = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => {
@@ -37,7 +43,8 @@ const player = "IntersectionObserver" in window
 
 function gallery(items, base) {
   if (!items || !items.length) return null;
-  const url = (path) => (!path ? null : /^https?:/.test(path) ? path : base + path);
+  const url = (path) =>
+    !path ? null : /^(https?:|assets\/)/.test(path) ? path : base + path;
 
   const figures = items.map((it, i) => {
     const src = url(it.src);
@@ -66,7 +73,8 @@ function gallery(items, base) {
       if (player) player.observe(media);
       else media.autoplay = true;
     }
-    return el("figure", { class: "case-media__item" }, [
+    const size = SIZES.includes(it.size) ? it.size : i === 0 ? "full" : "half";
+    return el("figure", { class: `case-media__item case-media__item--${size}` }, [
       media,
       it.caption ? el("figcaption", { class: "case-media__cap", text: it.caption }) : null,
     ]);

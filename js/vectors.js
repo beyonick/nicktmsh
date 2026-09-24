@@ -467,6 +467,73 @@ function mountGrid(host) {
   host.prepend(svg);
 }
 
+/* --- Роза векторов ------------------------------------------------------------
+   Реф: vectors-group.com, блок «And this through all vectors». Четыре линии
+   со стрелками на обоих концах через общий центр и три пунктирных круга.
+   У каждой линии своя фаза: веер то собирается неровно, то встаёт ровной
+   звездой через 45°. Круги медленно поворачиваются навстречу друг другу —
+   пунктир течёт. SVG, а не холст: линия той же толщины, что вся графика
+   сайта (--line-px через non-scaling-stroke), и чёткая на любом экране. */
+
+function mountCompass(host) {
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("class", "vg-compass");
+  svg.setAttribute("viewBox", "0 0 200 200");
+  svg.setAttribute("aria-hidden", "true");
+
+  const mk = (tag, attrs, parent = svg) => {
+    const n = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    parent.append(n);
+    return n;
+  };
+
+  // Круги: радиусы и шаг пунктира сняты с рефа (доли длины стрелки).
+  const rings = [
+    { r: 30, dash: "6 5.2" },
+    { r: 53, dash: "5.2 5.2" },
+    { r: 74, dash: "5.6 5.6" },
+  ].map((c) => mk("circle", { cx: 100, cy: 100, r: c.r, "stroke-dasharray": c.dash, class: "vg-compass__ring" }));
+
+  // Линия: древко через центр и по наконечнику на каждом конце.
+  const L = 92;
+  const H = 7;
+  const arrows = [0, 1, 2, 3].map(() => {
+    const g = mk("g", { class: "vg-compass__arrow" });
+    mk("line", { x1: 100 - L, y1: 100, x2: 100 + L, y2: 100 }, g);
+    mk("polyline", { points: `${100 + L - H},${100 - H * 0.7} ${100 + L},100 ${100 + L - H},${100 + H * 0.7}` }, g);
+    mk("polyline", { points: `${100 - L + H},${100 - H * 0.7} ${100 - L},100 ${100 - L + H},${100 + H * 0.7}` }, g);
+    return g;
+  });
+
+  host.append(svg);
+
+  const scene = {
+    visible: false,
+    draw(t) {
+      // Базовая звезда через 45° плюс собственное покачивание каждой линии
+      // и общее медленное вращение.
+      arrows.forEach((g, i) => {
+        const a = i * 45 + Math.sin(t * 0.9 + i * 1.7) * 22 + t * 9;
+        g.setAttribute("transform", `rotate(${a.toFixed(2)} 100 100)`);
+      });
+      rings.forEach((c, i) => {
+        const dir = i % 2 ? -1 : 1;
+        c.setAttribute("transform", `rotate(${(dir * t * (6 + i * 3)).toFixed(2)} 100 100)`);
+      });
+    },
+  };
+
+  svg.__scene = scene;
+  visibility.observe(svg);
+  if (reduced) {
+    scene.draw(0);
+    return;
+  }
+  join(scene);
+}
+
 /* --- Координаты курсора ------------------------------------------------------
    Моно-строка «X 0412 · Y 0133»: где сейчас курсор внутри блока-хозяина
    (ближайший footer или section), в макетных пикселях. Приборная деталь,
@@ -514,6 +581,7 @@ export function mountVectors(root = document) {
     if (spec === "grid") return mountGrid(host);
     if (spec === "field") return mountField(host);
     if (spec === "coords") return mountCoords(host);
+    if (spec === "compass") return mountCompass(host);
     if (spec.startsWith("solid:")) return mountSolid(host, spec.slice(6), i);
   });
 }

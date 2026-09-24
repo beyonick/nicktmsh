@@ -309,3 +309,118 @@
   .ad-top { flex-wrap: wrap; }
   .ad-status { order: 10; width: 100%; margin-inline-start: 0; }
 }
+
+/* --- Галерея кейса: поле и конструктор --------------------------------------- */
+
+.ad-media { display: grid; gap: 0.5rem; justify-items: start; }
+.ad-media__strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.ad-media__thumb {
+  width: 3.25rem;
+  height: 3.25rem;
+  object-fit: cover;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+/* Конструктор — на весь экран поверх админки. Сетка на шесть долей, как
+   .case-media на странице кейса: 1/1 — span 6, 1/2 — span 3, 1/3 — span 2. */
+.ad-builder {
+  width: min(1180px, calc(100vw - 32px));
+  max-width: none;
+  height: calc(100dvh - 32px);
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  overflow: auto;
+}
+.ad-builder::backdrop { background: color-mix(in srgb, var(--bg) 80%, transparent); }
+.ad-builder__head {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border-block-end: 1px solid var(--hair);
+}
+.ad-builder__title { margin-inline-end: auto; letter-spacing: 0.04em; }
+.ad-builder__hint { padding: 0.75rem 1rem 0; }
+.ad-builder__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin: 0;
+  padding: 1rem;
+  list-style: none;
+}
+
+.ad-tile {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.4rem;
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  background: var(--bg);
+  cursor: grab;
+}
+.ad-tile--full { grid-column: span 6; }
+.ad-tile--half { grid-column: span 3; }
+.ad-tile--third { grid-column: span 2; }
+.ad-tile.is-dragging { opacity: 0.35; }
+/* Куда встанет карточка — лаймовая черта по краю, на который наведено. */
+.ad-tile.is-before { box-shadow: -3px 0 0 var(--accent); }
+.ad-tile.is-after { box-shadow: 3px 0 0 var(--accent); }
+
+.ad-tile__bar { display: flex; align-items: center; gap: 0.25rem; }
+.ad-tile__num { margin-inline-end: auto; opacity: 0.5; }
+.ad-tile__size,
+.ad-tile__del {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.6875rem;
+  cursor: pointer;
+}
+.ad-tile__size[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.ad-tile__del:hover { border-color: #ff6b5a; color: #ff6b5a; }
+
+.ad-tile__frame {
+  overflow: hidden;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+}
+.ad-tile__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: auto;
+}
+.ad-tile__media.is-broken { min-height: 4rem; opacity: 0.2; }
+.ad-tile__cap { font-size: 0.75rem; }
+.ad-tile__path {
+  overflow: hidden;
+  font-size: 0.625rem;
+  opacity: 0.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -196,17 +196,20 @@
 
 .case__link { margin-block-end: calc(48 * var(--u)); color: var(--accent); }
 
-/* Галерея кейса (js/case.js): первая работа во всю колонку, остальные —
-   по две. Кадры разной пропорции не режутся: высота у каждого своя. */
+/* Галерея кейса (js/case.js). Сетка на шесть долей: full — вся строка,
+   half — половина, third — треть; раскладку задаёт конструктор в админке.
+   Кадры разной пропорции не режутся: высота у каждого своя. */
 .case-media {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: calc(16 * var(--u));
   align-items: start;
   padding-block-end: calc(120 * var(--u));
 }
 .case-media__item { margin: 0; }
-.case-media__item:first-child { grid-column: 1 / -1; }
+.case-media__item--full { grid-column: span 6; }
+.case-media__item--half { grid-column: span 3; }
+.case-media__item--third { grid-column: span 2; }
 .case-media__file {
   display: block;
   width: 100%;
@@ -258,6 +261,7 @@
 
   .case__p { max-width: none; }
   .case-media { grid-template-columns: 1fr; }
+  .case-media__item[class] { grid-column: auto; }
 }
 
 /* --- Шоурил (/work, ветка Motion) -------------------------------------------

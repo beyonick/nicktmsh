@@ -32,7 +32,7 @@ export const INK_DEFAULTS = {
   velFade: 0.4, // затухание скорости, 1/с
   dyeFade: 0.25, // таяние краски, 1/с: след держится секунды три
   radius: 0.07, // радиус мазка, доля ширины ячейки
-  force: 35, // какая доля скорости курсора уходит в жидкость
+  force: 60, // какая доля скорости курсора уходит в жидкость
   flow: 1.5, // сколько краски кладёт стоящий курсор, в секунду
   ink: 1.2, // плотность следа по его оси — одна на любой скорости мыши
   full: 1.5, // потолок плотности: густое тает дольше тонкого
@@ -325,34 +325,9 @@ function mount(host) {
   const map = document.createElement("canvas");
   const mctx = map.getContext("2d");
 
-  /* Режим «проявления» (data-ink-reveal): вместо цветов ячеек чернила
-     берут пиксели картинки. Так фото «обо мне» стоит чёрно-белым, а под
-     жидкостью за курсором проступает цветным. */
-  const reveal = host.dataset.inkReveal ? new Image() : null;
-  if (reveal) {
-    reveal.decoding = "async";
-    reveal.onload = () => {
-      if (canvas.isConnected) {
-        paintCells();
-        render();
-      }
-    };
-    reveal.src = host.dataset.inkReveal;
-  }
-
   function paintCells() {
     map.width = canvas.width;
     map.height = canvas.height;
-    if (reveal) {
-      cellW = W;
-      mctx.clearRect(0, 0, map.width, map.height);
-      if (reveal.complete && reveal.naturalWidth) mctx.drawImage(reveal, 0, 0, map.width, map.height);
-      gl.bindTexture(gl.TEXTURE_2D, cells.tex);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, map);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-      return;
-    }
     const box = host.getBoundingClientRect();
     const left = box.left + host.clientLeft;
     const top = box.top + host.clientTop;
@@ -657,10 +632,9 @@ export function watchSpots(root = document) {
   const self = root.classList && inks.get(root);
   if (self && !root.classList.contains("work")) self.detach();
 
-  const hosts = root.matches && root.matches(".work") ? [root] : [...root.querySelectorAll(".work")];
-  if (root.querySelectorAll) hosts.push(...root.querySelectorAll("[data-ink-reveal]"));
+  const hosts = root.matches && root.matches(".work") ? [root] : root.querySelectorAll(".work");
   for (const host of hosts) {
-    if (!host.dataset.inkReveal && !host.querySelector(".card")) continue;
+    if (!host.querySelector(".card")) continue;
     let ink = inks.get(host);
     if (!ink) {
       ink = mount(host);
