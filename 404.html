@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- 404: Vercel отдаёт этот файл на любой несуществующий адрес, в том числе
+     вложенный (/case/x/y), поэтому все пути здесь абсолютные. Сюжет — в
+     языке нод: запрос есть, провод до выхода оборван. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found — Nikita Tomash</title>
+<meta name="robots" content="noindex">
+
+<link rel="preload" href="/assets/fonts/cy-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/icon-512.png">
+<link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/vectors.css">
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/nodes.css">
+<link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+
+<!-- Точечный узор, как на главной (js/dots.js). -->
+<div class="dots" aria-hidden="true"></div>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__mark" href="/">nicktmsh</a>
+    <span class="nav__rule" aria-hidden="true"></span>
+    <nav class="pills" aria-label="Main">
+      <a class="pill" href="/work">work</a>
+      <a class="pill" href="/lab">lab</a>
+      <a class="pill" href="mailto:n27tomash@gmail.com" data-contact>
+        <span class="pill__long">get in touch</span>
+        <span class="pill__short">talk</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="lost wrap">
+  <p class="label">404/ Not found</p>
+  <h1 class="display lost__title">Nothing is <em>wired</em> <em class="alt">here</em>.</h1>
+  <p class="lost__text">The link is broken, or the page has moved.</p>
+
+  <!-- Нода запроса → оборванный провод → выход без сигнала. -->
+  <div class="lost__graph" aria-hidden="true">
+    <figure class="node node--text lost__node">
+      <figcaption class="node__head"><span class="node__type">Input</span><span class="node__tool">request</span></figcaption>
+      <div class="node__body"><p class="node__text" data-path>/</p><span class="node__port node__port--out"></span></div>
+    </figure>
+    <span class="lost__wire"><span class="lost__half lost__half--live"></span><span class="lost__cut">×</span><span class="lost__half"></span></span>
+    <figure class="node node--text lost__node">
+      <figcaption class="node__head"><span class="node__type">Output</span><span class="node__tool">404</span></figcaption>
+      <div class="node__body"><p class="node__text">no signal</p><span class="node__port node__port--in"></span></div>
+    </figure>
+  </div>
+
+  <nav class="pills lost__nav" aria-label="Where to">
+    <a class="pill" href="/">back home</a>
+    <a class="pill" href="/work">work</a>
+    <a class="pill" href="/lab">lab</a>
+  </nav>
+</main>
+
+  <footer class="footer invert">
+    <div class="footer__in wrap">
+      <div class="footer__grid">
+        <div class="footer__object" data-vg="corners" aria-hidden="true">
+          <div class="footer__compass" data-vg="compass"></div>
+        </div>
+        <div class="footer__body">
+          <p class="footer__line">
+            Nikita Tomash — identity,<br>
+            motion and websites,<br>
+            built by hand
+          </p>
+          <ul class="socials footer__socials" data-socials></ul>
+          <nav class="footer__nav" aria-label="Footer">
+            <a class="pill" href="/work">work</a>
+            <a class="pill" href="/lab">lab</a>
+            <a class="pill" href="mailto:n27tomash@gmail.com" data-contact>get in touch</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer__base">
+        <span>&copy; 2026 nicktmsh</span>
+        <span class="footer__coords" data-vg="coords" aria-hidden="true"></span>
+        <span>Designed and coded by me</span>
+        <a class="footer__top" href="#top">back to top<span class="footer__up arrow" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Какой адрес запросили — в ноду запроса.
+  document.querySelector("[data-path]").textContent = decodeURI(location.pathname);
+</script>
+<script src="/js/main.js" defer></script>
+<script src="/js/vectors.js" type="module"></script>
+<script src="/js/contact.js" type="module"></script>
+<script src="/js/cursor.js" type="module"></script>
+<script src="/js/dots.js" type="module"></script>
+</body>
+</html>

@@ -272,3 +272,60 @@
 /* Шоурил стоит сразу за фильтрами, а не посередине строки. */
 .work-bar .reel-open { margin-inline-end: auto; }
 
+
+/* --- 404 (404.html) -----------------------------------------------------------
+   Нода запроса и нода выхода, провод между ними оборван: сигнал бежит до
+   обрыва и гаснет. */
+.lost { padding-block: calc(200 * var(--u)) calc(160 * var(--u)); }
+.lost__title { margin-block: calc(24 * var(--u)) 0; }
+.lost__text {
+  margin-block: calc(16 * var(--u)) 0;
+  color: color-mix(in srgb, var(--fg) 60%, var(--bg));
+}
+.lost__graph {
+  display: flex;
+  align-items: flex-end;
+  margin-block: calc(72 * var(--u)) calc(56 * var(--u));
+}
+.lost .node {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  flex: none;
+  width: calc(220 * var(--u));
+  cursor: default;
+}
+.lost .node__body { background: var(--bg); }
+.lost .node__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Провод — на высоте портов (середина тела ноды). */
+.lost__wire {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  min-width: calc(60 * var(--u));
+  margin-block-end: calc(14 * var(--u));
+}
+.lost__half { flex: 1; height: var(--line); background: var(--hair); }
+.lost__half--live {
+  background:
+    repeating-linear-gradient(90deg, var(--accent) 0 calc(2 * var(--u)), transparent calc(2 * var(--u)) calc(16 * var(--u))),
+    var(--hair);
+  animation: lost-flow 1.4s linear infinite;
+}
+@keyframes lost-flow { to { background-position: calc(16 * var(--u)) 0, 0 0; } }
+.lost__cut {
+  font-family: var(--mono);
+  font-size: calc(14 * var(--u));
+  line-height: 1;
+  color: var(--accent-2);
+}
+.lost__nav { justify-content: flex-start; }
+@media (max-width: 760px) {
+  .lost { padding-block: calc(150 * var(--u)) calc(100 * var(--u)); }
+  .lost .node { width: calc(118 * var(--u)); }
+  .lost__wire { min-width: calc(40 * var(--u)); gap: calc(6 * var(--u)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lost__half--live { animation: none; }
+}
