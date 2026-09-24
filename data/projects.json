@@ -7,25 +7,74 @@
   },
   "projects": [
     {
-      "slug": "",
-      "title": "Yandex Music ",
+      "slug": "yandex-music",
+      "title": "Yandex Music",
       "titleRu": "Яндекс музыка Итоги года 2025",
       "client": "Yandex Music",
       "year": 2025,
       "branch": "motion",
-      "kicker": "",
-      "role": "3D Generalist",
-      "summary": "",
-      "capabilities": [],
-      "cover": "",
+      "kicker": "3D for Year in Review 2025",
+      "role": "3D generalist",
+      "summary": "3D for Yandex Music's Year in Review 2025: genre hearts, characters and achievement badges.",
+      "capabilities": [
+        "3D",
+        "Lookdev",
+        "Animation"
+      ],
+      "cover": null,
       "logo": null,
       "link": null,
       "linkLabel": null,
       "featured": false,
-      "published": false,
-      "status": "in-progress",
+      "published": true,
+      "status": "done",
       "body": [],
-      "todo": []
+      "todo": [
+        "Текст кейса: задача и что именно делал",
+        "Подтвердить, что можно показывать"
+      ],
+      "media": [
+        {
+          "src": "work/yandex-music/sborka.mp4",
+          "caption": "Year in Review 2025"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-acoustic.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-electro.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-folk.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-hip-hop.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-classic.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-hardcore.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-folk-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-indie-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-jazz-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-indie-bg-first-image.webp"
+        },
+        {
+          "src": "work/yandex-music/04-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/10-fallback.webp"
+        }
+      ]
     },
     {
       "slug": "m",
@@ -904,6 +953,14 @@
         "Годы не подтверждены",
         "Список заказчиков",
         "Обложка: положить assets/work/logos-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/logos/logo-10.webp"
+        },
+        {
+          "src": "work/logos/logo-12.webp"
+        }
       ]
     },
     {
@@ -1003,6 +1060,318 @@
         "В работе — данных пока нет",
         "Название на сайт: имя практики, а не «сайт мамы»",
         "Заполнить: год, объём работ, текст, обложка"
+      ]
+    },
+    {
+      "titleRu": "VK Music",
+      "year": null,
+      "role": null,
+      "capabilities": [
+        "3D",
+        "Motion"
+      ],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "vk-music",
+      "title": "VK Music",
+      "client": "VK Music",
+      "branch": "motion",
+      "kicker": "Manifesto films",
+      "summary": "Three manifesto films for VK Music.",
+      "todo": [
+        "Год, роль, задача"
+      ],
+      "media": [
+        {
+          "src": "work/vk-music/manifest-1-6s.mp4"
+        },
+        {
+          "src": "work/vk-music/manifest-2-7s.mp4"
+        },
+        {
+          "src": "work/vk-music/manifest-3-5s.mp4"
+        }
+      ]
+    },
+    {
+      "titleRu": "LiteBIM",
+      "year": null,
+      "role": null,
+      "capabilities": [
+        "Logo",
+        "Product marks",
+        "Print",
+        "Banners"
+      ],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "litebim",
+      "title": "LiteBIM",
+      "client": "LiteBIM",
+      "branch": "branding",
+      "kicker": "Logo, product marks, print, banners",
+      "summary": "Identity for LiteBIM: the mark, a family of product marks, business cards and event banners.",
+      "todo": [
+        "Год, роль, задача"
+      ],
+      "media": [
+        {
+          "src": "work/litebim/litebim-logo-full.webp"
+        },
+        {
+          "src": "work/litebim/cm-m.webp"
+        },
+        {
+          "src": "work/litebim/archive-m.webp"
+        },
+        {
+          "src": "work/litebim/artboard-12-copy-2.webp"
+        },
+        {
+          "src": "work/litebim/2024update.webp"
+        },
+        {
+          "src": "work/litebim/2024update2.webp"
+        },
+        {
+          "src": "work/litebim/8-marta.webp"
+        },
+        {
+          "src": "work/litebim/ai-banner.webp"
+        },
+        {
+          "src": "work/litebim/03-iphone-15-pro-mockup-with-white-rock.webp"
+        }
+      ]
+    },
+    {
+      "titleRu": "Out Digital",
+      "year": null,
+      "role": null,
+      "capabilities": [
+        "3D",
+        "Motion"
+      ],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "out-digital",
+      "title": "Out Digital",
+      "client": "Out Digital",
+      "branch": "motion",
+      "kicker": "3D product and brand films",
+      "summary": "3D films and renders for Out Digital.",
+      "todo": [
+        "Год, роль, задача",
+        "Проверить название клиента латиницей"
+      ],
+      "media": [
+        {
+          "src": "work/out-digital/portfolio12sec.mp4"
+        },
+        {
+          "src": "work/out-digital/predmet-fin1.mp4"
+        },
+        {
+          "src": "work/out-digital/bloknoty-final.mp4"
+        },
+        {
+          "src": "work/out-digital/tender-eminem-7s.mp4"
+        },
+        {
+          "src": "work/out-digital/dynamic0136.webp"
+        },
+        {
+          "src": "work/out-digital/dynamic0180.webp"
+        },
+        {
+          "src": "work/out-digital/dynamic0300.webp"
+        }
+      ]
+    },
+    {
+      "titleRu": "PSB",
+      "year": null,
+      "role": null,
+      "capabilities": [
+        "3D",
+        "Motion"
+      ],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "psb",
+      "title": "PSB",
+      "client": "PSB",
+      "branch": "motion",
+      "kicker": "Commercial films",
+      "summary": "Commercial films for PSB bank.",
+      "todo": [
+        "Год, роль, задача"
+      ],
+      "media": [
+        {
+          "src": "work/psb/psb-rolik-02-25s.mp4"
+        },
+        {
+          "src": "work/psb/psb-rolik-04-29s.mp4"
+        }
+      ]
+    },
+    {
+      "titleRu": "Series VFX: Explosion",
+      "year": null,
+      "role": null,
+      "capabilities": [
+        "Houdini",
+        "VFX"
+      ],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "series-explosion",
+      "title": "Series VFX: Explosion",
+      "client": null,
+      "branch": "motion",
+      "kicker": "VFX shot",
+      "summary": "An explosion shot for a TV series.",
+      "todo": [
+        "Название сериала, год, роль"
+      ],
+      "media": [
+        {
+          "src": "work/series-explosion/low1.mp4"
+        }
+      ]
+    },
+    {
+      "titleRu": "Vesna",
+      "year": null,
+      "role": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": false,
+      "status": "done",
+      "body": [],
+      "slug": "vesna",
+      "title": "Vesna",
+      "client": "Vesna",
+      "branch": "motion",
+      "kicker": "Product photography",
+      "summary": null,
+      "todo": [
+        "Решить, показывать ли в портфолио (товары для взрослых)"
+      ],
+      "media": [
+        {
+          "src": "work/vesna/frame-27.webp"
+        },
+        {
+          "src": "work/vesna/frame-28.webp"
+        },
+        {
+          "src": "work/vesna/frame-29.webp"
+        },
+        {
+          "src": "work/vesna/frame-48.webp"
+        },
+        {
+          "src": "work/vesna/frame-49.webp"
+        },
+        {
+          "src": "work/vesna/frame-51.webp"
+        },
+        {
+          "src": "work/vesna/frame-52.webp"
+        },
+        {
+          "src": "work/vesna/frame-53.webp"
+        },
+        {
+          "src": "work/vesna/frame-54.webp"
+        },
+        {
+          "src": "work/vesna/frame-57.webp"
+        },
+        {
+          "src": "work/vesna/frame-746.webp"
+        },
+        {
+          "src": "work/vesna/frame-747.webp"
+        },
+        {
+          "src": "work/vesna/frame-748.webp"
+        },
+        {
+          "src": "work/vesna/frame-749.webp"
+        },
+        {
+          "src": "work/vesna/frame-750.webp"
+        },
+        {
+          "src": "work/vesna/frame-751.webp"
+        },
+        {
+          "src": "work/vesna/frame-753.webp"
+        },
+        {
+          "src": "work/vesna/frame-83.webp"
+        },
+        {
+          "src": "work/vesna/frame-84.webp"
+        },
+        {
+          "src": "work/vesna/frame-85.webp"
+        },
+        {
+          "src": "work/vesna/bady-i-vitaminy.webp"
+        },
+        {
+          "src": "work/vesna/igrushki.webp"
+        },
+        {
+          "src": "work/vesna/lubrikanty-dlya-seksa.webp"
+        },
+        {
+          "src": "work/vesna/maslo-dlya-massazha.webp"
+        }
       ]
     }
   ],
