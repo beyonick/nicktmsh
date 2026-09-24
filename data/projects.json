@@ -75,7 +75,7 @@
           "src": "work/yandex-music/10-fallback.webp"
         }
       ],
-      "logoRatio": 7.119,
+      "logoRatio": 1,
       "color": "#FFBC0D"
     },
     {
@@ -451,7 +451,7 @@
         }
       ],
       "logoRatio": 2.333,
-      "color": "#000000"
+      "color": "#FFFFFF4D"
     },
     {
       "slug": "honor",
@@ -495,7 +495,7 @@
         }
       ],
       "logoRatio": 5.2,
-      "color": "#000000"
+      "color": "#FFFFFF4D"
     },
     {
       "slug": "dzen",
@@ -514,7 +514,7 @@
         "3D"
       ],
       "cover": null,
-      "logo": "assets/logos/zen.svg",
+      "logo": "assets/logos/zen-sign.svg",
       "link": null,
       "featured": false,
       "published": true,
@@ -564,8 +564,8 @@
           "caption": "Science"
         }
       ],
-      "logoRatio": 3.24,
-      "color": "#000000"
+      "logoRatio": 1,
+      "color": "#FFFFFF4D"
     },
     {
       "slug": "waydeal",
@@ -623,7 +623,7 @@
         }
       ],
       "color": "#6734FF",
-      "logoRatio": 1.259
+      "logoRatio": 1.079
     },
     {
       "slug": "interactive",
@@ -644,7 +644,7 @@
         "Arturia BeatStep"
       ],
       "cover": null,
-      "logo": "assets/logos/nicktmsh.png",
+      "logo": "assets/logos/nt.png",
       "link": null,
       "featured": true,
       "published": true,
@@ -701,7 +701,7 @@
           "src": "work/interactive/frame-756.webp"
         }
       ],
-      "logoRatio": 5.086
+      "logoRatio": 1.284
     },
     {
       "slug": "mardini-2026",
@@ -944,7 +944,7 @@
           "caption": "Day 31 — Refract"
         }
       ],
-      "logoRatio": 5.961,
+      "logoRatio": 1,
       "color": "#F26722"
     },
     {
@@ -961,7 +961,7 @@
         "Logo design"
       ],
       "cover": null,
-      "logo": "assets/logos/nicktmsh.png",
+      "logo": "assets/logos/nt.png",
       "link": null,
       "featured": false,
       "published": true,
@@ -980,7 +980,7 @@
           "src": "work/logos/logo-12.webp"
         }
       ],
-      "logoRatio": 5.086
+      "logoRatio": 1.284
     },
     {
       "slug": "forma-budushchego",
@@ -1177,7 +1177,7 @@
           "src": "work/litebim/03-iphone-15-pro-mockup-with-white-rock.webp"
         }
       ],
-      "logoRatio": 3.131
+      "logoRatio": 0.803
     },
     {
       "titleRu": "Out Digital",
@@ -1189,7 +1189,7 @@
       ],
       "cover": null,
       "logo": "assets/logos/out-digital.png",
-      "color": null,
+      "color": "#C8ED24",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -1240,7 +1240,7 @@
       ],
       "cover": null,
       "logo": "assets/logos/psb.svg",
-      "color": null,
+      "color": "#2C2D84",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -1264,7 +1264,7 @@
           "src": "work/psb/psb-rolik-04-29s.mp4"
         }
       ],
-      "logoRatio": 3.275
+      "logoRatio": 1
     },
     {
       "titleRu": "Series VFX: Explosion",
@@ -1275,7 +1275,7 @@
         "VFX"
       ],
       "cover": null,
-      "logo": "assets/logos/nicktmsh.png",
+      "logo": "assets/logos/nt.png",
       "color": null,
       "link": null,
       "linkLabel": null,
@@ -1297,7 +1297,7 @@
           "src": "work/series-explosion/low1.mp4"
         }
       ],
-      "logoRatio": 5.086
+      "logoRatio": 1.284
     },
     {
       "titleRu": "Vesna",
