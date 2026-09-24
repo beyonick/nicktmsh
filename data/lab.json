@@ -1,8 +1,38 @@
 {
-  "updated": "2026-09-22",
+  "updated": "2026-09-24",
   "intro": "Ongoing experiments in Houdini and TouchDesigner. Not client work — this is where the techniques come from before they end up in one.",
   "instagram": "https://www.instagram.com/nicktmsh",
   "items": [
+    {
+      "slug": "showreel-2025",
+      "title": "Showreel 2025",
+      "date": null,
+      "tech": [
+        "Houdini",
+        "Cinema 4D",
+        "Redshift"
+      ],
+      "series": null,
+      "video": "lab/showreel-2025/2025-showreel-nikita-tomash-se.webm",
+      "poster": "",
+      "description": "The 2025 reel: a year of 3D in thirty seconds.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "avgust",
+      "title": "Avgust",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "lab/avgust/avgust-se.webm",
+      "poster": "",
+      "description": "",
+      "published": true,
+      "todo": []
+    },
     {
       "slug": "damaged",
       "title": "Damaged",
@@ -11,13 +41,11 @@
         "Houdini"
       ],
       "series": "Mardini 2026 — day 17",
-      "video": "",
-      "poster": "",
+      "video": "lab/damaged/day17-damaged-1-se.webm",
+      "poster": "lab/damaged/day17-damaged-0-00-05-03.webp",
       "description": "Mardini day 17, prompt: damaged. Destruction on a fixed budget of one evening.",
       "published": true,
-      "todo": [
-        "Постер: положить assets/lab/damaged-poster.webp"
-      ]
+      "todo": []
     },
     {
       "slug": "volumetric",
@@ -27,13 +55,11 @@
         "Houdini"
       ],
       "series": "Mardini 2026 — day 29",
-      "video": "",
-      "poster": "",
+      "video": "lab/volumetric/day29-volumetric-se.webm",
+      "poster": "lab/volumetric/day29-volumetric-0-00-01-14.webp",
       "description": "Mardini day 29, prompt: volumetric. Light doing the modelling instead of geometry.",
       "published": true,
-      "todo": [
-        "Постер: положить assets/lab/volumetric-poster.webp"
-      ]
+      "todo": []
     },
     {
       "slug": "motion-blur",
@@ -43,13 +69,11 @@
         "Houdini"
       ],
       "series": "Mardini 2026 — day 30",
-      "video": "",
-      "poster": "",
+      "video": "lab/motion-blur/day30-motion-blur-se.webm",
+      "poster": "lab/motion-blur/day30-motion-blur-0-00-03-07.webp",
       "description": "Mardini day 30, prompt: motion blur. Speed read from a single frame.",
       "published": true,
-      "todo": [
-        "Постер: положить assets/lab/motion-blur-poster.webp"
-      ]
+      "todo": []
     },
     {
       "slug": "splash",
@@ -60,13 +84,13 @@
       ],
       "series": null,
       "video": "",
-      "poster": "",
+      "poster": "lab/splash/fluid-toy-main-0179.webp",
       "description": "",
       "published": true,
       "todo": [
         "Год и техника",
         "Описание: что исследовал и зачем",
-        "Видео в Selectel + постер"
+        "Постер угадан по кадру (fluid_toy) — проверить"
       ]
     },
     {
@@ -78,13 +102,12 @@
       ],
       "series": null,
       "video": "",
-      "poster": "",
+      "poster": "lab/rock/rocks1-side-down-image100-000038.webp",
       "description": "",
       "published": true,
       "todo": [
         "Год и техника",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -95,14 +118,13 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
+      "video": "lab/grass/grass-flow-se.webm",
       "poster": "",
       "description": "",
       "published": true,
       "todo": [
         "Год и техника",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -131,14 +153,13 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
+      "video": "lab/alien-alloy/alien-alloy-growth-se.webm",
       "poster": "",
       "description": "",
       "published": true,
       "todo": [
         "На старом сайте слаг box, файл Alien_Alloy_Growth — уточнить название",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -150,13 +171,12 @@
       ],
       "series": null,
       "video": "",
-      "poster": "",
+      "poster": "lab/ribbons/ribbons-gnivc-main-0155-image100.webp",
       "description": "",
       "published": true,
       "todo": [
         "Год и техника",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -167,14 +187,13 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
+      "video": "lab/rubber-dreams/rubber-dreams-in-liquid-gold-se.webm",
       "poster": "",
       "description": "",
       "published": true,
       "todo": [
         "На старом сайте слаг gold, файл Rubber_Dreams_in_Liquid — уточнить название",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -185,14 +204,13 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
-      "poster": "",
+      "video": "lab/flowers-on-spline/flowers-spin-se.webm",
+      "poster": "lab/flowers-on-spline/flowers-onspline0049-image100.webp",
       "description": "",
       "published": true,
       "todo": [
         "На старом сайте слаг beyopillow — уточнить название",
-        "Описание",
-        "Видео + постер"
+        "Описание"
       ]
     },
     {
@@ -212,6 +230,135 @@
         "Описание",
         "Видео + постер"
       ]
+    },
+    {
+      "slug": "interactive-17-liquid-a",
+      "title": "Liquid",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-17-liquid-a/17-liquid-a.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-01-reel",
+      "title": "Study 01",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-01-reel/01-reel.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-13-reel-s",
+      "title": "Study 13",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-13-reel-s/13-reel-s.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-14-reel-c",
+      "title": "Study 14",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-14-reel-c/14-reel-c.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-16-reel-e",
+      "title": "Study 16",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-16-reel-e/16-reel-e.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-02-post",
+      "title": "Study 02",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-02-post/02-post.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-04-post",
+      "title": "Study 04",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-04-post/04-post.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-06-post",
+      "title": "Study 06",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-06-post/06-post.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
     }
-  ]
+  ],
+  "mediaBase": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/"
 }

@@ -208,7 +208,11 @@ viewer.addEventListener("keydown", (e) => {
 
 load("lab")
   .then((data) => {
-    items = published(data.items);
+    // Ролики и постеры лежат в Selectel: в json — путь от mediaBase или
+    // полный адрес, как у галерей кейсов.
+    const base = data.mediaBase || "";
+    const url = (p) => (!p || /^https?:/.test(p) ? p : base + p);
+    items = published(data.items).map((i) => ({ ...i, video: url(i.video), poster: url(i.poster) }));
     if (introHost) introHost.textContent = data.intro || "";
 
     host.replaceChildren(...items.map(reel));
