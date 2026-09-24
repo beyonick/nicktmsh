@@ -130,25 +130,30 @@ track.addEventListener("focusin", (e) => {
 /* --- Воспроизведение по видимости ----------------------------------------- */
 
 /* Шторка: кадр открывается один раз, когда на треть вошёл в экран. Лента
-   горизонтальная, но наблюдатель смотрит на реальный прямоугольник кадра,
-   поэтому сдвиг ленты он видит так же, как вертикальный скролл. */
+   горизонтальная, но наблюдатель смотрит на реальный прямоугольник, поэтому
+   сдвиг ленты он видит так же, как вертикальный скролл.
+
+   Наблюдаем рамку (.reel__media), а не сам кадр: закрытый кадр обрезан
+   clip-path целиком, и Chrome считает обрезанное невидимым — наблюдатель
+   никогда бы не сработал, кадр не открылся, а видео не запустились. */
 function watchReveal() {
-  const frames = host.querySelectorAll(".reel__frame");
+  const boxes = host.querySelectorAll(".reel__media");
+  const open = (box) => box.querySelector(".reel__frame")?.classList.add("is-shown");
   if (reduced || !("IntersectionObserver" in window)) {
-    frames.forEach((f) => f.classList.add("is-shown"));
+    boxes.forEach(open);
     return;
   }
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
         if (!e.isIntersecting) continue;
-        e.target.classList.add("is-shown");
+        open(e.target);
         io.unobserve(e.target);
       }
     },
     { threshold: 0.3 }
   );
-  frames.forEach((f) => io.observe(f));
+  boxes.forEach((b) => io.observe(b));
 }
 
 function watchPlayback() {
@@ -162,10 +167,13 @@ function watchPlayback() {
     return;
   }
 
+  // Видимость — тоже по рамке, а не по самому видео: пока кадр закрыт
+  // шторкой, видео внутри обрезано и для наблюдателя «не на экране».
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        const v = e.target;
+        const v = e.target.querySelector(".reel__video");
+        if (!v) continue;
         if (e.isIntersecting) {
           if (v.preload === "none") v.preload = "auto";
           v.play().catch(() => {}); // автоплей мог не разрешиться — не повод падать
@@ -177,7 +185,7 @@ function watchPlayback() {
     { rootMargin: "10% 0px", threshold: 0.25 }
   );
 
-  videos.forEach((v) => io.observe(v));
+  videos.forEach((v) => io.observe(v.closest(".reel__media") || v));
 }
 
 /* --- Просмотр ------------------------------------------------------------- */
