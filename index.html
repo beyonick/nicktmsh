@@ -157,7 +157,7 @@
   </section>
 
   <!-- 05 / Lets talk ----------------------------------------------------
-       Сначала — кто я: фото, пара абзацев и контакты на той же сетке 3×304,
+       Сначала — кто я: фото, абзац и кнопки контактов на той же сетке 3×304,
        что проекты выше (фото в первой колонке, текст во второй и третьей).
        Потом миллиметровка с вопросом: весь блок — кнопка, открывает окно
        контактов (js/contact.js). Поверх миллиметровки — поле векторов,
@@ -165,23 +165,21 @@
   <section class="band wrap" id="talk">
     <p class="label rise">05/ Lets talk</p>
     <div class="me">
-      <figure class="me__photo rise" data-vg="corners">
-        <img src="assets/me/nikita-tomash.webp" alt="Nikita Tomash at work" width="640" height="640" loading="lazy" decoding="async">
+      <!-- Фото чёрно-белое; под жидкостью за курсором проступает цветная
+           версия (js/spot.js, режим data-ink-reveal) — те же чернила, что
+           в сетке проектов. Плоскость фото наклоняется за курсором (tilt). -->
+      <figure class="me__photo rise" data-ink-reveal="assets/me/nikita-tomash-color.webp">
+        <img src="assets/me/nikita-tomash.webp" alt="Nikita Tomash" width="720" height="720" loading="lazy" decoding="async">
       </figure>
       <div class="me__text rise" style="--delay:80ms">
         <p class="me__name">Nikita Tomash</p>
-        <p class="me__role">Art director · creative technologist</p>
         <p class="me__bio">
           Most of my projects start the same way: a client knows something is
           wrong with how they look, but not what. My job is to name it, decide
           the direction, and then make the thing — the identity, the motion,
           the site itself.
         </p>
-        <p class="me__bio">
-          Eight years in design — from UX/UI and leading teams to 3D, motion
-          and interactive work.
-        </p>
-        <ul class="contacts me__contacts" data-contacts></ul>
+        <ul class="socials me__socials" data-socials></ul>
       </div>
     </div>
     <a class="talk graph rise" style="--delay:80ms" data-vg="field" href="mailto:n27tomash@gmail.com" data-contact>
@@ -266,7 +264,7 @@
 
   <footer class="footer invert">
     <p class="footer__line">
-      Nikita Tomash — Art Director Identity,<br>
+      Nikita Tomash — identity,<br>
       motion and websites, built by hand<br>
       &copy; 2026
     </p>

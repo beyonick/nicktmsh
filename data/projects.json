@@ -107,7 +107,7 @@
       "year": 2025,
       "branch": "branding",
       "kicker": "Logo, branding, mascot, print, web",
-      "role": "Art direction, full cycle",
+      "role": "Full cycle",
       "summary": "A brand built from zero for an IT aggregator: logo, identity, site, mascot and the graphic materials around them.",
       "capabilities": [
         "Logo",
@@ -210,7 +210,6 @@
       "role": "Design and hand-written front-end",
       "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
       "capabilities": [
-        "Art direction",
         "Web design",
         "Hand-written front-end"
       ],
@@ -381,7 +380,6 @@
       "role": null,
       "summary": "Promotional films for VK Video.",
       "capabilities": [
-        "Art direction",
         "3D motion",
         "Motion design"
       ],
@@ -409,10 +407,9 @@
       "year": null,
       "branch": "motion",
       "kicker": "Broadcast idents",
-      "role": "Art direction, end to end",
+      "role": "End to end",
       "summary": "Two seasonal idents for the 2x2 TV channel — one built on speed, one on light.",
       "capabilities": [
-        "Art direction",
         "Motion and graphic design",
         "3D motion"
       ],
@@ -990,10 +987,9 @@
       "year": 2026,
       "branch": "branding",
       "kicker": "Brand and website",
-      "role": "Art direction, full cycle: mark, identity, site",
+      "role": "Full cycle: mark, identity, site",
       "summary": "Mark, identity and the site, decided as one language rather than in sequence.",
       "capabilities": [
-        "Art direction",
         "Identity",
         "Web"
       ],

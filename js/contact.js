@@ -1,14 +1,17 @@
-/* Контакты: окно «Get in touch» и список ссылок.
+/* Контакты: окно «Get in touch» и кнопки-иконки.
 
    Все контакты сайта живут здесь, в одном массиве: окно, блок «обо мне»
-   на главной и любая кнопка с data-contact берут их отсюда. Поменять
-   ник или добавить сеть — одна строка.
+   на главной и любая кнопка с data-contact берут их отсюда. Поменять ник
+   или добавить сеть — одна строка.
+
+   Каждый контакт — круглая кнопка с иконкой, почта тоже: адрес не
+   выставлен текстом, он в кнопке (mailto) и в подсказке. Иконки нарисованы
+   линией той же толщины, что вся графика сайта (--line-px).
 
    Окно открывает любой элемент с data-contact. У кнопки в шапке href —
-   обычный mailto: без скрипта она просто открывает почту, со скриптом —
-   окно, где почта стоит первым действием, а мессенджеры и сети ниже.
+   обычный mailto: без скрипта она просто открывает почту.
 
-   Строка с пустым href не выводится: ссылка, которая никуда не ведёт,
+   Контакт с пустым href не выводится: кнопка, которая никуда не ведёт,
    хуже отсутствующей. */
 
 import { el } from "./store.js";
@@ -16,77 +19,87 @@ import { el } from "./store.js";
 export const EMAIL = "n27tomash@gmail.com";
 
 export const CONTACTS = [
-  { name: "Telegram", handle: "@beyoy", href: "https://t.me/beyoy" },
-  { name: "MAX", handle: "", href: "" }, // ссылка ещё не задана — строка скрыта
-  { name: "Instagram", handle: "@nicktmsh", href: "https://www.instagram.com/nicktmsh" },
-  { name: "YouTube", handle: "@nicktmsh", href: "https://www.youtube.com/@nicktmsh" },
-  { name: "Pinterest", handle: "nicktmsh", href: "https://www.pinterest.com/nicktmsh/" },
+  { key: "mail", name: "Email", hint: EMAIL, href: `mailto:${EMAIL}` },
+  { key: "telegram", name: "Telegram", hint: "@beyoy", href: "https://t.me/beyoy" },
+  { key: "max", name: "MAX", hint: "", href: "" }, // ссылка ещё не задана — кнопка скрыта
+  { key: "instagram", name: "Instagram", hint: "@nicktmsh", href: "https://www.instagram.com/nicktmsh" },
+  { key: "youtube", name: "YouTube", hint: "@nicktmsh", href: "https://www.youtube.com/@nicktmsh" },
+  { key: "pinterest", name: "Pinterest", hint: "nicktmsh", href: "https://www.pinterest.com/nicktmsh/" },
 ];
 
-/* Строки списка: название слева, ник справа, стрелка сайта (.arrow) на
-   ховере. Почта тоже строкой — в списке «обо мне» она нужна наравне
-   с остальными. */
-export function contactRows({ withMail = false } = {}) {
-  const rows = CONTACTS.filter((c) => c.href).map((c) => ({ ...c, external: true }));
-  if (withMail) rows.unshift({ name: "Email", handle: EMAIL, href: `mailto:${EMAIL}` });
-  return rows.map((c) =>
-    el("li", { class: "contacts__row" }, [
+/* Иконки 24×24, контуром. Заливка — только у мелких точек. */
+const ICONS = {
+  mail: '<rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.8 6.6 12 12.8l8.2-6.2"/>',
+  telegram: '<path d="M20.8 4.2 3.2 11.3l5.7 2.1 2 5.9 3.1-3.6 4.6 3.5z"/><path d="M8.9 13.4 20.8 4.2"/>',
+  max: '<path d="M12 3.6c-4.7 0-8.4 3.3-8.4 7.6 0 2.2 1 4.2 2.6 5.5l-.6 3.7 3.7-1.9c.8.2 1.7.3 2.7.3 4.7 0 8.4-3.3 8.4-7.6S16.7 3.6 12 3.6z"/>',
+  instagram: '<rect x="3.6" y="3.6" width="16.8" height="16.8" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17.1" cy="6.9" r=".7" fill="currentColor" stroke="none"/>',
+  youtube: '<rect x="2.6" y="5.6" width="18.8" height="12.8" rx="4"/><path d="M10.2 9.3v5.4l4.6-2.7z" fill="currentColor" stroke="none"/>',
+  pinterest: '<circle cx="12" cy="12" r="8.6"/><path d="M11.9 11.2 10.3 20.4M10.1 14.1c.6.7 1.5 1.1 2.5 1.1 2.2 0 3.7-1.9 3.7-4.4S14.3 6.6 12 6.6c-2.7 0-4.4 1.9-4.4 4.2 0 .9.3 1.7.9 2.2"/>',
+  close: '<path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/>',
+};
+
+function icon(key) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("class", "social__icon");
+  svg.innerHTML = ICONS[key];
+  return svg;
+}
+
+/* Ряд кнопок. У почты подсказка — сам адрес: навёл — увидел, нажал —
+   открылась почта. */
+export function socials() {
+  return CONTACTS.filter((c) => c.href).map((c) => {
+    const external = !c.href.startsWith("mailto:");
+    return el("li", {}, [
       el(
         "a",
         {
-          class: "contacts__link",
+          class: "social",
           href: c.href,
-          target: c.external ? "_blank" : null,
-          rel: c.external ? "noopener" : null,
+          target: external ? "_blank" : null,
+          rel: external ? "noopener" : null,
+          "aria-label": c.hint ? `${c.name}: ${c.hint}` : c.name,
+          title: c.hint ? `${c.name} · ${c.hint}` : c.name,
         },
-        [
-          el("span", { class: "contacts__name", text: c.name }),
-          el("span", { class: "contacts__handle", text: c.handle }),
-          el("span", { class: "contacts__arrow arrow", "aria-hidden": "true" }),
-        ]
+        [icon(c.key)]
       ),
-    ])
-  );
+    ]);
+  });
 }
 
-/* --- Окно ------------------------------------------------------------------ */
+/* --- Окно ------------------------------------------------------------------
+   Компактная панель по центру: подпись и крестик, одна фраза, кнопка
+   почты и ряд иконок, строка доступности. Без миллиметровки и без
+   крупного вопроса — вопрос уже был на странице, окно отвечает на него. */
 
 function build() {
-  const copy = el("button", { class: "pill contact__copy", type: "button", text: "copy" });
-  copy.addEventListener("click", () => {
-    if (navigator.clipboard) navigator.clipboard.writeText(EMAIL);
-    copy.textContent = "copied";
-    setTimeout(() => (copy.textContent = "copy"), 1400);
-  });
-
-  const title = el("h2", { class: "contact__title", id: "contact-title" });
-  title.innerHTML = 'Have a <em>project</em>, or just<br>a feeling about <em class="alt">one</em>?';
-
-  const dialog = el("dialog", { class: "contact", "aria-labelledby": "contact-title" }, [
-    el("div", { class: "contact__in graph" }, [
-      el("div", { class: "contact__head" }, [
-        el("p", { class: "label", text: "Get in touch" }),
-        el("button", { class: "pill contact__close", type: "button", "data-close": "", text: "close" }),
-      ]),
-      title,
-      el("p", {
-        class: "contact__note",
-        text:
-          "Write me two sentences about it. I’ll tell you honestly whether I’m the right person for it — and if I’m not, I usually know who is.",
-      }),
-      el("div", { class: "contact__mail" }, [
-        el("a", { class: "contact__address", href: `mailto:${EMAIL}`, text: EMAIL }),
-        copy,
-      ]),
-      el("ul", { class: "contacts" }, contactRows()),
-      el("p", {
-        class: "contact__status",
-        text: "Currently taking one project at a time. Working internationally.",
-      }),
-    ]),
+  const close = el("button", { class: "social contact__close", type: "button", "aria-label": "Close" }, [
+    icon("close"),
   ]);
 
-  dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
+  const dialog = el("dialog", { class: "contact", "aria-labelledby": "contact-title" }, [
+    el("div", { class: "contact__head" }, [
+      el("p", { class: "label", text: "Get in touch" }),
+      close,
+    ]),
+    el("p", { class: "contact__title", id: "contact-title", text: "Write me two sentences about it." }),
+    el("p", {
+      class: "contact__note",
+      text: "I’ll tell you honestly whether I’m the right person for it — and if I’m not, I usually know who is.",
+    }),
+    el("div", { class: "contact__actions" }, [
+      el("a", { class: "pill contact__mail", href: `mailto:${EMAIL}`, text: "email me" }),
+      el("ul", { class: "socials" }, socials().slice(1)), // почта уже кнопкой слева
+    ]),
+    el("p", {
+      class: "contact__status",
+      text: "Currently taking one project at a time. Working internationally.",
+    }),
+  ]);
+
+  close.addEventListener("click", () => dialog.close());
   // Клик по подложке закрывает; клик внутри панели — нет.
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();
@@ -109,7 +122,7 @@ document.addEventListener("click", (e) => {
   openContact();
 });
 
-// Списки контактов в разметке страницы (блок «обо мне» на главной).
-document.querySelectorAll("[data-contacts]").forEach((host) => {
-  host.replaceChildren(...contactRows({ withMail: true }));
+// Ряды иконок в разметке страницы (блок «обо мне» на главной).
+document.querySelectorAll("[data-socials]").forEach((host) => {
+  host.replaceChildren(...socials());
 });

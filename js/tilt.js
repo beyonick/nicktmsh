@@ -36,6 +36,7 @@ export const GROUPS = {
   logo: { label: "Знак бренда в ячейке", sel: ".card__logo", mode: "element", amount: 4, rot: 18, shift: 0 },
   title: { label: "Заголовок раздела", sel: ".page-title:not(.page-title--lab)", mode: "screen", amount: 1, rot: 5, shift: 24 },
   next: { label: "Следующий кейс", sel: ".case-next__link", mode: "screen", amount: 1, rot: 5, shift: 24 },
+  avatar: { label: "Фото «обо мне»", sel: ".me__photo", mode: "element", amount: 1.5, rot: 7, shift: 0 },
 };
 
 export const PARAMS = ["mode", "amount", "rot", "shift"];

@@ -473,19 +473,22 @@ button.pill {
 
 /* --- 05 / Обо мне -----------------------------------------------------------
    Сетка 3×304, как у проектов: фото в первой колонке, текст во второй и
-   третьей. Фото кадрировано угловыми метками (data-vg="corners"), как
-   остальная техническая графика сайта. */
+   третьей. Только имя, абзац и кнопки контактов — без подписей и рамок.
+   Фото чёрно-белое; под чернилами за курсором проступает цветным
+   (js/spot.js, data-ink-reveal). */
 
 .me {
   margin-block-start: calc(40 * var(--u));
   display: grid;
   grid-template-columns: var(--col) 1fr;
   gap: calc(40 * var(--u));
-  align-items: start;
+  align-items: end;
 }
 .me__photo {
+  position: relative;
   margin: 0;
-  padding: calc(10 * var(--u));
+  overflow: hidden;
+  border-radius: calc(12 * var(--u));
 }
 .me__photo img {
   display: block;
@@ -501,13 +504,6 @@ button.pill {
   line-height: var(--lh-display);
   letter-spacing: var(--track);
 }
-.me__role {
-  margin-block-start: calc(10 * var(--u));
-  font-family: var(--mono);
-  font-size: var(--fs-caption);
-  line-height: calc(18 * var(--u));
-  color: var(--accent);
-}
 .me__bio {
   max-width: calc(var(--col) * 1.9);
   margin-block-start: calc(20 * var(--u));
@@ -516,116 +512,114 @@ button.pill {
   line-height: calc(22 * var(--u));
   color: color-mix(in srgb, var(--fg) 62%, var(--bg));
 }
-.me__contacts { margin-block-start: calc(28 * var(--u)); }
+.me__socials { margin-block-start: calc(32 * var(--u)); }
 
-/* --- Контакты: строки (окно и блок «обо мне») --------------------------------
-   Строка — название слева, ник справа, стрелка сайта выезжает на ховере.
-   Линейки между строками — та же рамка --line, что везде. */
+/* --- Кнопки-иконки контактов ---------------------------------------------------
+   Круг той же обводки, что пилюли, иконка внутри той же линией. На ховере
+   заливается акцентом, как текущая пилюля. */
 
-.contacts { border-block-start: var(--line) solid var(--hair); }
-.contacts__link {
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * var(--u));
+}
+.social {
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: calc(12 * var(--u));
-  padding-block: calc(12 * var(--u));
-  border-block-end: var(--line) solid var(--hair);
-  font-family: var(--mono);
-  font-size: var(--fs-caption);
-  line-height: calc(18 * var(--u));
-  transition: color var(--dur-ui) var(--ease);
-}
-.contacts__handle { color: color-mix(in srgb, var(--fg) 55%, var(--bg)); transition: color var(--dur-ui) var(--ease); }
-.contacts__arrow {
-  --head: calc(7 * var(--u));
-  position: relative;
-  width: 0;
-  height: calc(10 * var(--u));
-  opacity: 0;
-  transform: translateX(calc(-6 * var(--u)));
+  place-items: center;
+  width: calc(44 * var(--u));
+  height: calc(44 * var(--u));
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border: var(--line) solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
   transition:
-    width var(--dur-ui) var(--ease),
-    opacity var(--dur-ui) var(--ease),
-    transform var(--dur-ui) var(--ease);
+    background-color var(--dur-ui) var(--ease),
+    color var(--dur-ui) var(--ease);
 }
-.contacts__link:hover,
-.contacts__link:focus-visible { color: var(--accent); }
-.contacts__link:hover .contacts__handle,
-.contacts__link:focus-visible .contacts__handle { color: var(--accent); }
-.contacts__link:hover .contacts__arrow,
-.contacts__link:focus-visible .contacts__arrow {
-  width: calc(16 * var(--u));
-  opacity: 1;
-  transform: none;
+.social:hover,
+.social:focus-visible {
+  background: var(--accent);
+  color: var(--bg);
 }
+.social__icon {
+  width: 46%;
+  height: 46%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--line-px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+.social__icon * { vector-effect: non-scaling-stroke; }
 
 /* --- Окно «Get in touch» (js/contact.js) --------------------------------------
-   Панель на ширину колонки контента, на миллиметровке, как блок 05.
-   Появляется снизу вверх с затуханием подложки. */
+   Компактная панель: ширина — две колонки сетки, высота — по содержимому.
+   Чистый фон, одна рамка. Появляется снизу вверх, подложка затемняется. */
 
 .contact {
-  width: min(calc(var(--page) + 80 * var(--u)), calc(100vw - 32px));
+  width: min(calc(var(--col) * 2), calc(100vw - 32px));
   max-width: none;
   max-height: calc(100dvh - 32px);
-  padding: 0;
+  padding: calc(24 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u));
   border: var(--line) solid var(--hair);
-  border-radius: calc(24 * var(--u));
+  border-radius: calc(20 * var(--u));
   background: var(--bg);
   color: var(--fg);
   overflow: auto;
 }
 .contact::backdrop {
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
   backdrop-filter: blur(6px);
 }
 .contact[open] { animation: contact-in var(--dur) var(--ease-out); }
 .contact[open]::backdrop { animation: contact-fade var(--dur) var(--ease-out); }
-@keyframes contact-in { from { opacity: 0; translate: 0 calc(40 * var(--u)); } }
+@keyframes contact-in { from { opacity: 0; translate: 0 calc(24 * var(--u)); } }
 @keyframes contact-fade { from { opacity: 0; } }
 
-.contact__in {
-  padding: calc(28 * var(--u)) calc(40 * var(--u)) calc(36 * var(--u));
-}
 .contact__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+.contact__close {
+  width: calc(36 * var(--u));
+  height: calc(36 * var(--u));
+  color: var(--fg);
+  border-color: var(--hair);
+}
 .contact__title {
-  margin-block-start: calc(56 * var(--u));
+  margin-block-start: calc(28 * var(--u));
   font-family: var(--display);
   font-weight: 700;
-  font-size: var(--fs-display);
-  line-height: var(--lh-display);
+  font-size: calc(32 * var(--u));
+  line-height: calc(32 * var(--u));
   letter-spacing: var(--track);
 }
-.contact__title em { font-style: normal; color: var(--accent); }
-.contact__title em.alt { color: var(--accent-2); }
 .contact__note {
-  max-width: calc(var(--col) * 2);
-  margin-block-start: calc(24 * var(--u));
+  margin-block-start: calc(12 * var(--u));
   font-family: var(--mono);
   font-size: var(--fs-caption);
   line-height: calc(22 * var(--u));
   color: color-mix(in srgb, var(--fg) 62%, var(--bg));
 }
-.contact__mail {
+.contact__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: calc(16 * var(--u));
-  margin-block: calc(40 * var(--u)) calc(32 * var(--u));
+  gap: calc(8 * var(--u));
+  margin-block-start: calc(28 * var(--u));
 }
-.contact__address {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: var(--fs-display);
-  line-height: var(--lh-display);
-  letter-spacing: var(--track);
-  color: var(--accent);
-  text-decoration: underline;
-  text-decoration-thickness: var(--line);
-  text-underline-offset: 0.18em;
+.contact__mail {
+  height: calc(44 * var(--u));
+  min-height: 36px;
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 .contact__status {
   margin-block-start: calc(24 * var(--u));
@@ -782,8 +776,8 @@ button.pill {
   .branches { grid-template-columns: 1fr; gap: calc(8 * var(--u)); }
   .me { grid-template-columns: 1fr; gap: calc(24 * var(--u)); }
   .me__bio { max-width: none; }
-  .contact__in { padding: calc(20 * var(--u)); }
-  .contact__address { font-size: calc(22 * var(--u)); line-height: calc(26 * var(--u)); }
+  .contact { padding: calc(20 * var(--u)); }
+  .contact__title { font-size: calc(24 * var(--u)); line-height: calc(26 * var(--u)); }
   .work { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: 100%; }
   .card { aspect-ratio: 1; }
 }
