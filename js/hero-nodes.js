@@ -2,10 +2,14 @@
 
    Над именем — три входа (DESIGN, RENDER, CODE) со значками софта, провода
    сходятся в порт над именем; под подписью выходит OUTPUT · ON SCREEN с
-   живым роликом из Lab. Поток сверху вниз — так же, как читается страница:
-   имя занимает всю колонку, и по бокам нодам места нет. Та же нодовая
+   живым роликом из Lab. Клик по выходу переключает ролик. Правее выхода —
+   ещё две ноды: SHOWREEL открывает шоурил, ABOUT ME спускает к блоку
+   «обо мне». Поток сверху вниз — так же, как читается страница: имя
+   занимает всю колонку, и по бокам нодам места нет. Та же нодовая
    система, что в пайплайне (css/nodes.css): ноды можно таскать, по
    проводам бежит сигнал, пока экран виден. На телефоне графа нет. */
+
+import { load } from "./store.js";
 
 const NS = "http://www.w3.org/2000/svg";
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -16,7 +20,16 @@ const INPUTS = [
   { type: "02", tool: "Render", icons: ["houdini", "cinema-4d", "redshift"] },
   { type: "03", tool: "Code", text: "JS · WebGL · GLSL" },
 ];
-const OUTPUT = { type: "Output", tool: "On screen", video: "lab/alien-alloy/alien-alloy-growth-se.webm" };
+// Ролики выхода; первый — стилистически ближе всего к первому экрану.
+const VIDEOS = [
+  "lab/alien-alloy/alien-alloy-growth-se.webm",
+  "lab/grass/grass-flow-se.webm",
+  "lab/avgust/avgust-se.webm",
+  "lab/damaged/day17-damaged-1-se.webm",
+  "lab/volumetric/day29-volumetric-se.webm",
+  "lab/motion-blur/day30-motion-blur-se.webm",
+];
+const pad = (n) => String(n).padStart(2, "0");
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -56,23 +69,64 @@ function makeNode(spec) {
   return node;
 }
 
+/* Шоурил: то же окно, что на /work (стили .reel-box — в home.css). */
+function reelBox(src) {
+  const box = el("dialog", "reel-box");
+  box.setAttribute("aria-label", "Showreel");
+  const close = el("button", "pill reel-box__close", "close");
+  close.type = "button";
+  const video = el("video", "reel-box__video");
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = "none";
+  box.append(close, video);
+  close.addEventListener("click", () => box.close());
+  box.addEventListener("click", (e) => {
+    if (e.target === box) box.close();
+  });
+  box.addEventListener("close", () => video.pause());
+  document.body.append(box);
+  return () => {
+    if (video.getAttribute("src") !== src) video.src = src;
+    box.showModal();
+    video.play().catch(() => {});
+  };
+}
+
 function mount(hero) {
   const name = hero.querySelector(".hero__name");
   if (!name) return;
 
   const layer = el("div", "hero__graph");
-  layer.setAttribute("aria-hidden", "true");
   const wires = document.createElementNS(NS, "svg");
   wires.setAttribute("class", "nodes__wires");
+  wires.setAttribute("aria-hidden", "true");
   layer.append(wires);
 
   const ins = INPUTS.map((s) => ({ node: makeNode(s), dx: 0, dy: 0 }));
-  const out = { node: makeNode(OUTPUT), dx: 0, dy: 0 };
+  const out = {
+    node: makeNode({ type: "Output", tool: `On screen · 01/${pad(VIDEOS.length)}`, video: VIDEOS[0] }),
+    dx: 0,
+    dy: 0,
+  };
+  const reel = { node: makeNode({ type: "Showreel", tool: "2025", text: "▶ play the reel" }), dx: 0, dy: 0 };
+  const about = { node: makeNode({ type: "About", tool: "me", text: "↓ who’s behind this" }), dx: 0, dy: 0 };
   ins.forEach((n) => n.node.querySelector(".node__port--in").classList.add("is-idle"));
+  about.node.querySelector(".node__port--out").classList.add("is-idle");
   out.node.querySelector(".node__port--out").classList.add("is-idle");
-  [...ins, out].forEach((n) => layer.append(n.node));
+  // Шоурил и «обо мне» подключены сбоку — порты у них слева и справа.
+  [reel, about].forEach((n) => n.node.classList.add("hero-node--side"));
+  // Выход и две ноды правее нажимаются, как кнопки.
+  for (const [n, label] of [[out, "Next video"], [reel, "Play showreel"], [about, "About me"]]) {
+    n.node.classList.add("hero-node--action");
+    n.node.setAttribute("role", "button");
+    n.node.setAttribute("aria-label", label);
+    n.node.tabIndex = 0;
+  }
+  const all = [...ins, out, reel, about];
+  all.forEach((n) => layer.append(n.node));
 
-  // Порты у имени: вход слева, выход справа.
+  // Порты у имени: вход сверху, выход снизу.
   const portIn = el("span", "hero__port");
   const portOut = el("span", "hero__port");
   layer.append(portIn, portOut);
@@ -90,6 +144,8 @@ function mount(hero) {
   };
   const inWires = ins.map(wire);
   const outWire = wire();
+  const reelWire = wire();
+  const aboutWire = wire();
 
   hero.append(layer);
 
@@ -104,22 +160,31 @@ function mount(hero) {
     const nameTop = N.top - H.top;
     const subBottom = S.bottom - H.top;
 
-    // Входы — ряд над именем, по центру.
+    // Входы — ряд над именем, по центру; верх общий, по самой высокой.
     const w = 150 * u;
     const gap = 56 * u;
     const row = 3 * w + 2 * gap;
-    // Верх у всех входов общий — по самой высокой ноде.
     ins.forEach((n) => (n.node.style.width = `${w}px`));
     const tall = Math.max(...ins.map((n) => n.node.offsetHeight));
     ins.forEach((n, i) => {
       n.node.style.left = `${cx - row / 2 + i * (w + gap) + n.dx}px`;
       n.node.style.top = `${nameTop - 34 * u - tall + n.dy}px`;
     });
-    // Выход — под подписью.
+
+    // Выход — под подписью, по центру; правее — шоурил и «обо мне» на
+    // одной с ним средней линии.
     const ow = 150 * u;
+    const oy = subBottom + 44 * u;
     out.node.style.width = `${ow}px`;
     out.node.style.left = `${cx - ow / 2 + out.dx}px`;
-    out.node.style.top = `${subBottom + 44 * u + out.dy}px`;
+    out.node.style.top = `${oy + out.dy}px`;
+    const mid = oy + out.node.offsetHeight / 2;
+    const sw = 120 * u;
+    [reel, about].forEach((n, i) => {
+      n.node.style.width = `${sw}px`;
+      n.node.style.left = `${cx + ow / 2 + 48 * u + i * (sw + 40 * u) + n.dx}px`;
+      n.node.style.top = `${mid - n.node.offsetHeight / 2 + n.dy}px`;
+    });
 
     base = { pin: { x: cx, y: nameTop - 12 * u }, pout: { x: cx, y: subBottom + 14 * u } };
     portIn.style.left = `${base.pin.x}px`;
@@ -129,36 +194,92 @@ function mount(hero) {
     draw();
   }
 
-  // Провод сверху вниз: касательные вертикальные.
-  function curve(a, b, l) {
-    const dy = Math.max(20, Math.abs(b.y - a.y) * 0.5);
-    const d = `M${a.x},${a.y} C${a.x},${a.y + dy} ${b.x},${b.y - dy} ${b.x},${b.y}`;
+  // Провода: сверху вниз — касательные вертикальные, вбок — горизонтальные.
+  const set = (l, d) => {
     l.line.setAttribute("d", d);
     l.flow.setAttribute("d", d);
-  }
+  };
+  const down = (a, b, l) => {
+    const dy = Math.max(20, Math.abs(b.y - a.y) * 0.5);
+    set(l, `M${a.x},${a.y} C${a.x},${a.y + dy} ${b.x},${b.y - dy} ${b.x},${b.y}`);
+  };
+  const side = (a, b, l) => {
+    const dx = Math.max(20, Math.abs(b.x - a.x) * 0.5);
+    set(l, `M${a.x},${a.y} C${a.x + dx},${a.y} ${b.x - dx},${b.y} ${b.x},${b.y}`);
+  };
 
   function draw() {
     if (!base) return;
     const H = hero.getBoundingClientRect();
     wires.setAttribute("viewBox", `0 0 ${H.width} ${H.height}`);
-    ins.forEach((n, i) => {
-      const b = n.node.querySelector(".node__body").getBoundingClientRect();
-      curve({ x: b.left + b.width / 2 - H.left, y: b.bottom - H.top }, base.pin, inWires[i]);
-    });
-    const b = out.node.querySelector(".node__body").getBoundingClientRect();
-    curve(base.pout, { x: b.left + b.width / 2 - H.left, y: b.top - H.top }, outWire);
+    const box = (n) => {
+      const r = n.node.querySelector(".node__body").getBoundingClientRect();
+      return {
+        l: r.left - H.left,
+        r: r.right - H.left,
+        t: r.top - H.top,
+        b: r.bottom - H.top,
+        cx: r.left + r.width / 2 - H.left,
+        cy: r.top + r.height / 2 - H.top,
+      };
+    };
+    ins.forEach((n, i) => down({ x: box(n).cx, y: box(n).b }, base.pin, inWires[i]));
+    const o = box(out);
+    down(base.pout, { x: o.cx, y: o.t }, outWire);
+    const r = box(reel);
+    side({ x: o.r, y: o.cy }, { x: r.l, y: r.cy }, reelWire);
+    const a = box(about);
+    side({ x: r.r, y: r.cy }, { x: a.l, y: a.cy }, aboutWire);
   }
 
-  // Перетаскивание: сдвиг хранится от расчётного места, поэтому переживает
-  // пересчёт раскладки.
-  for (const n of [...ins, out]) {
+  /* Действия нод справа. */
+  const video = out.node.querySelector("video");
+  const tool = out.node.querySelector(".node__tool");
+  let clip = 0;
+  function nextVideo() {
+    clip = (clip + 1) % VIDEOS.length;
+    out.node.classList.add("is-swap");
+    setTimeout(() => {
+      video.src = BASE + VIDEOS[clip];
+      tool.textContent = `On screen · ${pad(clip + 1)}/${pad(VIDEOS.length)}`;
+      video.play().catch(() => {});
+    }, reduced ? 0 : 180);
+  }
+  video.addEventListener("loadeddata", () => out.node.classList.remove("is-swap"));
+
+  let playReel = null;
+  load("projects")
+    .then((data) => {
+      const v = data.showreel && data.showreel.video;
+      if (v) playReel = reelBox(/^https?:/.test(v) ? v : (data.mediaBase || "") + v);
+    })
+    .catch(() => {});
+
+  const actions = new Map([
+    [out.node, nextVideo],
+    [reel.node, () => playReel && playReel()],
+    [
+      about.node,
+      () =>
+        document
+          .querySelector(".me, #talk")
+          ?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }),
+    ],
+  ]);
+
+  // Перетаскивание и клик: сдвинул больше чем на 4 px — перетащил, иначе
+  // нажал. Сдвиг хранится от расчётного места и переживает пересчёт.
+  for (const n of all) {
     n.node.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       e.preventDefault();
       n.node.setPointerCapture(e.pointerId);
-      n.node.classList.add("is-dragging");
       const start = { x: e.clientX, y: e.clientY, dx: n.dx, dy: n.dy };
+      let moved = false;
       const move = (ev) => {
+        if (!moved && Math.hypot(ev.clientX - start.x, ev.clientY - start.y) < 4) return;
+        moved = true;
+        n.node.classList.add("is-dragging");
         n.dx = start.dx + ev.clientX - start.x;
         n.dy = start.dy + ev.clientY - start.y;
         layout();
@@ -168,14 +289,22 @@ function mount(hero) {
         n.node.removeEventListener("pointermove", move);
         n.node.removeEventListener("pointerup", up);
         n.node.removeEventListener("pointercancel", up);
+        if (!moved && actions.has(n.node)) actions.get(n.node)();
       };
       n.node.addEventListener("pointermove", move);
       n.node.addEventListener("pointerup", up);
       n.node.addEventListener("pointercancel", up);
     });
+    if (actions.has(n.node)) {
+      n.node.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          actions.get(n.node)();
+        }
+      });
+    }
   }
 
-  const video = out.node.querySelector("video");
   video.addEventListener("loadedmetadata", layout);
   new IntersectionObserver((entries) => {
     const on = entries[0].isIntersecting;
@@ -189,6 +318,6 @@ function mount(hero) {
   layout();
 }
 
-if (matchMedia("(min-width: 761px)").matches) {
-  document.querySelectorAll(".hero").forEach(mount);
-}
+// Монтируем всегда: на узком экране граф прячет CSS, а окно могут
+// расширить уже после загрузки.
+document.querySelectorAll(".hero").forEach(mount);

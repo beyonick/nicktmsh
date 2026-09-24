@@ -166,8 +166,9 @@
   <section class="band wrap" id="talk">
     <p class="label rise">05/ Lets talk</p>
     <div class="me">
-      <!-- Фото чёрно-белое, плоскость наклоняется за курсором (js/tilt.js). -->
-      <figure class="me__photo rise">
+      <!-- Фото чёрно-белое, плоскость наклоняется за курсором (js/tilt.js).
+           Клик меняет кадр за шторками (js/avatar.js); список — data-photos. -->
+      <figure class="me__photo rise" data-photos='["assets/me/nikita-tomash.webp", "assets/me/nikita-tomash-2.webp"]'>
         <img src="assets/me/nikita-tomash.webp" alt="Nikita Tomash" width="720" height="720" loading="lazy" decoding="async">
       </figure>
       <div class="me__text rise" style="--delay:80ms">
@@ -370,5 +371,6 @@
 <script src="js/cursor.js" type="module"></script>
 <script src="js/pipeline.js" type="module"></script>
 <script src="js/hero-nodes.js" type="module"></script>
+<script src="js/avatar.js" type="module"></script>
 </body>
 </html>

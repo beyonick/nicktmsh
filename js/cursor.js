@@ -13,7 +13,7 @@
 const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const HOT = "a, button, [role='switch'], [role='radio'], [data-contact], .card, .logo, .marquee b, .picto, .social, summary, label";
+const HOT = "a, button, [role='button'], [role='switch'], [role='radio'], [data-contact], .card, .logo, .marquee b, .picto, .social, summary, label";
 // Таскаются ноды схем; ноды окна контактов только нажимаются.
 const DRAG = ".node:not(.contact .node)";
 const TEXT = "input, textarea, select, [contenteditable='true']";

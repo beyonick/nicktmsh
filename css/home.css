@@ -492,7 +492,37 @@ button.pill {
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: calc(12 * var(--u));
+}
+/* Шторки (js/avatar.js): полосы акцента въезжают по очереди с разных
+   сторон, закрывают кадр, кадр меняется, полосы разъезжаются. */
+.me__shutter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  pointer-events: none;
+}
+.me__shutter i {
+  background: var(--accent);
+  scale: 0 1;
+  transform-origin: calc(100% * mod(var(--i), 2)) 50%;
+  transition: scale 380ms var(--ease);
+  transition-delay: calc(var(--i) * 40ms);
+}
+.me__photo.is-closed .me__shutter i { scale: 1 1; }
+.me__count {
+  position: absolute;
+  inset-block-end: calc(10 * var(--u));
+  inset-inline-end: calc(12 * var(--u));
+  padding: calc(2 * var(--u)) calc(8 * var(--u));
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0.1em;
+  color: var(--fg);
+  pointer-events: none;
 }
 .me__photo img {
   display: block;
@@ -1151,3 +1181,34 @@ html.has-cursor :is(input, textarea, select, [contenteditable="true"]) { cursor:
 .cursor.is-text { opacity: 0; }
 
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* --- Окно шоурила --------------------------------------------------------------
+   Общее для /work (кнопка в ветке Motion) и главной (нода SHOWREEL на
+   первом экране). Шоурил вертикальный, поэтому окно — по высоте экрана. */
+
+.reel-box {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+}
+.reel-box::backdrop { background: color-mix(in srgb, var(--bg) 92%, transparent); }
+.reel-box__video {
+  display: block;
+  height: 88vh;
+  max-width: 92vw;
+  background: var(--bg);
+}
+.reel-box__close {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(100% + 12px);
+  color: var(--accent);
+  background: var(--bg);
+}
+@media (max-width: 760px) {
+  .reel-box__video { height: auto; width: 92vw; }
+  .reel-box__close { inset-inline-start: auto; inset-inline-end: 0; inset-block-start: calc(100% + 12px); }
+}

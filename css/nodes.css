@@ -315,7 +315,19 @@
 /* Поток сверху вниз: порты у нод — сверху (вход) и снизу (выход). */
 .hero__graph .node__port--in { inset-block-start: 0; inset-inline-start: 50%; }
 .hero__graph .node__port--out { inset-block-start: 100%; inset-inline-start: 50%; }
-.hero__graph .node__media { aspect-ratio: 16 / 9; object-fit: cover; }
+.hero__graph .hero-node--side .node__port { inset-block-start: 50%; }
+.hero__graph .hero-node--side .node__port--in { inset-inline-start: 0; }
+.hero__graph .hero-node--side .node__port--out { inset-inline-start: 100%; }
+.hero__graph .node__media {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: opacity 180ms var(--ease);
+}
+.hero__graph .node.is-swap .node__media { opacity: 0.1; }
+.hero-node--action .node__body { cursor: pointer; }
+.hero-node--action:hover .node__body,
+.hero-node--action:focus-visible .node__body { box-shadow: 0 0 0 var(--line) var(--accent); }
+.hero-node--action:focus-visible { outline: none; }
 .hero__graph .node {
   position: absolute;
   pointer-events: auto;
