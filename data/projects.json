@@ -7,6 +7,81 @@
   },
   "projects": [
     {
+      "slug": "forma-budushchego",
+      "title": "Forma Budushchego",
+      "titleRu": "Форма Будущего",
+      "client": "Форма Будущего",
+      "year": 2026,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": "Full cycle: mark, identity, site",
+      "summary": "Mark, identity and the site, decided as one language rather than in sequence.",
+      "capabilities": [
+        "Identity",
+        "Web"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе",
+        "Сайт пишется кодом позже — тогда кейс вернёт ветку web",
+        "Текст, решения, обложка"
+      ]
+    },
+    {
+      "slug": "tempus-watch",
+      "title": "Tempus Watch",
+      "titleRu": "Tempus Watch",
+      "client": "Tempus Watch",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": null,
+      "summary": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе — данных пока нет",
+        "Заполнить: год, роль, объём работ, текст, обложка"
+      ]
+    },
+    {
+      "slug": "t",
+      "title": "Troyanovskiy",
+      "titleRu": "Ваня Трояновский",
+      "client": "",
+      "year": 2026,
+      "branch": "web",
+      "kicker": "branding, web",
+      "role": "Design and hand-written front-end",
+      "summary": "",
+      "capabilities": [
+        "Web design",
+        "Hand-written front-end"
+      ],
+      "cover": "",
+      "logo": null,
+      "color": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": []
+    },
+    {
       "slug": "yandex-music",
       "title": "Yandex Music",
       "titleRu": "Яндекс музыка Итоги года 2025",
@@ -83,136 +158,27 @@
       "color": "#FFBC0D"
     },
     {
-      "slug": "m",
-      "title": "MTZ",
-      "titleRu": "МТЗ",
-      "client": "",
-      "year": 2026,
-      "branch": "motion",
-      "kicker": "Houdini simulation",
-      "role": "3D Generalist",
-      "summary": "",
+      "slug": "zhenya",
+      "title": "Zhenya",
+      "titleRu": "Женя",
+      "client": "Женя",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Brand and website",
+      "role": null,
+      "summary": null,
       "capabilities": [],
-      "cover": "",
+      "cover": null,
       "logo": null,
       "link": null,
-      "linkLabel": null,
       "featured": false,
       "published": false,
-      "status": "done",
+      "status": "in-progress",
       "body": [],
-      "todo": []
-    },
-    {
-      "slug": "pervaya-tsifra",
-      "title": "Pervaya Tsifra",
-      "titleRu": "Первая Цифра",
-      "client": "Первая Цифра",
-      "year": 2025,
-      "branch": "branding",
-      "kicker": "Logo, branding, mascot, print, web",
-      "role": "Full cycle",
-      "summary": "A brand built from zero for an IT aggregator: logo, identity, site, mascot and the graphic materials around them.",
-      "capabilities": [
-        "Logo",
-        "Identity",
-        "Web",
-        "Mascot",
-        "Graphic materials"
-      ],
-      "cover": null,
-      "logo": "assets/logos/pervaya-tsifra.svg",
-      "link": "https://1-cifra.ru/",
-      "linkLabel": "1-cifra.ru",
-      "featured": true,
-      "published": true,
-      "status": "done",
-      "body": [
-        "Positioning, mark, type system, colour, mascot and the printed set were decided together rather than handed between three people.",
-        "The brand shipped: the live site is the proof, not a mockup."
-      ],
       "todo": [
-        "Текст кейса: задача, решения, результат, 2–3 цифры (пришлёт)"
-      ],
-      "media": [
-        {
-          "src": "work/pervaya-tsifra/dr-shot.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/artboard-27-2x-80.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avocado-sc.mp4",
-          "caption": "Mascot"
-        },
-        {
-          "src": "work/pervaya-tsifra/image-4a6082f7-f484-4c16-b4ec-4b8dae8fdd24.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/image-6eef3626-b6e4-4c89-8ab1-8b0f1997ae86.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/2.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/3.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/image-91b347a2-bb13-463f-86c9-9e58f8a76f51.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/image-9822001c-6ca3-400e-8b72-081cc167be22.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avatarblack-youtube.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avatarlime-youtube.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avatarwhite-youtube.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/track.mp4"
-        }
-      ],
-      "color": "#D3FF00",
-      "logoRatio": 2.153
-    },
-    {
-      "slug": "smallteatrik",
-      "title": "Small Puppet Theatre",
-      "titleRu": "Маленький театрик кукол",
-      "client": "Маленький театрик кукол, Геленджик",
-      "year": 2026,
-      "branch": "web",
-      "kicker": "Web design and front-end",
-      "role": "Design and hand-written front-end",
-      "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
-      "capabilities": [
-        "Web design",
-        "Hand-written front-end"
-      ],
-      "cover": "assets/work/smallteatrik/site-home.webp",
-      "logo": "assets/logos/smallteatrik.svg",
-      "link": "https://smallteatrik.vercel.app/",
-      "linkLabel": "smallteatrik.vercel.app",
-      "featured": true,
-      "published": true,
-      "status": "done",
-      "body": [
-        "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
-        "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
-      ],
-      "todo": [],
-      "logoRatio": 0.792,
-      "color": "#FF6A2B",
-      "media": [
-        {
-          "src": "assets/work/smallteatrik/site-home.webp",
-          "size": "full",
-          "caption": "Home"
-        }
+        "В работе — данных пока нет",
+        "Уточнить, что за проект и как он называется на сайте",
+        "Заполнить: год, роль, объём работ, текст, обложка"
       ]
     },
     {
@@ -370,34 +336,161 @@
       "logoRatio": 1
     },
     {
+      "slug": "pervaya-tsifra",
+      "title": "Pervaya Tsifra",
+      "titleRu": "Первая Цифра",
+      "client": "Первая Цифра",
+      "year": 2025,
+      "branch": "branding",
+      "kicker": "Logo, branding, mascot, print, web",
+      "role": "Full cycle",
+      "summary": "A brand built from zero for an IT aggregator: logo, identity, site, mascot and the graphic materials around them.",
+      "capabilities": [
+        "Logo",
+        "Identity",
+        "Web",
+        "Mascot",
+        "Graphic materials"
+      ],
+      "cover": null,
+      "logo": "assets/logos/pervaya-tsifra.svg",
+      "link": "https://1-cifra.ru/",
+      "linkLabel": "1-cifra.ru",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Positioning, mark, type system, colour, mascot and the printed set were decided together rather than handed between three people.",
+        "The brand shipped: the live site is the proof, not a mockup."
+      ],
+      "todo": [
+        "Текст кейса: задача, решения, результат, 2–3 цифры (пришлёт)"
+      ],
+      "media": [
+        {
+          "src": "work/pervaya-tsifra/dr-shot.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/artboard-27-2x-80.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avocado-sc.mp4",
+          "caption": "Mascot"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-4a6082f7-f484-4c16-b4ec-4b8dae8fdd24.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-6eef3626-b6e4-4c89-8ab1-8b0f1997ae86.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/2.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/3.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-91b347a2-bb13-463f-86c9-9e58f8a76f51.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-9822001c-6ca3-400e-8b72-081cc167be22.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarblack-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarlime-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarwhite-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/track.mp4"
+        }
+      ],
+      "color": "#D3FF00",
+      "logoRatio": 2.153
+    },
+    {
       "slug": "vk-video",
-      "title": "VK Video",
+      "title": "VK Video - Manifest",
       "titleRu": "VK Видео",
-      "client": "VK Видео",
-      "year": null,
+      "client": "VK Video",
+      "year": 2025,
       "branch": "motion",
       "kicker": "Promotional videos",
-      "role": null,
+      "role": "Motion Designer",
       "summary": "Promotional films for VK Video.",
       "capabilities": [
-        "3D motion",
-        "Motion design"
+        "Motion design",
+        "working with typography"
       ],
       "cover": null,
       "logo": "assets/logos/vk.svg",
-      "link": null,
+      "link": "http://vk.com/",
       "featured": true,
       "published": true,
       "status": "done",
       "body": [],
       "todo": [
-        "Год не подтверждён",
-        "Роль не заполнена",
         "Текст кейса: на старом сайте страница только с видео",
         "Обложка: положить assets/work/vk-video-cover.webp"
       ],
       "logoRatio": 1,
-      "color": "#0077FF"
+      "color": "#0077FF",
+      "media": [
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-1-6s.mp4",
+          "caption": "Manifest 1"
+        },
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-3-5s.mp4",
+          "size": "full",
+          "caption": "Manifest 2"
+        },
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-2-7s.mp4",
+          "size": "full",
+          "caption": "Manifest 3"
+        }
+      ],
+      "linkLabel": "vk"
+    },
+    {
+      "slug": "smallteatrik",
+      "title": "Small Puppet Theatre",
+      "titleRu": "Маленький театрик кукол",
+      "client": "Маленький театрик кукол, Геленджик",
+      "year": 2026,
+      "branch": "web",
+      "kicker": "Web design and front-end",
+      "role": "Design and hand-written front-end",
+      "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
+      "capabilities": [
+        "Web design",
+        "Hand-written front-end"
+      ],
+      "cover": "assets/work/smallteatrik/site-home.webp",
+      "logo": "assets/logos/smallteatrik.svg",
+      "link": "https://smallteatrik.vercel.app/",
+      "linkLabel": "smallteatrik.vercel.app",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
+        "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
+      ],
+      "todo": [],
+      "logoRatio": 0.792,
+      "color": "#FF6A2B",
+      "media": [
+        {
+          "src": "assets/work/smallteatrik/site-home.webp",
+          "size": "full",
+          "caption": "Home"
+        }
+      ]
     },
     {
       "slug": "2x2",
@@ -467,7 +560,7 @@
       "cover": null,
       "logo": "assets/logos/honor.svg",
       "link": null,
-      "featured": false,
+      "featured": true,
       "published": true,
       "status": "done",
       "body": [
@@ -495,135 +588,29 @@
       "color": "#FFFFFF4D"
     },
     {
-      "slug": "dzen",
-      "title": "Dzen",
-      "titleRu": "Дзен",
-      "client": "Дзен",
-      "year": null,
+      "slug": "b",
+      "title": "BTZ Historical museum",
+      "titleRu": "БТЗ",
+      "client": "BTZ",
+      "year": 2026,
       "branch": "motion",
-      "kicker": "Motion design",
-      "role": null,
-      "summary": "An animated piece and a key visual for Dzen.",
+      "kicker": "Houdini simulation",
+      "role": "3D Generalist",
+      "summary": "",
       "capabilities": [
-        "Storyboarding",
-        "Illustration",
-        "Animation",
-        "3D"
+        "Simulation",
+        "Lookdev"
       ],
-      "cover": null,
-      "logo": "assets/logos/zen-sign.svg",
-      "link": null,
+      "cover": "",
+      "logo": null,
+      "link": "https://belsteel.com/",
+      "linkLabel": "belsteel",
       "featured": false,
-      "published": true,
-      "status": "done",
-      "body": [
-        "An animated piece created for Dzen. Role: storyboarding, illustration, animation.",
-        "Key visual for Dzen. Role: modelling, shading, animation."
-      ],
-      "todo": [
-        "Год не подтверждён",
-        "Обложка: положить assets/work/dzen-cover.webp"
-      ],
-      "media": [
-        {
-          "src": "work/dzen/dzen-full-color-titles.mp4",
-          "size": "half"
-        },
-        {
-          "src": "work/dzen/all-in-one.webp"
-        },
-        {
-          "src": "work/dzen/podarok-f.mp4",
-          "size": "full"
-        },
-        {
-          "src": "work/dzen/10-obschestvo-v3-gr-40s.mp4",
-          "caption": "Society",
-          "size": "third"
-        },
-        {
-          "src": "work/dzen/4-ogorod-gr-40s.mp4",
-          "caption": "Garden",
-          "size": "third"
-        },
-        {
-          "src": "work/dzen/6-avto-v4-gr-30s.mp4",
-          "caption": "Auto",
-          "size": "third"
-        },
-        {
-          "src": "work/dzen/7-lichnosti-v3-2-40s.mp4",
-          "caption": "People"
-        },
-        {
-          "src": "work/dzen/9-nauka-v3-gr-50s.mp4",
-          "caption": "Science"
-        }
-      ],
-      "logoRatio": 1,
-      "color": "#FFFFFF4D"
-    },
-    {
-      "slug": "waydeal",
-      "title": "WayDeal",
-      "titleRu": "WayDeal",
-      "client": "WayDeal",
-      "year": null,
-      "branch": "branding",
-      "kicker": "Logo, identity, corporate portal",
-      "role": null,
-      "summary": "Logo, identity and a corporate portal for WayDeal.",
-      "capabilities": [
-        "Logo",
-        "Identity",
-        "Corporate portal"
-      ],
-      "cover": null,
-      "logo": "assets/logos/waydeal.svg",
-      "link": null,
-      "featured": false,
-      "published": true,
+      "published": false,
       "status": "done",
       "body": [],
-      "todo": [
-        "Материалы портала (пришлёт)",
-        "Что за компания, год, роль"
-      ],
-      "media": [
-        {
-          "src": "work/waydeal/1hd.webp"
-        },
-        {
-          "src": "work/waydeal/2hd.webp"
-        },
-        {
-          "src": "work/waydeal/3hd.webp"
-        },
-        {
-          "src": "work/waydeal/4hd.webp"
-        },
-        {
-          "src": "work/waydeal/5hd.webp"
-        },
-        {
-          "src": "work/waydeal/6hd.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/waydeal/7hd.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/waydeal/8hd.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/waydeal/9hd.webp",
-          "size": "full"
-        }
-      ],
-      "color": "#6734FF",
-      "logoRatio": 1.079
+      "todo": [],
+      "color": "#E6B620"
     },
     {
       "slug": "interactive",
@@ -646,7 +633,7 @@
       "cover": null,
       "logo": "assets/logos/nt.png",
       "link": null,
-      "featured": true,
+      "featured": false,
       "published": true,
       "status": "done",
       "body": [
@@ -927,135 +914,66 @@
       "color": "#F26722"
     },
     {
-      "slug": "logos",
-      "title": "Commercial Logos",
-      "titleRu": "Логотипы",
-      "client": "Разные заказчики",
+      "slug": "waydeal",
+      "title": "WayDeal",
+      "titleRu": "WayDeal",
+      "client": "WayDeal",
       "year": null,
       "branch": "branding",
-      "kicker": "Logos",
-      "role": "Design",
-      "summary": "A set of commercial marks made outside full identity projects.",
+      "kicker": "Logo, identity, corporate portal",
+      "role": null,
+      "summary": "Logo, identity and a corporate portal for WayDeal.",
       "capabilities": [
-        "Logo design"
+        "Logo",
+        "Identity",
+        "Corporate portal"
       ],
       "cover": null,
-      "logo": "assets/logos/nt.png",
+      "logo": "assets/logos/waydeal.svg",
       "link": null,
       "featured": false,
       "published": true,
       "status": "done",
       "body": [],
       "todo": [
-        "Годы не подтверждены",
-        "Список заказчиков",
-        "Обложка: положить assets/work/logos-cover.webp"
+        "Материалы портала (пришлёт)",
+        "Что за компания, год, роль"
       ],
       "media": [
         {
-          "src": "work/logos/logo-12.webp",
+          "src": "work/waydeal/1hd.webp"
+        },
+        {
+          "src": "work/waydeal/2hd.webp"
+        },
+        {
+          "src": "work/waydeal/3hd.webp"
+        },
+        {
+          "src": "work/waydeal/4hd.webp"
+        },
+        {
+          "src": "work/waydeal/5hd.webp"
+        },
+        {
+          "src": "work/waydeal/6hd.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/waydeal/7hd.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/waydeal/8hd.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/waydeal/9hd.webp",
           "size": "full"
         }
       ],
-      "logoRatio": 1.284
-    },
-    {
-      "slug": "forma-budushchego",
-      "title": "Forma Budushchego",
-      "titleRu": "Форма Будущего",
-      "client": "Форма Будущего",
-      "year": 2026,
-      "branch": "branding",
-      "kicker": "Brand and website",
-      "role": "Full cycle: mark, identity, site",
-      "summary": "Mark, identity and the site, decided as one language rather than in sequence.",
-      "capabilities": [
-        "Identity",
-        "Web"
-      ],
-      "cover": null,
-      "logo": null,
-      "link": null,
-      "featured": false,
-      "published": false,
-      "status": "in-progress",
-      "body": [],
-      "todo": [
-        "В работе",
-        "Сайт пишется кодом позже — тогда кейс вернёт ветку web",
-        "Текст, решения, обложка"
-      ]
-    },
-    {
-      "slug": "tempus-watch",
-      "title": "Tempus Watch",
-      "titleRu": "Tempus Watch",
-      "client": "Tempus Watch",
-      "year": null,
-      "branch": "branding",
-      "kicker": "Brand and website",
-      "role": null,
-      "summary": null,
-      "capabilities": [],
-      "cover": null,
-      "logo": null,
-      "link": null,
-      "featured": false,
-      "published": false,
-      "status": "in-progress",
-      "body": [],
-      "todo": [
-        "В работе — данных пока нет",
-        "Заполнить: год, роль, объём работ, текст, обложка"
-      ]
-    },
-    {
-      "slug": "zhenya",
-      "title": "Zhenya",
-      "titleRu": "Женя",
-      "client": "Женя",
-      "year": null,
-      "branch": "branding",
-      "kicker": "Brand and website",
-      "role": null,
-      "summary": null,
-      "capabilities": [],
-      "cover": null,
-      "logo": null,
-      "link": null,
-      "featured": false,
-      "published": false,
-      "status": "in-progress",
-      "body": [],
-      "todo": [
-        "В работе — данных пока нет",
-        "Уточнить, что за проект и как он называется на сайте",
-        "Заполнить: год, роль, объём работ, текст, обложка"
-      ]
-    },
-    {
-      "slug": "insurance",
-      "title": "Insurance Practice",
-      "titleRu": "Сайт про страхование",
-      "client": "Частная практика",
-      "year": null,
-      "branch": "web",
-      "kicker": "Website",
-      "role": null,
-      "summary": null,
-      "capabilities": [],
-      "cover": null,
-      "logo": null,
-      "link": null,
-      "featured": false,
-      "published": false,
-      "status": "in-progress",
-      "body": [],
-      "todo": [
-        "В работе — данных пока нет",
-        "Название на сайт: имя практики, а не «сайт мамы»",
-        "Заполнить: год, объём работ, текст, обложка"
-      ]
+      "color": "#6734FF",
+      "logoRatio": 1.079
     },
     {
       "titleRu": "VK Music",
@@ -1095,65 +1013,6 @@
         }
       ],
       "logoRatio": 1
-    },
-    {
-      "titleRu": "LiteBIM",
-      "year": null,
-      "role": null,
-      "capabilities": [
-        "Logo",
-        "Product marks",
-        "Print",
-        "Banners"
-      ],
-      "cover": null,
-      "logo": "assets/logos/litebim.svg",
-      "color": "#5BA7D0",
-      "link": null,
-      "linkLabel": null,
-      "featured": false,
-      "published": true,
-      "status": "done",
-      "body": [],
-      "slug": "litebim",
-      "title": "LiteBIM",
-      "client": "LiteBIM",
-      "branch": "branding",
-      "kicker": "Logo, product marks, print, banners",
-      "summary": "Identity for LiteBIM: the mark, a family of product marks, business cards and event banners.",
-      "todo": [
-        "Год, роль, задача"
-      ],
-      "media": [
-        {
-          "src": "work/litebim/litebim-logo-full.webp"
-        },
-        {
-          "src": "work/litebim/cm-m.webp"
-        },
-        {
-          "src": "work/litebim/archive-m.webp"
-        },
-        {
-          "src": "work/litebim/artboard-12-copy-2.webp"
-        },
-        {
-          "src": "work/litebim/2024update.webp"
-        },
-        {
-          "src": "work/litebim/2024update2.webp"
-        },
-        {
-          "src": "work/litebim/8-marta.webp"
-        },
-        {
-          "src": "work/litebim/ai-banner.webp"
-        },
-        {
-          "src": "work/litebim/03-iphone-15-pro-mockup-with-white-rock.webp"
-        }
-      ],
-      "logoRatio": 0.803
     },
     {
       "titleRu": "Out Digital",
@@ -1205,6 +1064,191 @@
         }
       ],
       "logoRatio": 5.084
+    },
+    {
+      "slug": "dzen",
+      "title": "Dzen",
+      "titleRu": "Дзен",
+      "client": "Дзен",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Motion design",
+      "role": null,
+      "summary": "An animated piece and a key visual for Dzen.",
+      "capabilities": [
+        "Storyboarding",
+        "Illustration",
+        "Animation",
+        "3D"
+      ],
+      "cover": null,
+      "logo": "assets/logos/zen-sign.svg",
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [
+        "An animated piece created for Dzen. Role: storyboarding, illustration, animation.",
+        "Key visual for Dzen. Role: modelling, shading, animation."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Обложка: положить assets/work/dzen-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/dzen/dzen-full-color-titles.mp4",
+          "size": "half"
+        },
+        {
+          "src": "work/dzen/all-in-one.webp"
+        },
+        {
+          "src": "work/dzen/podarok-f.mp4",
+          "size": "full"
+        },
+        {
+          "src": "work/dzen/10-obschestvo-v3-gr-40s.mp4",
+          "caption": "Society",
+          "size": "third"
+        },
+        {
+          "src": "work/dzen/4-ogorod-gr-40s.mp4",
+          "caption": "Garden",
+          "size": "third"
+        },
+        {
+          "src": "work/dzen/6-avto-v4-gr-30s.mp4",
+          "caption": "Auto",
+          "size": "third"
+        },
+        {
+          "src": "work/dzen/7-lichnosti-v3-2-40s.mp4",
+          "caption": "People"
+        },
+        {
+          "src": "work/dzen/9-nauka-v3-gr-50s.mp4",
+          "caption": "Science"
+        }
+      ],
+      "logoRatio": 1,
+      "color": "#FFFFFF4D"
+    },
+    {
+      "slug": "logos",
+      "title": "Commercial Logos",
+      "titleRu": "Логотипы",
+      "client": "Разные заказчики",
+      "year": null,
+      "branch": "branding",
+      "kicker": "Logos",
+      "role": "Design",
+      "summary": "A set of commercial marks made outside full identity projects.",
+      "capabilities": [
+        "Logo design"
+      ],
+      "cover": null,
+      "logo": "assets/logos/nt.png",
+      "link": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Годы не подтверждены",
+        "Список заказчиков",
+        "Обложка: положить assets/work/logos-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/logos/logo-12.webp",
+          "size": "full"
+        }
+      ],
+      "logoRatio": 1.284
+    },
+    {
+      "slug": "insurance",
+      "title": "Insurance Practice",
+      "titleRu": "Сайт про страхование",
+      "client": "Частная практика",
+      "year": null,
+      "branch": "web",
+      "kicker": "Website",
+      "role": null,
+      "summary": null,
+      "capabilities": [],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "featured": false,
+      "published": false,
+      "status": "in-progress",
+      "body": [],
+      "todo": [
+        "В работе — данных пока нет",
+        "Название на сайт: имя практики, а не «сайт мамы»",
+        "Заполнить: год, объём работ, текст, обложка"
+      ]
+    },
+    {
+      "titleRu": "LiteBIM",
+      "year": null,
+      "role": "Product Designer",
+      "capabilities": [
+        "Logo",
+        "Product marks",
+        "Print",
+        "Banners"
+      ],
+      "cover": null,
+      "logo": "assets/logos/litebim.svg",
+      "color": "#5BA7D0",
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "slug": "litebim",
+      "title": "LiteBIM",
+      "client": "LiteBIM",
+      "branch": "branding",
+      "kicker": "Logo, ux/ui, banners",
+      "summary": "Identity for LiteBIM: the mark, a family of product marks, business cards and event banners.",
+      "todo": [
+        "Год, роль, задача"
+      ],
+      "media": [
+        {
+          "src": "work/litebim/litebim-logo-full.webp"
+        },
+        {
+          "src": "work/litebim/cm-m.webp"
+        },
+        {
+          "src": "work/litebim/archive-m.webp"
+        },
+        {
+          "src": "work/litebim/artboard-12-copy-2.webp"
+        },
+        {
+          "src": "work/litebim/2024update.webp"
+        },
+        {
+          "src": "work/litebim/2024update2.webp"
+        },
+        {
+          "src": "work/litebim/8-marta.webp"
+        },
+        {
+          "src": "work/litebim/ai-banner.webp"
+        },
+        {
+          "src": "work/litebim/03-iphone-15-pro-mockup-with-white-rock.webp"
+        }
+      ],
+      "logoRatio": 0.803
     },
     {
       "titleRu": "PSB",
