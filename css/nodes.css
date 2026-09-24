@@ -300,3 +300,113 @@
   .wire.is-new .wire__line { animation: none; stroke-dasharray: none; }
   .pipe__output.is-pulse .node__body { animation: none; }
 }
+
+/* =============================================================================
+   Первый экран (js/hero-nodes.js): входы слева от имени, выход справа.
+   ============================================================================= */
+
+.hero__graph {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.hero__graph[hidden] { display: none; }
+/* Поток сверху вниз: порты у нод — сверху (вход) и снизу (выход). */
+.hero__graph .node__port--in { inset-block-start: 0; inset-inline-start: 50%; }
+.hero__graph .node__port--out { inset-block-start: 100%; inset-inline-start: 50%; }
+.hero__graph .node__media { aspect-ratio: 16 / 9; object-fit: cover; }
+.hero__graph .node {
+  position: absolute;
+  pointer-events: auto;
+  text-align: start;
+}
+.hero__graph .node__body { background: var(--bg); }
+.hero__graph .node--text .node__body { padding: calc(8 * var(--u)) calc(10 * var(--u)); }
+.hero-node__icons { display: flex; gap: calc(6 * var(--u)); }
+.hero-node__icon { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
+.hero__port {
+  position: absolute;
+  width: calc(10 * var(--u));
+  height: calc(10 * var(--u));
+  border: var(--line) solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+  translate: -50% -50%;
+}
+.hero__graph.is-live .wire__flow {
+  opacity: 0.9;
+  animation: wire-flow 1.4s linear infinite;
+}
+@media (max-width: 760px) { .hero__graph { display: none; } }
+
+/* =============================================================================
+   «Get in touch», нодовая версия (js/contact.js): вход → каналы → выход.
+   Раскладка — сетка в три колонки, а не координаты: окно маленькое, и
+   ноды должны вставать сами.
+   ============================================================================= */
+
+.contact--nodes { width: min(calc(720 * var(--u)), calc(100vw - 32px)); }
+.contact__graph {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1.1fr;
+  gap: calc(40 * var(--u));
+  align-items: center;
+  width: auto;
+  height: auto;
+  margin-block-start: calc(20 * var(--u));
+  padding-block: calc(20 * var(--u));
+}
+.contact__graph .node {
+  position: relative;
+  inset: auto;
+  width: auto;
+  cursor: auto;
+  touch-action: auto;
+}
+.contact__routes { display: grid; gap: calc(10 * var(--u)); position: relative; z-index: 2; }
+.contact__route { cursor: pointer; }
+.contact__route-icon {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: calc(26 * var(--u));
+  height: calc(26 * var(--u));
+  border: var(--line) solid currentColor;
+  border-radius: 50%;
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+  transition: color var(--dur-ui) var(--ease);
+}
+.contact__route-icon .social__icon { width: 58%; height: 58%; }
+.contact__route.is-on .contact__route-icon { color: var(--accent); }
+.contact__in .node__port--in,
+.contact__out .node__port--out { display: none; }
+
+.contact__graph .wire:not(.is-hot) { opacity: 0.22; }
+.contact__graph .wire.is-hot .wire__line { stroke: var(--accent); }
+.contact__graph .wire.is-hot .wire__flow {
+  opacity: 0.9;
+  animation: wire-flow 1.4s linear infinite;
+}
+.contact__where { font-size: calc(11 * var(--u)); line-height: calc(16 * var(--u)); }
+.contact__send {
+  margin-block-start: calc(12 * var(--u));
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.contact__out.is-pulse .node__body { animation: pipe-pulse 0.9s var(--ease-out); }
+.contact__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(16 * var(--u));
+}
+.contact__foot .contact__status { margin: 0; }
+.contact__more .social { width: calc(32 * var(--u)); height: calc(32 * var(--u)); }
+
+@media (max-width: 760px) {
+  .contact__graph { grid-template-columns: 1fr; gap: calc(20 * var(--u)); }
+  .contact__graph .wire { display: none; }
+  .contact__foot { flex-direction: column; align-items: start; }
+}

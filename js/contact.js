@@ -69,42 +69,185 @@ export function socials() {
   });
 }
 
-/* --- Окно ------------------------------------------------------------------
-   Компактная панель по центру: подпись и крестик, одна фраза, кнопка
-   почты и ряд иконок, строка доступности. Без миллиметровки и без
-   крупного вопроса — вопрос уже был на странице, окно отвечает на него. */
+/* --- Окно: нодовая версия --------------------------------------------------
+   «Get in touch» собран как маленький граф, той же системой, что пайплайн
+   на главной (css/nodes.css): слева INPUT — само сообщение, в середине —
+   каналы, справа OUTPUT · SEND. Клик по каналу прокладывает маршрут:
+   провода к нему загораются, к остальным гаснут. «Send» по почте
+   открывает письмо с уже вписанным текстом; мессенджеры текст принять
+   ссылкой не умеют — сообщение копируется, и открывается чат. */
+
+const ROUTES = ["mail", "telegram", "max", "instagram"];
+const NS = "http://www.w3.org/2000/svg";
 
 function build() {
+  const channels = CONTACTS.filter((c) => c.href && ROUTES.includes(c.key));
+  let route = channels[0];
+
   const close = el("button", { class: "social contact__close", type: "button", "aria-label": "Close" }, [
     icon("close"),
   ]);
 
-  const dialog = el("dialog", { class: "contact", "aria-labelledby": "contact-title" }, [
-    el("div", { class: "contact__head" }, [
-      el("p", { class: "label", text: "Get in touch" }),
-      close,
+  const graph = el("div", { class: "nodes__canvas contact__graph" });
+  const wires = document.createElementNS(NS, "svg");
+  wires.setAttribute("class", "nodes__wires");
+  wires.setAttribute("aria-hidden", "true");
+  graph.append(wires);
+
+  const node = (cls, type, tool, body) =>
+    el("figure", { class: `node ${cls}` }, [
+      el("figcaption", { class: "node__head" }, [
+        el("span", { class: "node__type", text: type }),
+        el("span", { class: "node__tool", text: tool }),
+      ]),
+      el("div", { class: "node__body" }, [
+        ...body,
+        el("span", { class: "node__port node__port--in" }),
+        el("span", { class: "node__port node__port--out" }),
+      ]),
+    ]);
+
+  // Вход: сообщение.
+  const message = el("textarea", {
+    class: "pipe__prompt contact__message",
+    rows: "5",
+    placeholder: "Two sentences about your project…",
+    "aria-label": "Your message",
+  });
+  const input = node("node--text pipe__io contact__in", "Input", "Your project", [message]);
+
+  // Каналы.
+  const routeNodes = channels.map((c) => {
+    const n = node("pipe__tool contact__route", "", "", [
+      el("span", { class: "contact__route-icon" }, [icon(c.key)]),
+      el("span", { class: "pipe__name", text: c.name }),
+      el("span", { class: "pipe__role", text: c.hint }),
+    ]);
+    n.tabIndex = 0;
+    n.setAttribute("role", "radio");
+    n.dataset.key = c.key;
+    n.addEventListener("click", () => pick(c));
+    n.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        pick(c);
+      }
+    });
+    return n;
+  });
+  const routeBox = el("div", { class: "contact__routes", role: "radiogroup", "aria-label": "Channel" }, routeNodes);
+
+  // Выход: куда уйдёт и кнопка.
+  const where = el("p", { class: "node__text contact__where" });
+  const send = el("button", { class: "pill contact__send", type: "button", text: "send" });
+  const output = node("node--text pipe__io contact__out", "Output", "Send", [where, send]);
+
+  graph.append(input, routeBox, output);
+
+  const status = el("p", {
+    class: "contact__status",
+    text: "Currently taking one project at a time. Working internationally.",
+  });
+
+  const dialog = el("dialog", { class: "contact contact--nodes", "aria-label": "Get in touch" }, [
+    el("div", { class: "contact__head" }, [el("p", { class: "label", text: "Get in touch" }), close]),
+    graph,
+    el("div", { class: "contact__foot" }, [
+      status,
+      el("ul", { class: "socials contact__more" }, socials().filter((li) => {
+        const a = li.querySelector("a");
+        return a && /youtube|pinterest/i.test(a.href);
+      })),
     ]),
-    el("p", { class: "contact__title", id: "contact-title", text: "Write me two sentences about it." }),
-    el("p", {
-      class: "contact__note",
-      text: "I’ll tell you honestly whether I’m the right person for it — and if I’m not, I usually know who is.",
-    }),
-    el("div", { class: "contact__actions" }, [
-      el("a", { class: "pill contact__mail", href: `mailto:${EMAIL}`, text: "email me" }),
-      el("ul", { class: "socials" }, socials().slice(1)), // почта уже кнопкой слева
-    ]),
-    el("p", {
-      class: "contact__status",
-      text: "Currently taking one project at a time. Working internationally.",
-    }),
   ]);
+
+  /* Провода: от сообщения к каждому каналу и от каждого канала к выходу.
+     Выбранный маршрут горит и по нему бежит сигнал, остальные — тусклые. */
+  const lines = [];
+  const wire = () => {
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "wire");
+    const line = document.createElementNS(NS, "path");
+    line.setAttribute("class", "wire__line");
+    const flow = document.createElementNS(NS, "path");
+    flow.setAttribute("class", "wire__flow");
+    g.append(line, flow);
+    wires.append(g);
+    return { g, line, flow };
+  };
+  routeNodes.forEach((n) => {
+    lines.push({ from: input, to: n, key: n.dataset.key, ...wire() });
+    lines.push({ from: n, to: output, key: n.dataset.key, ...wire() });
+  });
+
+  function draw() {
+    const c = graph.getBoundingClientRect();
+    if (!c.width) return;
+    wires.setAttribute("viewBox", `0 0 ${c.width} ${c.height}`);
+    for (const l of lines) {
+      const a = l.from.querySelector(".node__body").getBoundingClientRect();
+      const b = l.to.querySelector(".node__body").getBoundingClientRect();
+      const x1 = a.right - c.left;
+      const y1 = a.top + a.height / 2 - c.top;
+      const x2 = b.left - c.left;
+      const y2 = b.top + b.height / 2 - c.top;
+      const dx = Math.max(24, Math.abs(x2 - x1) * 0.5);
+      const d = `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`;
+      l.line.setAttribute("d", d);
+      l.flow.setAttribute("d", d);
+    }
+  }
+
+  function pick(c) {
+    route = c;
+    routeNodes.forEach((n) => {
+      const on = n.dataset.key === c.key;
+      n.classList.toggle("is-on", on);
+      n.setAttribute("aria-checked", String(on));
+    });
+    lines.forEach((l) => l.g.classList.toggle("is-hot", l.key === c.key));
+    graph.classList.add("is-focus");
+    const mail = c.key === "mail";
+    where.textContent = mail
+      ? `via Email · ${EMAIL}. Opens your mail app with the message filled in.`
+      : `via ${c.name} · ${c.hint}. The message is copied — paste it into the chat.`;
+    send.textContent = mail ? "send email" : `open ${c.name}`;
+    output.classList.remove("is-pulse");
+    void output.offsetWidth;
+    output.classList.add("is-pulse");
+  }
+
+  send.addEventListener("click", async () => {
+    const text = message.value.trim();
+    if (route.key === "mail") {
+      const q = new URLSearchParams({ subject: "Project", body: text }).toString().replace(/\+/g, "%20");
+      location.href = `mailto:${EMAIL}?${q}`;
+      return;
+    }
+    if (text && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // не скопировалось — чат всё равно откроется
+      }
+    }
+    window.open(route.href, "_blank", "noopener");
+  });
 
   close.addEventListener("click", () => dialog.close());
   // Клик по подложке закрывает; клик внутри панели — нет.
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();
   });
+  // Окно въезжает анимацией — провода считаем, когда оно встало, и на
+  // любое изменение размера.
+  dialog.addEventListener("animationend", draw);
+  new ResizeObserver(draw).observe(graph);
+  message.addEventListener("input", draw);
+
   document.body.append(dialog);
+  pick(route);
+  dialog.__draw = draw;
   return dialog;
 }
 
@@ -113,6 +256,7 @@ let dialog = null;
 export function openContact() {
   if (!dialog) dialog = build();
   if (!dialog.open) dialog.showModal();
+  requestAnimationFrame(() => dialog.__draw && dialog.__draw());
 }
 
 document.addEventListener("click", (e) => {

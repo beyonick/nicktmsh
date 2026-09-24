@@ -13,16 +13,42 @@
 const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const HOT = "a, button, [role='switch'], [data-contact], .card, .logo, .marquee b, .picto, .social, summary, label";
-const DRAG = ".node";
+const HOT = "a, button, [role='switch'], [role='radio'], [data-contact], .card, .logo, .marquee b, .picto, .social, summary, label";
+// Таскаются ноды схем; ноды окна контактов только нажимаются.
+const DRAG = ".node:not(.contact .node)";
 const TEXT = "input, textarea, select, [contenteditable='true']";
 
 if (fine) {
   const ring = document.createElement("div");
   ring.className = "cursor";
   ring.setAttribute("aria-hidden", "true");
+  // Кольцо живёт в верхнем слое браузера (popover): иначе модальное окно
+  // (dialog — тоже верхний слой) ложится поверх него, и курсор пропадает
+  // под «Get in touch».
+  ring.setAttribute("popover", "manual");
   document.body.append(ring);
   document.documentElement.classList.add("has-cursor");
+
+  const raise = () => {
+    // Сначала домой, в body: перенос показанного popover закрыл бы его.
+    if (ring.parentElement !== document.body) document.body.append(ring);
+    try {
+      if (ring.matches(":popover-open")) ring.hidePopover();
+      ring.showPopover();
+    } catch {
+      // Верхний слой недоступен — кладём кольцо внутрь открытого окна.
+      const open = document.querySelector("dialog[open]");
+      if (open) open.append(ring);
+    }
+  };
+  raise();
+  // Окно открылось — поднимаем кольцо над ним: верхний слой рисуется в
+  // порядке показа, последний сверху.
+  new MutationObserver(raise).observe(document.body, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["open"],
+  });
 
   const aim = { x: -100, y: -100 };
   const pos = { x: -100, y: -100 };
