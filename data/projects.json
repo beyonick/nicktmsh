@@ -213,7 +213,7 @@
         "Web design",
         "Hand-written front-end"
       ],
-      "cover": null,
+      "cover": "assets/work/smallteatrik/site-home.webp",
       "logo": "assets/logos/smallteatrik.svg",
       "link": "https://smallteatrik.vercel.app/",
       "linkLabel": "smallteatrik.vercel.app",
@@ -224,11 +224,54 @@
         "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
         "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
       ],
-      "todo": [
-        "Обложка assets/work/smallteatrik-cover.webp"
-      ],
+      "todo": [],
       "logoRatio": 0.792,
-      "color": "#FF6A2B"
+      "color": "#FF6A2B",
+      "media": [
+        {
+          "src": "assets/work/smallteatrik/site-home.webp",
+          "size": "full",
+          "caption": "Home"
+        },
+        {
+          "src": "assets/work/smallteatrik/site-afisha.webp",
+          "size": "half",
+          "caption": "Repertoire"
+        },
+        {
+          "src": "assets/work/smallteatrik/site-show.webp",
+          "size": "half",
+          "caption": "Show page"
+        },
+        {
+          "src": "assets/work/smallteatrik/mobile-home.webp",
+          "size": "third"
+        },
+        {
+          "src": "assets/work/smallteatrik/mobile-afisha.webp",
+          "size": "third"
+        },
+        {
+          "src": "assets/work/smallteatrik/mobile-show.webp",
+          "size": "third",
+          "caption": "Mobile"
+        },
+        {
+          "src": "assets/work/smallteatrik/site-schedule.webp",
+          "size": "half",
+          "caption": "Schedule"
+        },
+        {
+          "src": "assets/work/smallteatrik/site-actors.webp",
+          "size": "half",
+          "caption": "Actors"
+        },
+        {
+          "src": "assets/work/smallteatrik/site-about.webp",
+          "size": "full",
+          "caption": "About the theatre"
+        }
+      ]
     },
     {
       "slug": "mts-money",
