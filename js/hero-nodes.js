@@ -7,7 +7,9 @@
    «обо мне». Поток сверху вниз — так же, как читается страница: имя
    занимает всю колонку, и по бокам нодам места нет. Та же нодовая
    система, что в пайплайне (css/nodes.css): ноды можно таскать, по
-   проводам бежит сигнал, пока экран виден. На телефоне графа нет. */
+   проводам бежит сигнал, пока экран виден. На телефоне ряд справа от
+   выхода не помещается: шоурил и «обо мне» встают столбиком, и оба
+   подключены к выходу. */
 
 import { load } from "./store.js";
 
@@ -30,6 +32,7 @@ const VIDEOS = [
   "lab/motion-blur/day30-motion-blur-se.webm",
 ];
 const pad = (n) => String(n).padStart(2, "0");
+const phone = matchMedia("(max-width: 760px)");
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -155,6 +158,8 @@ function mount(hero) {
   const frame = hero.querySelector(".hero__frame");
 
   function layout() {
+    if (phone.matches) return layoutPhone();
+    reel.node.querySelector(".node__port--out").classList.remove("is-idle");
     const H = hero.getBoundingClientRect();
     const N = name.getBoundingClientRect();
     const T = title.getBoundingClientRect();
@@ -191,6 +196,47 @@ function mount(hero) {
       n.node.style.left = `${cx + ow / 2 + 48 * u + i * (sw + 40 * u) + n.dx}px`;
       n.node.style.top = `${mid - n.node.offsetHeight / 2 + n.dy}px`;
     });
+
+    base = { pin: { x: cx, y: top }, pout: { x: cx, y: bottom } };
+    ports();
+  }
+
+  // Телефон: колонка 309 макетных единиц (css/base.css, .wrap), наведения
+  // нет — рамка имени стоит на месте, и ноды считаются прямо от неё.
+  function layoutPhone() {
+    const H = hero.getBoundingClientRect();
+    const F = (frame || title).getBoundingClientRect();
+    const W = H.width;
+    const u = W / 309;
+    const cx = F.left - H.left + F.width / 2;
+    const top = F.top - H.top;
+    const bottom = F.bottom - H.top;
+
+    const gap = 10 * u;
+    const w = (W - 2 * gap) / 3;
+    ins.forEach((n) => (n.node.style.width = `${w}px`));
+    const tall = Math.max(...ins.map((n) => n.node.offsetHeight));
+    ins.forEach((n, i) => {
+      n.node.style.left = `${i * (w + gap) + n.dx}px`;
+      n.node.style.top = `${top - 40 * u - tall + n.dy}px`;
+    });
+
+    const ow = 172 * u;
+    const oy = bottom + 40 * u;
+    out.node.style.width = `${ow}px`;
+    out.node.style.left = `${out.dx}px`;
+    out.node.style.top = `${oy + out.dy}px`;
+    const mid = oy + out.node.offsetHeight / 2;
+    const sx = ow + 30 * u;
+    const sw = W - sx;
+    const vgap = 14 * u;
+    [reel, about].forEach((n) => (n.node.style.width = `${sw}px`));
+    const stack = reel.node.offsetHeight + vgap + about.node.offsetHeight;
+    reel.node.style.left = `${sx + reel.dx}px`;
+    reel.node.style.top = `${mid - stack / 2 + reel.dy}px`;
+    about.node.style.left = `${sx + about.dx}px`;
+    about.node.style.top = `${mid - stack / 2 + reel.node.offsetHeight + vgap + about.dy}px`;
+    reel.node.querySelector(".node__port--out").classList.add("is-idle");
 
     base = { pin: { x: cx, y: top }, pout: { x: cx, y: bottom } };
     ports();
@@ -262,7 +308,8 @@ function mount(hero) {
     const r = box(reel);
     side({ x: o.r, y: o.cy }, { x: r.l, y: r.cy }, reelWire);
     const a = box(about);
-    side({ x: r.r, y: r.cy }, { x: a.l, y: a.cy }, aboutWire);
+    const from = phone.matches ? { x: o.r, y: o.cy } : { x: r.r, y: r.cy };
+    side(from, { x: a.l, y: a.cy }, aboutWire);
   }
 
   /* Действия нод справа. */

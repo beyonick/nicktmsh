@@ -401,7 +401,20 @@
   .hero__dash rect { animation: none; }
   .hero__frame { transition: none; }
 }
-@media (max-width: 760px) { .hero__graph, .hero__frame, .hero__title::after { display: none; } }
+/* Телефон: граф тот же, ноды плотнее (раскладка — layoutPhone в
+   js/hero-nodes.js). Наведения нет — рамка не сжимается. Вертикальный
+   свайп по ноде листает страницу, вбок — тащит ноду. */
+@media (max-width: 760px) {
+  .hero__title::after { display: none; }
+  .hero__frame,
+  .hero__title:hover .hero__frame { inset: calc(-20 * var(--u)) 0 calc(-18 * var(--u)); }
+  .hero__graph .node { touch-action: pan-y; }
+  .hero__graph .node__head { gap: calc(6 * var(--u)); font-size: calc(9 * var(--u)); letter-spacing: 0.1em; }
+  .hero__graph .node--text .node__body { padding: calc(7 * var(--u)) calc(8 * var(--u)); }
+  .hero__graph .node__text { font-size: calc(10.5 * var(--u)); line-height: calc(15 * var(--u)); }
+  .hero-node__icons { gap: calc(5 * var(--u)); }
+  .hero-node__icon { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+}
 
 /* =============================================================================
    «Get in touch», нодовая версия (js/contact.js): вход → каналы → выход.
