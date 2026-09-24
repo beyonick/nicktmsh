@@ -114,6 +114,13 @@
   opacity: 1;
   transform: none;
 }
+/* Пилюля-кнопка (<button>) выглядит так же, как пилюля-ссылка: без этого
+   браузер красит кнопку своим светлым фоном и системным шрифтом. */
+button.pill {
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+}
 /* Кнопка без обводки в покое (All work): обводка появляется на ховере —
    та же, что у кнопок шапки. */
 .pill--ghost {
@@ -429,9 +436,12 @@
   background-position: 0 0;
 }
 .talk {
-  margin-block-start: calc(40 * var(--u));
+  margin-block-start: calc(72 * var(--u));
   display: grid;
   place-items: center;
+  align-content: center;
+  gap: calc(32 * var(--u));
+  color: inherit;
   height: calc(494 * var(--u));
   padding-block-start: calc(12 * var(--u));
   /* Поле — ровно 24×13 клеток по 38, поэтому градиент рисует линии только
@@ -444,6 +454,189 @@
    Два акцента — два ключевых слова. */
 .talk em { font-style: normal; color: var(--accent); }
 .talk em.alt { color: var(--accent-2); }
+/* Весь блок — кнопка «написать»: пилюля под вопросом отзывается на
+   наведение по всему блоку, а не только по себе. */
+.talk .display { display: block; }
+.talk__cta { color: var(--accent); }
+.talk:hover .talk__cta,
+.talk:focus-visible .talk__cta {
+  background: var(--accent);
+  color: var(--bg);
+}
+.talk:hover .pill__arrow,
+.talk:focus-visible .pill__arrow {
+  width: calc(16 * var(--u));
+  margin-inline-end: calc(10 * var(--u));
+  opacity: 1;
+  transform: none;
+}
+
+/* --- 05 / Обо мне -----------------------------------------------------------
+   Сетка 3×304, как у проектов: фото в первой колонке, текст во второй и
+   третьей. Фото кадрировано угловыми метками (data-vg="corners"), как
+   остальная техническая графика сайта. */
+
+.me {
+  margin-block-start: calc(40 * var(--u));
+  display: grid;
+  grid-template-columns: var(--col) 1fr;
+  gap: calc(40 * var(--u));
+  align-items: start;
+}
+.me__photo {
+  margin: 0;
+  padding: calc(10 * var(--u));
+}
+.me__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.me__name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+.me__role {
+  margin-block-start: calc(10 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(18 * var(--u));
+  color: var(--accent);
+}
+.me__bio {
+  max-width: calc(var(--col) * 1.9);
+  margin-block-start: calc(20 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+.me__contacts { margin-block-start: calc(28 * var(--u)); }
+
+/* --- Контакты: строки (окно и блок «обо мне») --------------------------------
+   Строка — название слева, ник справа, стрелка сайта выезжает на ховере.
+   Линейки между строками — та же рамка --line, что везде. */
+
+.contacts { border-block-start: var(--line) solid var(--hair); }
+.contacts__link {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: calc(12 * var(--u));
+  padding-block: calc(12 * var(--u));
+  border-block-end: var(--line) solid var(--hair);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(18 * var(--u));
+  transition: color var(--dur-ui) var(--ease);
+}
+.contacts__handle { color: color-mix(in srgb, var(--fg) 55%, var(--bg)); transition: color var(--dur-ui) var(--ease); }
+.contacts__arrow {
+  --head: calc(7 * var(--u));
+  position: relative;
+  width: 0;
+  height: calc(10 * var(--u));
+  opacity: 0;
+  transform: translateX(calc(-6 * var(--u)));
+  transition:
+    width var(--dur-ui) var(--ease),
+    opacity var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+.contacts__link:hover,
+.contacts__link:focus-visible { color: var(--accent); }
+.contacts__link:hover .contacts__handle,
+.contacts__link:focus-visible .contacts__handle { color: var(--accent); }
+.contacts__link:hover .contacts__arrow,
+.contacts__link:focus-visible .contacts__arrow {
+  width: calc(16 * var(--u));
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Окно «Get in touch» (js/contact.js) --------------------------------------
+   Панель на ширину колонки контента, на миллиметровке, как блок 05.
+   Появляется снизу вверх с затуханием подложки. */
+
+.contact {
+  width: min(calc(var(--page) + 80 * var(--u)), calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: var(--line) solid var(--hair);
+  border-radius: calc(24 * var(--u));
+  background: var(--bg);
+  color: var(--fg);
+  overflow: auto;
+}
+.contact::backdrop {
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(6px);
+}
+.contact[open] { animation: contact-in var(--dur) var(--ease-out); }
+.contact[open]::backdrop { animation: contact-fade var(--dur) var(--ease-out); }
+@keyframes contact-in { from { opacity: 0; translate: 0 calc(40 * var(--u)); } }
+@keyframes contact-fade { from { opacity: 0; } }
+
+.contact__in {
+  padding: calc(28 * var(--u)) calc(40 * var(--u)) calc(36 * var(--u));
+}
+.contact__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.contact__title {
+  margin-block-start: calc(56 * var(--u));
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+}
+.contact__title em { font-style: normal; color: var(--accent); }
+.contact__title em.alt { color: var(--accent-2); }
+.contact__note {
+  max-width: calc(var(--col) * 2);
+  margin-block-start: calc(24 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+.contact__mail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(16 * var(--u));
+  margin-block: calc(40 * var(--u)) calc(32 * var(--u));
+}
+.contact__address {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track);
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: var(--line);
+  text-underline-offset: 0.18em;
+}
+.contact__status {
+  margin-block-start: calc(24 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact[open], .contact[open]::backdrop { animation: none; }
+}
 
 /* --- Лента слов -------------------------------------------------------------
    Две строки навстречу, вторая со сдвигом фазы — в макете слова
@@ -587,6 +780,10 @@
   .hero__sub { font-size: calc(13 * var(--u)); line-height: calc(20 * var(--u)); }
 
   .branches { grid-template-columns: 1fr; gap: calc(8 * var(--u)); }
+  .me { grid-template-columns: 1fr; gap: calc(24 * var(--u)); }
+  .me__bio { max-width: none; }
+  .contact__in { padding: calc(20 * var(--u)); }
+  .contact__address { font-size: calc(22 * var(--u)); line-height: calc(26 * var(--u)); }
   .work { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: 100%; }
   .card { aspect-ratio: 1; }
 }

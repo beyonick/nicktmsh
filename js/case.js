@@ -122,7 +122,7 @@ function render(project, next, base) {
     ? null
     : el("p", { class: "case__p case__p--empty rise" }, [
         "The write-up for this one isn’t online yet. ",
-        el("a", { class: "under", href: "mailto:hello@nicktmsh.ru", text: "Ask me about it" }),
+        el("a", { class: "under", href: "mailto:n27tomash@gmail.com", "data-contact": "", text: "Ask me about it" }),
         " and I’ll send the full case.",
       ]);
 

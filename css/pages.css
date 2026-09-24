@@ -265,6 +265,8 @@
    Шоурил вертикальный, поэтому окно — по высоте экрана. */
 
 .work-bar .reel-open[hidden] { display: none; }
+/* Шоурил стоит сразу за фильтрами, а не посередине строки. */
+.work-bar .reel-open { margin-inline-end: auto; }
 .reel-box {
   padding: 0;
   border: 0;
