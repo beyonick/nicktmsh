@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 4 40 50">
+  <!-- Знак «Маленького театрика кукол» (фавикон smallteatrik.vercel.app),
+       одним цветом для маски: корона и лицо, глаза и улыбка вырезаны. -->
+  <defs>
+    <mask id="face">
+      <rect x="0" y="0" width="64" height="64" fill="#fff"/>
+      <circle cx="25.5" cy="30" r="3.2" fill="#000"/>
+      <circle cx="38.5" cy="30" r="3.2" fill="#000"/>
+      <path d="M23.3 35.6a11 10 0 0 0 17.4 0" fill="none" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <path d="M23 20 L26 7 L30 15 L33 5 L37 15 L41 8 L43 20 Z" fill="#fff"/>
+  <circle cx="32" cy="34" r="19" fill="#fff" mask="url(#face)"/>
+</svg>

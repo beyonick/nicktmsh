@@ -22,7 +22,7 @@
         "Animation"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/yandex-music.svg",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -74,7 +74,9 @@
         {
           "src": "work/yandex-music/10-fallback.webp"
         }
-      ]
+      ],
+      "logoRatio": 7.119,
+      "color": "#FFBC0D"
     },
     {
       "slug": "m",
@@ -213,7 +215,7 @@
         "Hand-written front-end"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/smallteatrik.svg",
       "link": "https://smallteatrik.vercel.app/",
       "linkLabel": "smallteatrik.vercel.app",
       "featured": true,
@@ -225,7 +227,9 @@
       ],
       "todo": [
         "Обложка assets/work/smallteatrik-cover.webp"
-      ]
+      ],
+      "logoRatio": 0.792,
+      "color": "#FF6A2B"
     },
     {
       "slug": "mts-money",
@@ -394,7 +398,8 @@
         "Текст кейса: на старом сайте страница только с видео",
         "Обложка: положить assets/work/vk-video-cover.webp"
       ],
-      "logoRatio": 1
+      "logoRatio": 1,
+      "color": "#0077FF"
     },
     {
       "slug": "2x2",
@@ -445,7 +450,8 @@
           "src": "work/2x2/2x2.webp"
         }
       ],
-      "logoRatio": 2.333
+      "logoRatio": 2.333,
+      "color": "#000000"
     },
     {
       "slug": "honor",
@@ -488,7 +494,8 @@
           "src": "work/honor/frame-2.webp"
         }
       ],
-      "logoRatio": 5.2
+      "logoRatio": 5.2,
+      "color": "#000000"
     },
     {
       "slug": "dzen",
@@ -557,7 +564,8 @@
           "caption": "Science"
         }
       ],
-      "logoRatio": 3.24
+      "logoRatio": 3.24,
+      "color": "#000000"
     },
     {
       "slug": "waydeal",
@@ -636,7 +644,7 @@
         "Arturia BeatStep"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/nicktmsh.png",
       "link": null,
       "featured": true,
       "published": true,
@@ -692,7 +700,8 @@
         {
           "src": "work/interactive/frame-756.webp"
         }
-      ]
+      ],
+      "logoRatio": 5.086
     },
     {
       "slug": "mardini-2026",
@@ -710,7 +719,7 @@
         "Animation"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/houdini.svg",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -934,7 +943,9 @@
           "src": "work/mardini-2026/day31_refract_v2_l.webp",
           "caption": "Day 31 — Refract"
         }
-      ]
+      ],
+      "logoRatio": 5.961,
+      "color": "#F26722"
     },
     {
       "slug": "logos",
@@ -950,7 +961,7 @@
         "Logo design"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/nicktmsh.png",
       "link": null,
       "featured": false,
       "published": true,
@@ -968,7 +979,8 @@
         {
           "src": "work/logos/logo-12.webp"
         }
-      ]
+      ],
+      "logoRatio": 5.086
     },
     {
       "slug": "forma-budushchego",
@@ -1078,8 +1090,8 @@
         "Motion"
       ],
       "cover": null,
-      "logo": null,
-      "color": null,
+      "logo": "assets/logos/vk.svg",
+      "color": "#0077FF",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -1105,7 +1117,8 @@
         {
           "src": "work/vk-music/manifest-3-5s.mp4"
         }
-      ]
+      ],
+      "logoRatio": 1
     },
     {
       "titleRu": "LiteBIM",
@@ -1119,7 +1132,7 @@
       ],
       "cover": null,
       "logo": "assets/logos/litebim.svg",
-      "color": null,
+      "color": "#5BA7D0",
       "link": null,
       "linkLabel": null,
       "featured": false,
@@ -1175,7 +1188,7 @@
         "Motion"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/out-digital.png",
       "color": null,
       "link": null,
       "linkLabel": null,
@@ -1214,7 +1227,8 @@
         {
           "src": "work/out-digital/dynamic0300.webp"
         }
-      ]
+      ],
+      "logoRatio": 5.084
     },
     {
       "titleRu": "PSB",
@@ -1225,7 +1239,7 @@
         "Motion"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/psb.svg",
       "color": null,
       "link": null,
       "linkLabel": null,
@@ -1249,7 +1263,8 @@
         {
           "src": "work/psb/psb-rolik-04-29s.mp4"
         }
-      ]
+      ],
+      "logoRatio": 3.275
     },
     {
       "titleRu": "Series VFX: Explosion",
@@ -1260,7 +1275,7 @@
         "VFX"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/nicktmsh.png",
       "color": null,
       "link": null,
       "linkLabel": null,
@@ -1281,7 +1296,8 @@
         {
           "src": "work/series-explosion/low1.mp4"
         }
-      ]
+      ],
+      "logoRatio": 5.086
     },
     {
       "titleRu": "Vesna",
