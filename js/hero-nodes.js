@@ -157,8 +157,12 @@ function mount(hero) {
     const S = (hero.querySelector(".hero__sub") || name).getBoundingClientRect();
     const u = H.width / 912;
     const cx = N.left - H.left + N.width / 2;
-    const nameTop = N.top - H.top;
-    const subBottom = S.bottom - H.top;
+    // Порты — на верхнем и нижнем ребре рамки имени (.hero__frame);
+    // без рамки — чуть выше имени и ниже подписи.
+    const frame = hero.querySelector(".hero__frame");
+    const F = frame && frame.getClientRects().length ? frame.getBoundingClientRect() : null;
+    const pinY = F ? F.top - H.top : N.top - H.top - 12 * u;
+    const poutY = F ? F.bottom - H.top : S.bottom - H.top + 14 * u;
 
     // Входы — ряд над именем, по центру; верх общий, по самой высокой.
     const w = 150 * u;
@@ -168,13 +172,13 @@ function mount(hero) {
     const tall = Math.max(...ins.map((n) => n.node.offsetHeight));
     ins.forEach((n, i) => {
       n.node.style.left = `${cx - row / 2 + i * (w + gap) + n.dx}px`;
-      n.node.style.top = `${nameTop - 34 * u - tall + n.dy}px`;
+      n.node.style.top = `${pinY - 30 * u - tall + n.dy}px`;
     });
 
     // Выход — под подписью, по центру; правее — шоурил и «обо мне» на
     // одной с ним средней линии.
     const ow = 150 * u;
-    const oy = subBottom + 44 * u;
+    const oy = poutY + 36 * u;
     out.node.style.width = `${ow}px`;
     out.node.style.left = `${cx - ow / 2 + out.dx}px`;
     out.node.style.top = `${oy + out.dy}px`;
@@ -186,7 +190,7 @@ function mount(hero) {
       n.node.style.top = `${mid - n.node.offsetHeight / 2 + n.dy}px`;
     });
 
-    base = { pin: { x: cx, y: nameTop - 12 * u }, pout: { x: cx, y: subBottom + 14 * u } };
+    base = { pin: { x: cx, y: pinY }, pout: { x: cx, y: poutY } };
     portIn.style.left = `${base.pin.x}px`;
     portIn.style.top = `${base.pin.y}px`;
     portOut.style.left = `${base.pout.x}px`;

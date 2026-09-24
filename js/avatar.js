@@ -1,14 +1,15 @@
 /* Аватар «обо мне»: круг, пунктирная орбита и смена кадра по клику.
 
    Список кадров — в data-photos на <figure>. Клик (или Enter) проигрывает
-   цифровой переход на холсте поверх фото: кадр рассыпается в пиксельные
-   блоки, строки сдвигаются, как сбойный сигнал, вспыхивают блоки данных
-   акцентом — в пике кадр меняется и собирается обратно. Счётчик в углу —
+   переход на холсте поверх фото, языком айдентики — линиями: кадр
+   раскладывается на тонкие горизонтальные линии, они редеют и расходятся
+   волной, сверху вниз проходит линия-сканер акцентом; в середине кадр
+   меняется и собирается из линий обратно. Счётчик в углу —
    какой кадр из скольких. Без движения (reduced motion) кадр меняется
    сразу. */
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const DUR = 560; // мс на весь переход
+const DUR = 720; // мс на весь переход
 
 function accent() {
   const probe = document.createElement("span");
@@ -39,8 +40,6 @@ document.querySelectorAll("[data-photos]").forEach((fig) => {
   count.setAttribute("aria-hidden", "true");
   fig.append(fx, count);
   const ctx = fx.getContext("2d");
-  const small = document.createElement("canvas");
-  const sctx = small.getContext("2d");
 
   let at = Math.max(0, list.indexOf(img.getAttribute("src")));
   let busy = false;
@@ -52,35 +51,27 @@ document.querySelectorAll("[data-photos]").forEach((fig) => {
   fig.setAttribute("role", "button");
   fig.setAttribute("aria-label", "Next photo");
 
-  // Кадр с пикселизацией block и сбоем glitch (0..1).
-  function paint(pic, block, glitch, lime) {
+  // Кадр линиями — язык айдентики: тонкие горизонтальные линии, как растр
+  // миллиметровки. k (0..1) — сила эффекта: линии редеют и утончаются,
+  // расходятся волной; сверху вниз идёт линия-сканер акцентом.
+  function paint(pic, k, t, lime, dpr, lw) {
     const w = fx.width;
     const h = fx.height;
-    const sw = Math.max(1, Math.round(w / block));
-    const sh = Math.max(1, Math.round(h / block));
-    small.width = sw;
-    small.height = sh;
-    sctx.drawImage(pic, 0, 0, sw, sh);
-    ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, w, h);
-    ctx.drawImage(small, 0, 0, w, h);
-    // Сдвинутые строки — как сорванная синхронизация.
-    const rows = Math.round(glitch * 9);
-    for (let i = 0; i < rows; i++) {
-      const y = Math.random() * h;
-      const bh = (0.02 + Math.random() * 0.07) * h;
-      const shift = (Math.random() - 0.5) * glitch * w * 0.35;
-      ctx.drawImage(small, 0, (y / h) * sh, sw, (bh / h) * sh, shift, y, w, bh);
+    // Как object-fit: cover — середина кадра во весь круг.
+    const iw = pic.naturalWidth || w;
+    const ih = pic.naturalHeight || h;
+    const s = Math.max(w / iw, h / ih);
+    const sx = (iw - w / s) / 2;
+    const sy = (ih - h / s) / 2;
+    const gap = Math.max(1, Math.round((1 + k * 6) * dpr));
+    const thick = Math.max(1, gap * (1 - k * 0.8));
+    for (let y = 0; y < h; y += gap) {
+      const off = Math.sin((y * 0.045) / dpr + t * 12) * k * w * 0.05;
+      ctx.drawImage(pic, sx, sy + y / s, w / s, thick / s, off, y, w, thick);
     }
-    // Блоки данных акцентом.
     ctx.fillStyle = lime;
-    const cells = Math.round(glitch * 14);
-    const cell = Math.max(2, block);
-    for (let i = 0; i < cells; i++) {
-      ctx.globalAlpha = 0.5 + Math.random() * 0.5;
-      ctx.fillRect(Math.floor((Math.random() * w) / cell) * cell, Math.floor((Math.random() * h) / cell) * cell, cell, cell);
-    }
-    ctx.globalAlpha = 1;
+    ctx.fillRect(0, t * h - lw / 2, w, lw);
   }
 
   const next = () => {
@@ -98,14 +89,14 @@ document.querySelectorAll("[data-photos]").forEach((fig) => {
     fx.width = Math.round(fig.clientWidth * dpr);
     fx.height = Math.round(fig.clientHeight * dpr);
     const lime = accent();
-    const maxBlock = fx.width / 10;
+    // Толщина линии-сканера — линия сайта (--line-px, js/main.js).
+    const lw = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--line-px")) || 1) * dpr;
     fig.classList.add("is-fx");
     const start = performance.now();
     const step = (now) => {
       const t = Math.min(1, (now - start) / DUR);
       const k = Math.sin(t * Math.PI); // 0 → 1 → 0: пик в середине
-      const block = 1 + k * k * maxBlock;
-      paint(t < 0.5 ? from : to, block, k, lime);
+      paint(t < 0.5 ? from : to, k, t, lime, dpr, lw);
       if (t >= 0.5 && img.getAttribute("src") !== list[at]) {
         img.src = list[at];
         show();

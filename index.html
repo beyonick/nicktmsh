@@ -21,6 +21,9 @@
 </head>
 <body>
 
+<!-- Точечный паттерн на весь документ (js/dots.js, стили — home.css). -->
+<div class="dots" aria-hidden="true"></div>
+
 <a class="skip" href="#about">Skip to content</a>
 
 <header class="nav">
@@ -45,6 +48,9 @@
        плоскостью, как на рефе. -->
   <section class="hero wrap">
     <div class="hero__title">
+      <!-- Рамка ноды вокруг имени: порты входа и выхода графа стоят на её
+           рёбрах (js/hero-nodes.js), шапка — как у нод. -->
+      <span class="hero__frame" aria-hidden="true"><span class="node__head"><span class="node__type">Core</span><span class="node__tool">nicktmsh</span></span></span>
       <h1 class="hero__name">nikita tomash</h1>
       <p class="hero__sub">creative technologist</p>
     </div>
@@ -373,5 +379,6 @@
 <script src="js/pipeline.js" type="module"></script>
 <script src="js/hero-nodes.js" type="module"></script>
 <script src="js/avatar.js" type="module"></script>
+<script src="js/dots.js" type="module"></script>
 </body>
 </html>
