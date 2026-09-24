@@ -145,3 +145,158 @@
 @media (prefers-reduced-motion: reduce) {
   .nodes.is-live .wire__flow { animation: none; }
 }
+
+/* =============================================================================
+   Пайплайн на главной (js/pipeline.js) — та же нодовая система, но живая:
+   ноды софта включаются кликом, провода пересобираются, выход печатается.
+   ============================================================================= */
+
+.pipe-head {
+  display: grid;
+  grid-template-columns: calc(var(--col) * 2) 1fr;
+  gap: calc(40 * var(--u));
+  align-items: end;
+  margin-block-start: calc(33 * var(--u));
+}
+.pipe-head__note {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  line-height: calc(22 * var(--u));
+  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+}
+
+.pipe__stage {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(var(--x) * var(--u));
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
+}
+
+/* Нода софта: значок, имя, роль. Выключенная — пунктиром и без цвета,
+   включённая — сплошной рамкой, значок в своих цветах. */
+.pipe__tool .node__head { display: none; }
+.pipe__tool .node__body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: calc(7 * var(--u));
+  align-items: center;
+  padding: calc(8 * var(--u)) calc(8 * var(--u));
+  border: var(--line) dashed var(--hair);
+  background: var(--bg);
+  transition:
+    border-color var(--dur-ui) var(--ease),
+    background-color var(--dur-ui) var(--ease),
+    box-shadow var(--dur-ui) var(--ease);
+}
+.pipe__icon {
+  grid-row: span 2;
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+  filter: grayscale(1);
+  opacity: 0.4;
+  transition: filter var(--dur-ui) var(--ease), opacity var(--dur-ui) var(--ease);
+}
+.pipe__name,
+.pipe__role { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pipe__name {
+  font-family: var(--mono);
+  font-size: calc(10.5 * var(--u));
+  line-height: calc(14 * var(--u));
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  transition: color var(--dur-ui) var(--ease);
+}
+.pipe__role {
+  font-family: var(--mono);
+  font-size: calc(9 * var(--u));
+  line-height: calc(12 * var(--u));
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--fg) 35%, var(--bg));
+}
+.pipe__tool:hover .node__body,
+.pipe__tool:focus-visible .node__body { border-color: color-mix(in srgb, var(--fg) 45%, var(--bg)); }
+.pipe__tool:focus-visible { outline: none; }
+.pipe__tool.is-on .node__body {
+  border-style: solid;
+  border-color: var(--hair);
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+}
+.pipe__tool.is-on .pipe__icon { filter: none; opacity: 1; }
+.pipe__tool.is-on .pipe__name { color: var(--fg); }
+
+/* Вход и выход. */
+.pipe__io .node__body { background: var(--bg); }
+.pipe__prompt {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: calc(12 * var(--u));
+  line-height: calc(17 * var(--u));
+  resize: none;
+  outline: none;
+}
+.pipe__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(4 * var(--u));
+  margin-block-start: calc(10 * var(--u));
+  padding-block-start: calc(10 * var(--u));
+  border-block-start: var(--line) solid var(--hair);
+}
+.pipe__chip {
+  padding: calc(3 * var(--u)) calc(8 * var(--u));
+  border: var(--line) solid var(--hair);
+  border-radius: 100px;
+  background: none;
+  color: color-mix(in srgb, var(--fg) 60%, var(--bg));
+  font-family: var(--mono);
+  font-size: calc(9 * var(--u));
+  line-height: calc(12 * var(--u));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.pipe__chip:hover { border-color: var(--accent); color: var(--accent); }
+.pipe__chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+.pipe__result { color: var(--fg); }
+.pipe__result.is-typing::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-inline-start: 0.1em;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: pipe-caret 0.7s steps(1) infinite;
+}
+@keyframes pipe-caret { 50% { opacity: 0; } }
+.pipe__output.is-pulse .node__body { animation: pipe-pulse 0.9s var(--ease-out); }
+@keyframes pipe-pulse {
+  from { box-shadow: 0 0 0 calc(6 * var(--u)) color-mix(in srgb, var(--accent) 35%, transparent); }
+  to { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Новый провод прорисовывается от порта к порту; сигнал по нему пускается
+   после. */
+.wire.is-new .wire__line { stroke-dasharray: 1; animation: wire-in 0.8s var(--ease-out) both; }
+.wire.is-new .wire__flow { opacity: 0 !important; }
+@keyframes wire-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@media (max-width: 760px) {
+  .pipe-head { grid-template-columns: 1fr; gap: calc(16 * var(--u)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wire.is-new .wire__line { animation: none; stroke-dasharray: none; }
+  .pipe__output.is-pulse .node__body { animation: none; }
+}

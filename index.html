@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/vectors.css">
 <link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/nodes.css">
 </head>
 <body>
 
@@ -249,6 +250,23 @@
     </div>
   </section>
 
+  <!-- 06 / Pipeline ----------------------------------------------------
+       Нодовая система (css/nodes.css) вживую, js/pipeline.js: бриф на входе,
+       софт, с которым я работаю, по этапам, и что получится на выходе. Клик
+       по ноде подключает или отключает её, провода и выход пересобираются;
+       готовые брифы включают свой набор. -->
+  <section class="band wrap" id="pipeline">
+    <p class="label rise">06/ Pipeline</p>
+    <div class="pipe-head rise" style="--delay:80ms">
+      <h2 class="display">Pick a brief.<br>Wire the tools.</h2>
+      <p class="pipe-head__note">
+        These are the tools I actually work in. Click a node to plug it in or
+        out — the output rewrites itself. Nodes can be dragged.
+      </p>
+    </div>
+    <div class="nodes pipe rise" style="--delay:160ms" data-pipeline></div>
+  </section>
+
   <!-- Lab: тизер. Перспективная сетка сходится ровно за словом — точка
        схода работает указателем, а не фоном. -->
   <section class="lab-teaser" id="lab" data-para="0.35">
@@ -349,5 +367,7 @@
 <script src="js/tilt-panel.js" type="module"></script>
 <script src="js/ink-panel.js" type="module"></script>
 <script src="js/contact.js" type="module"></script>
+<script src="js/cursor.js" type="module"></script>
+<script src="js/pipeline.js" type="module"></script>
 </body>
 </html>

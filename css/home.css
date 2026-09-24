@@ -182,6 +182,7 @@ button.pill {
 #work      { --gap-top: calc(98  * var(--u)); }
 #clients   { --gap-top: calc(129 * var(--u)); }
 #talk      { --gap-top: calc(121 * var(--u)); --gap-bottom: calc(49 * var(--u)); }
+#pipeline  { --gap-top: calc(120 * var(--u)); }
 
 /* Переносы строк в дисплейных блоках расставлены руками под 1200. */
 @media (max-width: 760px) { .display br { display: none; } }
@@ -406,14 +407,18 @@ button.pill {
 
 /* Логотипы одноцветные: mask + background-color. Высоты сняты с макета
    поштучно — знаки выровнены на глаз по оптике, а не по одной высоте. */
+/* Логотипы клиентов стоят почти в тон фону (#302B3D — цвет миллиметровки)
+   и проявляются вторым акцентом под курсором. */
 .logo {
   flex: none;
   height: var(--h, calc(48 * var(--u)));
   aspect-ratio: var(--ar, 4);
-  background: var(--logo);
+  background: #302B3D;
   -webkit-mask: var(--src) center / contain no-repeat;
   mask: var(--src) center / contain no-repeat;
+  transition: background-color var(--dur-ui) var(--ease);
 }
+.logo:hover { background: var(--accent-2); }
 
 .mark-gazprombank { --src: url("../assets/logos/gazprombank.svg"); --ar: 4.74; --h: calc(52 * var(--u)); }
 .mark-sber        { --src: url("../assets/logos/sber.svg");        --ar: 6.04; --h: calc(30 * var(--u)); }
@@ -1104,3 +1109,42 @@ html.is-tilt-picking * { cursor: crosshair !important; }
 @media (max-width: 760px) {
   .about { max-width: none; }
 }
+
+/* --- Курсор-кольцо (js/cursor.js) ------------------------------------------------
+   Системный курсор прячется только когда кольцо есть (мышь, скрипт
+   загрузился); в полях ввода остаётся текстовый. */
+
+html.has-cursor,
+html.has-cursor * { cursor: none !important; }
+html.has-cursor :is(input, textarea, select, [contenteditable="true"]) { cursor: text !important; }
+
+.cursor {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 100;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    scale 380ms var(--ease),
+    background-color 380ms var(--ease),
+    border-style 0ms;
+}
+.cursor.is-shown { opacity: 1; }
+/* Ховер: кольцо вырастает и заливается — под ним всё инвертируется. */
+.cursor.is-hot { scale: 2; background: #fff; }
+/* Нода: пунктирное кольцо чуть больше — «можно взять». */
+.cursor.is-drag { scale: 1.6; border-style: dashed; }
+.cursor.is-drag.is-hot { background: transparent; }
+.cursor.is-down { scale: 0.7; }
+.cursor.is-hot.is-down { scale: 1.6; }
+.cursor.is-text { opacity: 0; }
+
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
