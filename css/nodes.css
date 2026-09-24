@@ -350,24 +350,58 @@
   opacity: 0.9;
   animation: wire-flow 1.4s linear infinite;
 }
-/* Имя — тоже нода: рамка, как у нод, шапка сверху, порты графа на её
-   рёбрах. Типографика первого экрана и нодовая система — одним языком. */
+/* Имя — тоже нода: рамка бегущим пунктиром, шапка сверху, порты графа на её
+   рёбрах. Типографика первого экрана и нодовая система — одним языком.
+   При наведении рамка сжимается к имени; порты едут за ней (js/hero-nodes.js,
+   там же отступы рамки в покое — менять вместе). */
 .hero__title { position: relative; }
 .hero__frame {
   position: absolute;
   inset: calc(-26 * var(--u)) calc(-32 * var(--u)) calc(-24 * var(--u));
   z-index: -1;
-  border: var(--line) solid var(--hair);
-  border-radius: calc(8 * var(--u));
   text-align: start;
   pointer-events: none;
+  transition: inset 500ms var(--ease-out);
 }
+.hero__title:hover .hero__frame {
+  inset: calc(-14 * var(--u)) calc(-18 * var(--u)) calc(-12 * var(--u));
+}
+/* Зона наведения — вся рамка в покое, а не только текст: сжатая рамка не
+   уходит из-под курсора и не дёргается. */
+.hero__title::after {
+  content: "";
+  position: absolute;
+  inset: calc(-26 * var(--u)) calc(-32 * var(--u)) calc(-24 * var(--u));
+  z-index: -1;
+}
+/* Пунктир — SVG: у border штрихи не двигаются. pathLength="1000" и период
+   5 — ровно 200 штрихов по периметру, без шва в углу. */
+.hero__dash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.hero__dash rect {
+  rx: calc(8 * var(--u));
+  fill: none;
+  stroke: var(--hair);
+  stroke-width: var(--line-px, 1px);
+  stroke-dasharray: 2.5 2.5;
+  animation: hero-dash 0.9s linear infinite;
+}
+@keyframes hero-dash { to { stroke-dashoffset: -5; } }
 .hero__frame .node__head {
   position: absolute;
   inset-block-end: 100%;
   inset-inline-start: 0;
 }
-@media (max-width: 760px) { .hero__graph, .hero__frame { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero__dash rect { animation: none; }
+  .hero__frame { transition: none; }
+}
+@media (max-width: 760px) { .hero__graph, .hero__frame, .hero__title::after { display: none; } }
 
 /* =============================================================================
    «Get in touch», нодовая версия (js/contact.js): вход → каналы → выход.
