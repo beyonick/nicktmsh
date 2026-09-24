@@ -196,6 +196,31 @@
 
 .case__link { margin-block-end: calc(48 * var(--u)); color: var(--accent); }
 
+/* Галерея кейса (js/case.js): первая работа во всю колонку, остальные —
+   по две. Кадры разной пропорции не режутся: высота у каждого своя. */
+.case-media {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(16 * var(--u));
+  align-items: start;
+  padding-block-end: calc(120 * var(--u));
+}
+.case-media__item { margin: 0; }
+.case-media__item:first-child { grid-column: 1 / -1; }
+.case-media__file {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--thumb);
+}
+.case-media__cap {
+  margin-block-start: calc(8 * var(--u));
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+}
+
 .case-next {
   padding-block: calc(56 * var(--u)) calc(120 * var(--u));
   border-block-start: var(--line) solid var(--hair);
@@ -232,4 +257,5 @@
   .row__arrow { display: none; }
 
   .case__p { max-width: none; }
+  .case-media { grid-template-columns: 1fr; }
 }

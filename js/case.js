@@ -19,7 +19,63 @@ function meta(term, value) {
   ]);
 }
 
-function render(project, next) {
+/* Галерея. Файлы лежат в Selectel, в json — путь от mediaBase (или
+   полный адрес). Видео определяется по расширению: без звука, по кругу,
+   играет только на экране — роликов в кейсе бывает с десяток. Файл,
+   который не загрузился, убирается целиком, а не оставляет пустую рамку:
+   так кейс не ломается, пока медиа ещё не залиты. */
+const VIDEO = /\.(mp4|webm|mov)(\?|$)/i;
+
+const player = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.play().catch(() => {});
+        else e.target.pause();
+      }
+    }, { rootMargin: "200px 0px" })
+  : null;
+
+function gallery(items, base) {
+  if (!items || !items.length) return null;
+  const url = (path) => (!path ? null : /^https?:/.test(path) ? path : base + path);
+
+  const figures = items.map((it, i) => {
+    const src = url(it.src);
+    const drop = (e) => e.currentTarget.closest("figure").remove();
+    const media = VIDEO.test(src)
+      ? el("video", {
+          class: "case-media__file",
+          src,
+          poster: url(it.poster),
+          muted: "",
+          loop: "",
+          playsinline: "",
+          preload: "metadata",
+          onerror: drop,
+        })
+      : el("img", {
+          class: "case-media__file",
+          src,
+          alt: it.caption || "",
+          loading: i < 2 ? "eager" : "lazy",
+          decoding: "async",
+          onerror: drop,
+        });
+    if (media.tagName === "VIDEO") {
+      media.muted = true; // атрибута мало: без свойства автоплей не пустят
+      if (player) player.observe(media);
+      else media.autoplay = true;
+    }
+    return el("figure", { class: "case-media__item" }, [
+      media,
+      it.caption ? el("figcaption", { class: "case-media__cap", text: it.caption }) : null,
+    ]);
+  });
+
+  return el("section", { class: "case-media wrap" }, figures);
+}
+
+function render(project, next, base) {
   document.title = `${project.title} — Nikita Tomash`;
   const desc = document.querySelector('meta[name="description"]');
   if (desc && project.summary) desc.setAttribute("content", project.summary);
@@ -83,6 +139,7 @@ function render(project, next) {
   host.replaceChildren(
     head,
     el("section", { class: "band wrap case" }, [metaList, link, ...body, empty]),
+    gallery(project.media, base),
     nextBlock
   );
   host.removeAttribute("aria-busy");
@@ -115,7 +172,7 @@ load("projects")
 
     project.branchLabel = (data.branches || {})[project.branch] || null;
     const i = list.indexOf(project);
-    render(project, list[(i + 1) % list.length]);
+    render(project, list[(i + 1) % list.length], data.mediaBase || "");
   })
   .catch((err) => {
     host.removeAttribute("aria-busy");

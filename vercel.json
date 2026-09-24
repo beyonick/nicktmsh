@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/mts", "destination": "/case?p=mts-money", "permanent": true },
+    { "source": "/interactive", "destination": "/case?p=interactive", "permanent": true },
+    { "source": "/mardini2026", "destination": "/case?p=mardini-2026", "permanent": true },
+    { "source": "/pervaya", "destination": "/case?p=pervaya-tsifra", "permanent": true },
+    { "source": "/waydeal", "destination": "/case?p=waydeal", "permanent": true },
+    { "source": "/art", "destination": "/lab", "permanent": true }
+  ]
+}

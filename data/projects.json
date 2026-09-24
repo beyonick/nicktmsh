@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23",
+  "updated": "2026-09-24",
   "branches": {
     "web": "Web",
     "branding": "Branding",
@@ -57,13 +57,13 @@
       "branch": "branding",
       "kicker": "Logo, branding, mascot, print, web",
       "role": "Art direction, full cycle",
-      "summary": "A full identity for a digital services company: mark, type system, mascot, print and the site it all had to live on.",
+      "summary": "A brand built from zero for an IT aggregator: logo, identity, site, mascot and the graphic materials around them.",
       "capabilities": [
-        "Art direction",
+        "Logo",
         "Identity",
+        "Web",
         "Mascot",
-        "Print",
-        "Web"
+        "Graphic materials"
       ],
       "cover": null,
       "logo": null,
@@ -77,8 +77,34 @@
         "The brand shipped: the live site is the proof, not a mockup."
       ],
       "todo": [
-        "2-3 решения — конкретные развилки",
-        "Обложка assets/work/pervaya-tsifra-cover.webp"
+        "Текст кейса: задача, решения, результат, 2–3 цифры (пришлёт)",
+        "Знак SVG и цвет бренда"
+      ],
+      "media": [
+        {
+          "src": "work/pervaya-tsifra/Artboard_51.png"
+        },
+        {
+          "src": "work/pervaya-tsifra/2.png"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-4a6082f7-f484-.jpg"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-5548268a-3105-.jpg"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-6eef3626-b6e4-.jpg"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-91b347a2-bb13-.jpg"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-9822001c-6ca3-.jpg"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-b959ad10-a7d0-.jpg"
+        }
       ]
     },
     {
@@ -116,11 +142,11 @@
       "title": "MTS Money",
       "titleRu": "МТС Деньги",
       "client": "МТС Деньги",
-      "year": null,
+      "year": 2025,
       "branch": "motion",
-      "kicker": "3D creative production",
+      "kicker": "3D illustration for two MTS products",
       "role": "3D illustrator at MTS Money",
-      "summary": "3D illustration for fintech products across digital and marketing platforms — expressive volume kept inside a minimal, UI-friendly system.",
+      "summary": "3D illustration for two MTS fintech products, MTS Money and MTS Premium — expressive volume kept inside a minimal, UI-friendly system.",
       "capabilities": [
         "3D illustration",
         "Lookdev",
@@ -134,14 +160,108 @@
       "published": true,
       "status": "done",
       "body": [
-        "Designed high-quality 3D illustrations for fintech products across digital and marketing platforms, holding one visual style across the whole set.",
+        "Designed high-quality 3D illustrations for two MTS fintech products — MTS Money and MTS Premium — across digital and marketing platforms, holding one visual style across the whole set.",
         "Visual metaphors for a wide range of services — banking features, office access, travel bookings, mobility.",
         "Scenes built and rendered in Cinema 4D with Redshift."
       ],
       "todo": [
-        "Год не подтверждён",
         "Роль: арт-дирекция или исполнение — уточнить",
         "Обложка: положить assets/work/mts-money-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/mts-money/Dengi_01.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_02.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_03.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_04.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_05.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_06.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_07.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_08.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_09.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_10.jpg"
+        },
+        {
+          "src": "work/mts-money/Dengi_13.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_01.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_02.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_03.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_04.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_05.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_06.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_07.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_08.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_11.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_12.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_13.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_15.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_16se.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_17.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_18.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_19.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_20.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_21.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_22.jpg"
+        },
+        {
+          "src": "work/mts-money/Premium_23.jpg"
+        }
       ]
     },
     {
@@ -272,12 +392,13 @@
       "client": "WayDeal",
       "year": null,
       "branch": "branding",
-      "kicker": "Logo, branding, web design",
+      "kicker": "Logo, identity, corporate portal",
       "role": null,
-      "summary": "Mark, identity and web design for WayDeal.",
+      "summary": "Logo, identity and a corporate portal for WayDeal.",
       "capabilities": [
+        "Logo",
         "Identity",
-        "Web design"
+        "Corporate portal"
       ],
       "cover": null,
       "logo": null,
@@ -287,9 +408,38 @@
       "status": "done",
       "body": [],
       "todo": [
-        "Год не подтверждён",
-        "Текст кейса: на старом сайте страница только с картинками",
-        "Обложка: положить assets/work/waydeal-cover.webp"
+        "Материалы портала (пришлёт)",
+        "Что за компания, год, роль",
+        "Знак SVG и точный фиолетовый"
+      ],
+      "media": [
+        {
+          "src": "work/waydeal/1HD.jpg"
+        },
+        {
+          "src": "work/waydeal/2HD.jpg"
+        },
+        {
+          "src": "work/waydeal/3HD.jpg"
+        },
+        {
+          "src": "work/waydeal/4HD.jpg"
+        },
+        {
+          "src": "work/waydeal/5HD.jpg"
+        },
+        {
+          "src": "work/waydeal/6HD.jpg"
+        },
+        {
+          "src": "work/waydeal/7HD.jpg"
+        },
+        {
+          "src": "work/waydeal/8HD.jpg"
+        },
+        {
+          "src": "work/waydeal/9HD.jpg"
+        }
       ]
     },
     {
@@ -306,7 +456,9 @@
         "TouchDesigner",
         "Notch VFX",
         "Ableton Live",
-        "Generative systems"
+        "Generative systems",
+        "Leap Motion",
+        "Arturia BeatStep"
       ],
       "cover": null,
       "logo": null,
@@ -316,10 +468,247 @@
       "status": "done",
       "body": [
         "In autumn 2021 I ran a series of audiovisual experiments on interactive and generative installation content. It ended at around twenty pieces, each examining a different interaction method — voice input, motion tracking, audio-driven synchronisation.",
-        "Three workstations: an MSI Creator for real-time visuals in Notch VFX, a laptop generating audio in Ableton Live, and an HP NUC running TouchDesigner for input and system integration. Everything spoke OSC."
+        "Three workstations: an MSI Creator for real-time visuals in Notch VFX, a laptop generating audio in Ableton Live, and an HP NUC running TouchDesigner for input and system integration. Everything spoke OSC.",
+        "Eight pieces from the series: beat-driven fluid simulations played live on faders; sound and generative systems that follow the hand through Leap Motion; fragments, particles and spheres that scatter on gesture; gesture-driven audio and smoke with typography built into the scene; generative visuals and sound performed live on faders and pads of an Arturia BeatStep."
       ],
       "todo": [
-        "Обложка assets/work/interactive-cover.webp"
+        "Обложка assets/work/interactive-cover.webp",
+        "Ссылки на Vimeo для 8 работ — заменить ими кадры"
+      ],
+      "media": [
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%202.0/td_leapmotion.mp4",
+          "caption": "Process"
+        },
+        {
+          "src": "work/interactive/17_Liquid_C_0-00-26-.jpg"
+        },
+        {
+          "src": "work/interactive/Content_0-00-17-28.jpg"
+        },
+        {
+          "src": "work/interactive/Content_13_B_2_0-00-.jpg"
+        },
+        {
+          "src": "work/interactive/Content_14_0-00-13-2.jpg"
+        },
+        {
+          "src": "work/interactive/Content_15_0-00-06-0.jpg"
+        },
+        {
+          "src": "work/interactive/Content_D_0-00-32-09.jpg"
+        },
+        {
+          "src": "work/interactive/image-110e20c3-d054-.jpg"
+        },
+        {
+          "src": "work/interactive/image-36a90fab-bc18-.webp"
+        },
+        {
+          "src": "work/interactive/image-552168db-c400-.png"
+        },
+        {
+          "src": "work/interactive/image-56be6b35-0b09-.webp"
+        },
+        {
+          "src": "work/interactive/image-c5f84e36-642b-.png"
+        },
+        {
+          "src": "work/interactive/image-eb445cd0-99ce-.webp"
+        },
+        {
+          "src": "work/interactive/image-fa4516d6-f487-.jpg"
+        },
+        {
+          "src": "work/interactive/pipeline.jpg"
+        },
+        {
+          "src": "work/interactive/Screenshot_2021-11-0.png"
+        },
+        {
+          "src": "work/interactive/Screenshot_2021-11-1.png"
+        },
+        {
+          "src": "work/interactive/Screenshot_2021-11-2.png"
+        },
+        {
+          "src": "work/interactive/tild3732-Screenshot_2021-11-0.png"
+        },
+        {
+          "src": "work/interactive/tild3835-Screenshot_2021-11-0.png"
+        },
+        {
+          "src": "work/interactive/tild6331-Screenshot_2021-11-0.png"
+        }
+      ]
+    },
+    {
+      "slug": "mardini-2026",
+      "title": "Mardini 2026",
+      "titleRu": "Mardini 2026",
+      "client": "Personal project",
+      "year": 2026,
+      "branch": "motion",
+      "kicker": "31 days, 31 Houdini pieces",
+      "role": "Everything — concept, simulation, render",
+      "summary": "Mardini is SideFX's annual challenge: 31 days, 31 works, a new prompt every day, all of it in Houdini.",
+      "capabilities": [
+        "Houdini",
+        "Stills",
+        "Animation"
+      ],
+      "cover": null,
+      "logo": null,
+      "link": null,
+      "linkLabel": null,
+      "featured": false,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Mardini is an annual creative challenge run by SideFX, the makers of Houdini: 31 days, 31 works, each day a new prompt that pushes toward a different technique, tool or idea.",
+        "I set myself a few rules. One piece a day, no batching and nothing made in advance. No AI: everything built by hand in Houdini. Every piece explores one specific technique or system. Both stills and animation. An honest progression from familiar tools into new territory.",
+        "All 31 days done: 17 images and 14 animations, from Plant, Animal and Aquatic in the first days to Motion Blur and Refract at the end."
+      ],
+      "todo": [],
+      "media": [
+        {
+          "src": "work/mardini-2026/Day_1_01.png",
+          "caption": "Day 1 — Plant"
+        },
+        {
+          "src": "work/mardini-2026/Day_2_01.png",
+          "caption": "Day 2 — Animal"
+        },
+        {
+          "src": "work/mardini-2026/Day_3_01.png",
+          "caption": "Day 3 — Aquatic"
+        },
+        {
+          "src": "work/mardini-2026/day4_sq.jpg",
+          "caption": "Day 4 — Architecture"
+        },
+        {
+          "src": "work/mardini-2026/day5_6.jpg",
+          "caption": "Day 5 — Environment"
+        },
+        {
+          "src": "work/mardini-2026/Day6_-_Miniature.png",
+          "caption": "Day 6 — Miniature"
+        },
+        {
+          "src": "work/mardini-2026/Day7_01.png",
+          "caption": "Day 7 — Galactic"
+        },
+        {
+          "src": "work/mardini-2026/Day8_Explode-SE.webm",
+          "poster": "work/mardini-2026/Day8_Explode_0-00-02.jpg",
+          "caption": "Day 8 — Explode"
+        },
+        {
+          "src": "work/mardini-2026/Day9_Gooey-SE.webm",
+          "poster": "work/mardini-2026/Day9_Gooey_0-00-01-1.jpg",
+          "caption": "Day 9 — Gooey"
+        },
+        {
+          "src": "work/mardini-2026/Day10_Grow_1-SE.webm",
+          "poster": "work/mardini-2026/Day10_Grow_0-00-07-0.jpg",
+          "caption": "Day 10 — Grow"
+        },
+        {
+          "src": "work/mardini-2026/Day11_Disintegrate_1.webm",
+          "poster": "work/mardini-2026/Day11_Disintegrate_0.jpg",
+          "caption": "Day 11 — Disintegrate"
+        },
+        {
+          "src": "work/mardini-2026/Day12_Jiggle_1-SE.webm",
+          "poster": "work/mardini-2026/Day12_Jiggle_0-00-05.jpg",
+          "caption": "Day 12 — Jiggle"
+        },
+        {
+          "src": "work/mardini-2026/Fur_-_Copy.png",
+          "caption": "Day 13 — Fur"
+        },
+        {
+          "src": "work/mardini-2026/day14_4.png",
+          "caption": "Day 14 — Clothing"
+        },
+        {
+          "src": "work/mardini-2026/day15_Fonts-SE.webm",
+          "poster": "work/mardini-2026/day15_Fonts_0-00-00-.jpg",
+          "caption": "Day 15 — Fonts"
+        },
+        {
+          "src": "work/mardini-2026/day16_Fractal-SE.webm",
+          "poster": "work/mardini-2026/day16_Fractal_0-00-0.jpg",
+          "caption": "Day 16 — Fractal"
+        },
+        {
+          "src": "work/mardini-2026/Day17_Damaged_1-SE.webm",
+          "poster": "work/mardini-2026/Day17_Damaged_0-00-0.jpg",
+          "caption": "Day 17 — Damaged"
+        },
+        {
+          "src": "work/mardini-2026/9_Gooey_90055.png",
+          "caption": "Day 18 — Organic"
+        },
+        {
+          "src": "work/mardini-2026/Day_19_4.png",
+          "caption": "Day 19 — Neon"
+        },
+        {
+          "src": "work/mardini-2026/Stylish_Otto.png",
+          "caption": "Day 20 — Stylized"
+        },
+        {
+          "src": "work/mardini-2026/day21_Food-SE.webm",
+          "poster": "work/mardini-2026/day21_Food_0-00-01-2.jpg",
+          "caption": "Day 21 — Food"
+        },
+        {
+          "src": "work/mardini-2026/22_Transformer_5.png",
+          "caption": "Day 22 — Transformer"
+        },
+        {
+          "src": "work/mardini-2026/23_orbit.png",
+          "caption": "Day 23 — Orbit"
+        },
+        {
+          "src": "work/mardini-2026/Frame_361.png",
+          "caption": "Day 24 — Swarm"
+        },
+        {
+          "src": "work/mardini-2026/Day25_Dance_1-SE.webm",
+          "poster": "work/mardini-2026/Day25_Dance_0-00-00-.jpg",
+          "caption": "Day 25 — Dance"
+        },
+        {
+          "src": "work/mardini-2026/Day26_Collapse_1-SE.webm",
+          "poster": "work/mardini-2026/Day26_Collapse_0-00-.jpg",
+          "caption": "Day 26 — Collapse"
+        },
+        {
+          "src": "work/mardini-2026/Day27_Talk-SE.webm",
+          "poster": "work/mardini-2026/Day27_Talk_0-00-03-1.jpg",
+          "caption": "Day 27 — Talk"
+        },
+        {
+          "src": "work/mardini-2026/Crowdsday28_7.jpg",
+          "caption": "Day 28 — Crowds"
+        },
+        {
+          "src": "work/mardini-2026/Day29_Volumetric-SE.webm",
+          "poster": "work/mardini-2026/Day29_Volumetric_0-0.jpg",
+          "caption": "Day 29 — Volumetric"
+        },
+        {
+          "src": "work/mardini-2026/Day30_motion_blur-SE.webm",
+          "poster": "work/mardini-2026/Day30_motion_blur_0-.jpg",
+          "caption": "Day 30 — Motion Blur"
+        },
+        {
+          "src": "work/mardini-2026/Day31_Refract_v2_l.jpg",
+          "caption": "Day 31 — Refract"
+        }
       ]
     },
     {
@@ -447,5 +836,6 @@
         "Заполнить: год, объём работ, текст, обложка"
       ]
     }
-  ]
+  ],
+  "mediaBase": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/"
 }
