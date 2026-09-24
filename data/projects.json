@@ -194,7 +194,8 @@
           "src": "work/pervaya-tsifra/track.mp4"
         }
       ],
-      "color": "#D3FF00"
+      "color": "#D3FF00",
+      "logoRatio": 2.153
     },
     {
       "slug": "smallteatrik",
@@ -362,7 +363,8 @@
         {
           "src": "work/mts-money/premium-24.webp"
         }
-      ]
+      ],
+      "logoRatio": 1
     },
     {
       "slug": "vk-video",
@@ -391,7 +393,8 @@
         "Роль не заполнена",
         "Текст кейса: на старом сайте страница только с видео",
         "Обложка: положить assets/work/vk-video-cover.webp"
-      ]
+      ],
+      "logoRatio": 1
     },
     {
       "slug": "2x2",
@@ -441,7 +444,8 @@
         {
           "src": "work/2x2/2x2.webp"
         }
-      ]
+      ],
+      "logoRatio": 2.333
     },
     {
       "slug": "honor",
@@ -483,7 +487,8 @@
         {
           "src": "work/honor/frame-2.webp"
         }
-      ]
+      ],
+      "logoRatio": 5.2
     },
     {
       "slug": "dzen",
@@ -551,7 +556,8 @@
           "src": "work/dzen/9-nauka-v3-gr-50s.mp4",
           "caption": "Science"
         }
-      ]
+      ],
+      "logoRatio": 3.24
     },
     {
       "slug": "waydeal",
@@ -608,7 +614,8 @@
           "src": "work/waydeal/9hd.webp"
         }
       ],
-      "color": "#6734FF"
+      "color": "#6734FF",
+      "logoRatio": 1.259
     },
     {
       "slug": "interactive",
@@ -1111,7 +1118,7 @@
         "Banners"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/litebim.svg",
       "color": null,
       "link": null,
       "linkLabel": null,
@@ -1156,7 +1163,8 @@
         {
           "src": "work/litebim/03-iphone-15-pro-mockup-with-white-rock.webp"
         }
-      ]
+      ],
+      "logoRatio": 3.131
     },
     {
       "titleRu": "Out Digital",

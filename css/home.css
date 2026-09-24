@@ -282,8 +282,7 @@
   outline: var(--line) solid var(--accent);
   outline-offset: calc(-4 * var(--u));
 }
-.card__cap,
-.card__kicker { position: relative; z-index: 1; }
+.card__cap { z-index: 1; }
 
 /* Карточка с цветом бренда: знак по центру ячейки в четверть её ширины.
    Центрируется полями, а не translate — transform у знака занят
@@ -316,47 +315,47 @@
   pointer-events: none;
 }
 .work.has-ink .card { background: transparent; }
-/* В тёмной теме подпись и знак на чернилах выворачиваются в дополнительный
-   цвет (difference): светлый набор на лайме пропал бы. Вне чернил под ними
-   прозрачно — сетка изолирована, — и цвет остаётся ровно --fg. В светлой
-   теме тёмный набор читается на любых чернилах и так. */
-:root:not([data-theme="light"]) .work.has-ink :is(.card__cap, .card__kicker, .card__logo) {
-  mix-blend-mode: difference;
-}
+/* Чернила лежат под знаком и подписью и их не затемняют: набор остаётся
+   своего цвета поверх любого цвета ячейки. */
+/* Подпись — одна строка. Заголовок и вторая строка лежат в одном месте:
+   на ховере заголовок уезжает на строку вверх, а вторая строка
+   проявляется снизу на его месте. Высота подписи — одна строка, поэтому
+   сетка от ховера не двигается. */
 .card__cap {
+  position: relative;
   margin-block-start: auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: calc(8 * var(--u));
+  height: calc(18 * var(--u));
   font-family: var(--mono);
   font-size: var(--fs-caption);
   line-height: calc(18 * var(--u));
 }
-.card__cap sup {
+.card__title,
+.card__kicker {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    transform var(--dur-ui) var(--ease),
+    opacity var(--dur-ui) var(--ease);
+}
+.card__title { overflow: visible; text-overflow: clip; }
+.card__title sup {
   font-size: 0.65em;
   vertical-align: super;
   line-height: 0;
   margin-inline-start: calc(3 * var(--u));
   color: color-mix(in srgb, var(--fg) 45%, var(--bg));
 }
-.card__title { min-width: 0; }
-
-/* Вторая строка подписи — что именно делал. Место под неё зарезервировано
-   высотой строки, поэтому раскрытие не двигает соседние ячейки: сетка
-   стоит, меняется только содержимое одной ячейки. */
 .card__kicker {
-  margin-block-start: calc(2 * var(--u));
-  font-family: var(--mono);
-  font-size: calc(12 * var(--u));
-  line-height: calc(16 * var(--u));
-  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  color: color-mix(in srgb, var(--fg) 60%, var(--bg));
   opacity: 0;
-  transform: translateY(calc(-4 * var(--u)));
-  transition:
-    opacity var(--dur-ui) var(--ease),
-    transform var(--dur-ui) var(--ease);
+  transform: translateY(100%);
 }
+.card:hover .card__title,
+.card:focus-within .card__title { transform: translateY(-100%); }
 .card:hover .card__kicker,
 .card:focus-within .card__kicker {
   opacity: 1;
@@ -372,18 +371,6 @@
   line-height: calc(18 * var(--u));
   color: color-mix(in srgb, var(--fg) 62%, var(--bg));
 }
-/* Плашка знака: в макете это всегда квадрат 24×24 по правому краю
-   подписи. Знак вписывается внутрь по contain, поэтому вордмарк
-   (Honor, 2x2) не растягивает плашку и не искажается. */
-.card__chip {
-  flex: none;
-  height: calc(24 * var(--u));
-  width: calc(24 * var(--u));
-  background: var(--fg);
-  -webkit-mask: var(--src) center / contain no-repeat;
-  mask: var(--src) center / contain no-repeat;
-}
-
 /* --- 04 / Happy clients ----------------------------------------------------
    Лента бесконечная и обрезается краями экрана — выходит из оболочки
    на всю ширину. Дорожка продублирована, сдвиг замыкает цикл без шва. */
@@ -790,6 +777,11 @@ html.show-grid .grid-overlay { opacity: 1; }
   border-radius: 6px;
   font: inherit;
 }
+/* Панель чернил (js/ink-panel.js) — ещё левее, чтобы все три можно было
+   держать открытыми. */
+.inkpanel { inset-inline-end: 42.75rem; }
+.inkpanel .easepanel__row { grid-template-columns: 8.2rem 1fr 2.8rem; }
+
 .is-tilt-picked { outline: 1px dashed var(--accent); outline-offset: 4px; }
 html.is-tilt-picking,
 html.is-tilt-picking * { cursor: crosshair !important; }

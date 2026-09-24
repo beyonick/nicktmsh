@@ -22,21 +22,46 @@
    краска не растает. Без WebGL2 и float-текстур чернил нет: это украшение
    ховера, а не содержимое. */
 
-const P = {
+/* Параметры. Правятся вживую панелью «ink» (js/ink-panel.js) и хранятся в
+   localStorage — это настройка разработчика; здесь стартовые значения. */
+export const INK_DEFAULTS = {
   sim: 128, // короткая сторона сетки скоростей, ячеек симуляции
   dye: 0.6, // разрешение краски от CSS-размера сетки
   iters: 20, // итераций давления на кадр
   curl: 26, // завихрённость: кольца и завитки, как в рефе
   velFade: 0.4, // затухание скорости, 1/с
   dyeFade: 0.25, // таяние краски, 1/с: след держится секунды три
-  radius: 0.11, // радиус мазка, доля ширины ячейки
+  radius: 0.07, // радиус мазка, доля ширины ячейки
   force: 110, // какая доля скорости курсора уходит в жидкость
-  flow: 3, // сколько краски кладёт стоящий курсор, в секунду
-  ink: 1.6, // плотность следа по его оси — одна на любой скорости мыши
+  flow: 1.5, // сколько краски кладёт стоящий курсор, в секунду
+  ink: 1.2, // плотность следа по его оси — одна на любой скорости мыши
   full: 1.5, // потолок плотности: густое тает дольше тонкого
   near: 0.25, // с какого расстояния за рамкой курсор уже красит, доля ячейки
   linger: 6, // сколько секунд сцена живёт после ухода курсора
 };
+const STORE = "nicktmsh:ink";
+export const P = { ...INK_DEFAULTS };
+try {
+  Object.assign(P, JSON.parse(localStorage.getItem(STORE) || "{}"));
+} catch (err) {
+  // приватный режим или битое значение — работаем со стартовыми
+}
+export function setInk(key, value) {
+  P[key] = value;
+  try {
+    localStorage.setItem(STORE, JSON.stringify(P));
+  } catch (err) {
+    // не сохранили — значение всё равно действует до перезагрузки
+  }
+}
+export function resetInk() {
+  Object.assign(P, INK_DEFAULTS);
+  try {
+    localStorage.removeItem(STORE);
+  } catch (err) {
+    // нечего чистить
+  }
+}
 
 const enabled =
   matchMedia("(hover: hover) and (pointer: fine)").matches &&
@@ -550,7 +575,9 @@ function mount(host) {
       ptr.inside = false;
     },
     // Курсор в координатах сетки — в том числе за её пределами.
-    point(cx, cy) {
+    // quiet — сдвиг от скролла: сетка уехала под стоящим курсором. Это не
+    // мазок, иначе прокрутка колесом заливала бы краской всю сетку.
+    point(cx, cy, quiet = false) {
       if (!canvas.isConnected) return;
       const box = host.getBoundingClientRect();
       const x = cx - box.left - host.clientLeft;
@@ -558,7 +585,7 @@ function mount(host) {
       const m = cellW * P.near;
       const inside = x > -m && x < W + m && y > -m && y < H + m;
       // Первое касание — без рывка скорости из прошлой точки.
-      if (inside && !ptr.inside) {
+      if ((inside && !ptr.inside) || quiet) {
         ptr.px = x;
         ptr.py = y;
       }
@@ -572,13 +599,13 @@ function mount(host) {
 
 /* --- Все сетки на странице -------------------------------------------------------
    Один обработчик курсора на все сетки. Скролл двигает сетку под стоящим
-   курсором — это тоже движение, и краска от него размазывается. */
+   курсором: позиция пересчитывается, но мазка это не даёт. */
 
 const inks = new Map();
 const cursor = { x: -1e4, y: -1e4 };
 
-function update() {
-  for (const ink of inks.values()) ink.point(cursor.x, cursor.y);
+function update(quiet = false) {
+  for (const ink of inks.values()) ink.point(cursor.x, cursor.y, quiet);
 }
 
 if (enabled) {
@@ -591,7 +618,7 @@ if (enabled) {
     },
     { passive: true }
   );
-  addEventListener("scroll", update, { passive: true });
+  addEventListener("scroll", () => update(true), { passive: true });
   document.documentElement.addEventListener("pointerleave", () => {
     cursor.x = cursor.y = -1e4;
     update();

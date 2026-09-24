@@ -129,7 +129,30 @@ track.addEventListener("focusin", (e) => {
 
 /* --- Воспроизведение по видимости ----------------------------------------- */
 
+/* Шторка: кадр открывается один раз, когда на треть вошёл в экран. Лента
+   горизонтальная, но наблюдатель смотрит на реальный прямоугольник кадра,
+   поэтому сдвиг ленты он видит так же, как вертикальный скролл. */
+function watchReveal() {
+  const frames = host.querySelectorAll(".reel__frame");
+  if (reduced || !("IntersectionObserver" in window)) {
+    frames.forEach((f) => f.classList.add("is-shown"));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add("is-shown");
+        io.unobserve(e.target);
+      }
+    },
+    { threshold: 0.3 }
+  );
+  frames.forEach((f) => io.observe(f));
+}
+
 function watchPlayback() {
+  watchReveal();
   const videos = host.querySelectorAll(".reel__video");
   if (!videos.length) return;
 

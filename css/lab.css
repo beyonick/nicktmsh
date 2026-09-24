@@ -71,9 +71,23 @@
   overflow: hidden;
 }
 
+/* Появление как на mersi-architecture.com: кадр открывается шторкой
+   снизу вверх, изображение внутри при этом доезжает из лёгкого
+   увеличения. Класс .is-shown ставит js/lab.js, когда кадр вошёл в экран. */
 .reel__frame {
   position: absolute;
   inset: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.3s var(--ease-out);
+}
+.reel__frame.is-shown { clip-path: inset(0); }
+.reel__frame:not(.is-shown) :is(.reel__video, .reel__poster) { transform: scale(1.15); }
+.reel__frame.is-shown :is(.reel__video, .reel__poster) {
+  transition: transform 1.6s var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reel__frame { clip-path: none; transition: none; }
+  .reel__frame:not(.is-shown) :is(.reel__video, .reel__poster) { transform: none; }
 }
 
 .reel__num {
