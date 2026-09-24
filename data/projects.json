@@ -36,19 +36,23 @@
       "media": [
         {
           "src": "work/yandex-music/sborka.mp4",
-          "caption": "Year in Review 2025"
+          "caption": "Year in Review 2025",
+          "size": "half"
         },
         {
           "src": "work/yandex-music/09-zhanr-acoustic.webp"
         },
         {
-          "src": "work/yandex-music/09-zhanr-electro.webp"
+          "src": "work/yandex-music/09-zhanr-electro.webp",
+          "size": "third"
         },
         {
-          "src": "work/yandex-music/09-zhanr-folk.webp"
+          "src": "work/yandex-music/09-zhanr-folk.webp",
+          "size": "third"
         },
         {
-          "src": "work/yandex-music/09-zhanr-hip-hop.webp"
+          "src": "work/yandex-music/09-zhanr-hip-hop.webp",
+          "size": "third"
         },
         {
           "src": "work/yandex-music/09-zhanr-classic.webp"
@@ -135,17 +139,11 @@
           "src": "work/pervaya-tsifra/dr-shot.webp"
         },
         {
-          "src": "work/pervaya-tsifra/pervaya-tsifra-logo.webp"
-        },
-        {
           "src": "work/pervaya-tsifra/artboard-27-2x-80.webp"
         },
         {
           "src": "work/pervaya-tsifra/avocado-sc.mp4",
           "caption": "Mascot"
-        },
-        {
-          "src": "work/pervaya-tsifra/avocado-dr.mp4"
         },
         {
           "src": "work/pervaya-tsifra/image-4a6082f7-f484-4c16-b4ec-4b8dae8fdd24.webp"
@@ -173,24 +171,6 @@
         },
         {
           "src": "work/pervaya-tsifra/avatarwhite-youtube.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/pervaya-bc-back.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/pervaya-bc-yellowt.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avocado-w3-copy.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/avocado-w3-copy-4.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/172.webp"
-        },
-        {
-          "src": "work/pervaya-tsifra/4e0a0f7a-32ea-49c3-b3f8-f6c921572f78.webp"
         },
         {
           "src": "work/pervaya-tsifra/track.mp4"
@@ -232,44 +212,6 @@
           "src": "assets/work/smallteatrik/site-home.webp",
           "size": "full",
           "caption": "Home"
-        },
-        {
-          "src": "assets/work/smallteatrik/site-afisha.webp",
-          "size": "half",
-          "caption": "Repertoire"
-        },
-        {
-          "src": "assets/work/smallteatrik/site-show.webp",
-          "size": "half",
-          "caption": "Show page"
-        },
-        {
-          "src": "assets/work/smallteatrik/mobile-home.webp",
-          "size": "third"
-        },
-        {
-          "src": "assets/work/smallteatrik/mobile-afisha.webp",
-          "size": "third"
-        },
-        {
-          "src": "assets/work/smallteatrik/mobile-show.webp",
-          "size": "third",
-          "caption": "Mobile"
-        },
-        {
-          "src": "assets/work/smallteatrik/site-schedule.webp",
-          "size": "half",
-          "caption": "Schedule"
-        },
-        {
-          "src": "assets/work/smallteatrik/site-actors.webp",
-          "size": "half",
-          "caption": "Actors"
-        },
-        {
-          "src": "assets/work/smallteatrik/site-about.webp",
-          "size": "full",
-          "caption": "About the theatre"
         }
       ]
     },
@@ -322,16 +264,20 @@
           "src": "work/mts-money/dengi-05.webp"
         },
         {
-          "src": "work/mts-money/dengi-06.webp"
+          "src": "work/mts-money/dengi-06.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/dengi-07.webp"
+          "src": "work/mts-money/dengi-07.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/dengi-08.webp"
+          "src": "work/mts-money/dengi-08.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/dengi-09.webp"
+          "src": "work/mts-money/dengi-09.webp",
+          "size": "full"
         },
         {
           "src": "work/mts-money/dengi-10.webp"
@@ -371,7 +317,8 @@
           "src": "work/mts-money/premium-11.webp"
         },
         {
-          "src": "work/mts-money/premium-12.webp"
+          "src": "work/mts-money/premium-12.webp",
+          "size": "full"
         },
         {
           "src": "work/mts-money/premium-13.webp"
@@ -380,34 +327,44 @@
           "src": "work/mts-money/premium-14.webp"
         },
         {
-          "src": "work/mts-money/premium-15.webp"
+          "src": "work/mts-money/premium-15.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-16se.webp"
+          "src": "work/mts-money/premium-16se.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-17.webp"
+          "src": "work/mts-money/premium-17.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-18.webp"
+          "src": "work/mts-money/premium-18.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-19.webp"
+          "src": "work/mts-money/premium-19.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-20.webp"
+          "src": "work/mts-money/premium-20.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-21.webp"
+          "src": "work/mts-money/premium-22.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-22.webp"
+          "src": "work/mts-money/premium-23.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-23.webp"
+          "src": "work/mts-money/premium-24.webp",
+          "size": "third"
         },
         {
-          "src": "work/mts-money/premium-24.webp"
+          "src": "work/mts-money/premium-21.webp",
+          "size": "full"
         }
       ],
       "logoRatio": 1
@@ -484,10 +441,8 @@
         },
         {
           "src": "work/2x2/ridesmoke2audio.mp4",
-          "caption": "Summer 25"
-        },
-        {
-          "src": "work/2x2/2x2.webp"
+          "caption": "Summer 25",
+          "size": "full"
         }
       ],
       "logoRatio": 2.333,
@@ -528,10 +483,12 @@
           "src": "work/honor/honor-x6c-my-1.mp4"
         },
         {
-          "src": "work/honor/honor-pad10-v1.mp4"
+          "src": "work/honor/honor-pad10-v1.mp4",
+          "size": "full"
         },
         {
-          "src": "work/honor/frame-2.webp"
+          "src": "work/honor/frame-2.webp",
+          "size": "full"
         }
       ],
       "logoRatio": 5.2,
@@ -569,31 +526,30 @@
       ],
       "media": [
         {
-          "src": "work/dzen/dzen-full-color-titles.mp4"
+          "src": "work/dzen/dzen-full-color-titles.mp4",
+          "size": "half"
         },
         {
           "src": "work/dzen/all-in-one.webp"
         },
         {
-          "src": "work/dzen/podarok-f.mp4"
-        },
-        {
-          "src": "work/dzen/artboard-67.webp"
-        },
-        {
-          "src": "work/dzen/dzen.webp"
+          "src": "work/dzen/podarok-f.mp4",
+          "size": "full"
         },
         {
           "src": "work/dzen/10-obschestvo-v3-gr-40s.mp4",
-          "caption": "Society"
+          "caption": "Society",
+          "size": "third"
         },
         {
           "src": "work/dzen/4-ogorod-gr-40s.mp4",
-          "caption": "Garden"
+          "caption": "Garden",
+          "size": "third"
         },
         {
           "src": "work/dzen/6-avto-v4-gr-30s.mp4",
-          "caption": "Auto"
+          "caption": "Auto",
+          "size": "third"
         },
         {
           "src": "work/dzen/7-lichnosti-v3-2-40s.mp4",
@@ -650,16 +606,20 @@
           "src": "work/waydeal/5hd.webp"
         },
         {
-          "src": "work/waydeal/6hd.webp"
+          "src": "work/waydeal/6hd.webp",
+          "size": "third"
         },
         {
-          "src": "work/waydeal/7hd.webp"
+          "src": "work/waydeal/7hd.webp",
+          "size": "third"
         },
         {
-          "src": "work/waydeal/8hd.webp"
+          "src": "work/waydeal/8hd.webp",
+          "size": "third"
         },
         {
-          "src": "work/waydeal/9hd.webp"
+          "src": "work/waydeal/9hd.webp",
+          "size": "full"
         }
       ],
       "color": "#6734FF",
@@ -699,12 +659,16 @@
       ],
       "media": [
         {
-          "src": "work/interactive/td_leapmotion.mp4",
-          "caption": "Process — Leap Motion into TouchDesigner"
+          "src": "work/interactive/pipeline.webp",
+          "caption": "Pipeline: Notch VFX, Ableton Live, TouchDesigner over OSC",
+          "size": "full"
         },
         {
-          "src": "work/interactive/pipeline.webp",
-          "caption": "Pipeline: Notch VFX, Ableton Live, TouchDesigner over OSC"
+          "src": "work/interactive/17-liquid-a.mp4",
+          "poster": "work/interactive/17-liquid-a_image100.webp"
+        },
+        {
+          "src": "work/interactive/16-reel-d.mp4"
         },
         {
           "src": "work/interactive/10-reel.mp4"
@@ -713,32 +677,7 @@
           "src": "work/interactive/14-reel-c.mp4"
         },
         {
-          "src": "work/interactive/16-reel-d.mp4"
-        },
-        {
-          "src": "work/interactive/16-reel-e.mp4"
-        },
-        {
-          "src": "work/interactive/17-liquid-a.mp4",
-          "poster": "work/interactive/17-liquid-a_image100.webp"
-        },
-        {
           "src": "work/interactive/04-post.mp4"
-        },
-        {
-          "src": "work/interactive/frame-702.webp"
-        },
-        {
-          "src": "work/interactive/frame-704.webp"
-        },
-        {
-          "src": "work/interactive/frame-705.webp"
-        },
-        {
-          "src": "work/interactive/frame-751.webp"
-        },
-        {
-          "src": "work/interactive/frame-756.webp"
         }
       ],
       "logoRatio": 1.284
@@ -1014,10 +953,8 @@
       ],
       "media": [
         {
-          "src": "work/logos/logo-10.webp"
-        },
-        {
-          "src": "work/logos/logo-12.webp"
+          "src": "work/logos/logo-12.webp",
+          "size": "full"
         }
       ],
       "logoRatio": 1.284
