@@ -4,22 +4,6 @@
   "instagram": "https://www.instagram.com/nicktmsh",
   "items": [
     {
-      "slug": "showreel-2025",
-      "title": "Showreel 2025",
-      "date": null,
-      "tech": [
-        "Houdini",
-        "Cinema 4D",
-        "Redshift"
-      ],
-      "series": null,
-      "video": "lab/showreel-2025/2025-showreel-nikita-tomash-se.webm",
-      "poster": "",
-      "description": "The 2025 reel: a year of 3D in thirty seconds.",
-      "published": true,
-      "todo": []
-    },
-    {
       "slug": "avgust",
       "title": "Avgust",
       "date": null,
@@ -84,13 +68,11 @@
       ],
       "series": null,
       "video": "",
-      "poster": "lab/splash/fluid-toy-main-0179.webp",
+      "poster": "",
       "description": "",
       "published": true,
       "todo": [
-        "Год и техника",
-        "Описание: что исследовал и зачем",
-        "Постер угадан по кадру (fluid_toy) — проверить"
+        "Нужен ролик Splash (отдельный, не золотая жидкость)"
       ]
     },
     {

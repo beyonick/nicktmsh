@@ -47,6 +47,9 @@
          из секции Expertise. -->
     <div class="work-bar rise" style="--delay:160ms">
       <nav class="filters" data-filters aria-label="Filter by branch"></nav>
+      <!-- Шоурил — отдельная кнопка ветки Motion, а не карточка: это не кейс.
+           Видна, когда выбран фильтр 3D & Motion (js/work.js). -->
+      <button type="button" class="pill pill--ghost reel-open" data-reel hidden>Showreel</button>
       <nav class="filters" data-views aria-label="View">
         <button type="button" class="pill" data-view="grid" aria-pressed="false">grid</button>
         <button type="button" class="pill" data-view="list" aria-pressed="false">list</button>
@@ -58,6 +61,11 @@
     <ul class="rows" data-rows aria-busy="true" aria-live="polite"></ul>
     <p class="rows__note" data-count></p>
   </section>
+
+  <dialog class="reel-box" data-reel-box aria-label="Showreel">
+    <button type="button" class="pill reel-box__close" data-reel-close>close</button>
+    <video class="reel-box__video" controls playsinline preload="none"></video>
+  </dialog>
 
   <footer class="footer invert">
     <p class="footer__line">

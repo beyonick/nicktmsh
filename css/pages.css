@@ -259,3 +259,35 @@
   .case__p { max-width: none; }
   .case-media { grid-template-columns: 1fr; }
 }
+
+/* --- Шоурил (/work, ветка Motion) -------------------------------------------
+   Кнопка стоит в строке фильтров, ролик открывается поверх страницы.
+   Шоурил вертикальный, поэтому окно — по высоте экрана. */
+
+.work-bar .reel-open[hidden] { display: none; }
+.reel-box {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+}
+.reel-box::backdrop { background: color-mix(in srgb, var(--bg) 92%, transparent); }
+.reel-box__video {
+  display: block;
+  height: 88vh;
+  max-width: 92vw;
+  background: var(--bg);
+}
+.reel-box__close {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(100% + 12px);
+  color: var(--accent);
+  background: var(--bg);
+}
+@media (max-width: 760px) {
+  .reel-box__video { height: auto; width: 92vw; }
+  .reel-box__close { inset-inline-start: auto; inset-inline-end: 0; inset-block-start: calc(100% + 12px); }
+}

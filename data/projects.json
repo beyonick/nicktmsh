@@ -452,7 +452,7 @@
       "branch": "motion",
       "kicker": "Product commercials",
       "role": "Execution to the agency storyboard and art",
-      "summary": "Two product films — Honor X8c and Honor Pad 10 — built on clean geometry, refined materials and precise camera work.",
+      "summary": "Two product films — Honor X6c and Honor Pad 10 — built on clean geometry, refined materials and precise camera work.",
       "capabilities": [
         "3D motion",
         "Lookdev",
@@ -466,7 +466,7 @@
       "published": true,
       "status": "done",
       "body": [
-        "Honor X8c — a brand film exploring the product through clean geometry and refined materials. Slim silhouette, camera system, surface detail. Role: modelling, shading, fluid simulations, photorealistic rendering, compositing.",
+        "Honor X6c — a brand film exploring the product through clean geometry and refined materials. Slim silhouette, camera system, surface detail. Role: modelling, shading, fluid simulations, photorealistic rendering, compositing.",
         "Honor Pad 10 — a fast product film on the key features. Macro shots on design, display and material; soft controlled light and precise animation. Role: lookdev, lighting, camera animation, compositing, final rendering."
       ],
       "todo": [
@@ -1182,8 +1182,7 @@
       "kicker": "3D product and brand films",
       "summary": "3D films and renders for Out Digital.",
       "todo": [
-        "Год, роль, задача",
-        "Проверить название клиента латиницей"
+        "Год, роль, задача"
       ],
       "media": [
         {
@@ -1375,5 +1374,9 @@
       ]
     }
   ],
-  "mediaBase": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/"
+  "mediaBase": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/",
+  "showreel": {
+    "title": "Showreel 2025",
+    "video": "lab/showreel-2025/2025-showreel-nikita-tomash-se.webm"
+  }
 }

@@ -16,6 +16,10 @@ const host = document.querySelector("[data-rows]");
 const filtersHost = document.querySelector("[data-filters]");
 const viewsHost = document.querySelector("[data-views]");
 const countHost = document.querySelector("[data-count]");
+const reelButton = document.querySelector("[data-reel]");
+const reelBox = document.querySelector("[data-reel-box]");
+const reelVideo = reelBox && reelBox.querySelector("video");
+let reelSrc = "";
 
 const VIEWS = ["grid", "list"];
 
@@ -49,6 +53,8 @@ function render() {
       b.setAttribute("aria-pressed", String(on));
     });
   mark(filtersHost, "data-branch", current);
+  // Кнопка шоурила живёт только в ветке Motion и только если ролик задан.
+  if (reelButton) reelButton.hidden = !(reelSrc && current === "motion");
   mark(viewsHost, "data-view", view);
 }
 
@@ -90,6 +96,10 @@ load("projects")
   .then((data) => {
     all = published(data.projects);
     branches = data.branches || {};
+    if (data.showreel && data.showreel.video) {
+      const v = data.showreel.video;
+      reelSrc = /^https?:/.test(v) ? v : (data.mediaBase || "") + v;
+    }
     // Ветка из адреса может не существовать — тогда показываем всё,
     // а не пустой список с активным фильтром-призраком.
     if (current && !branches[current]) current = "";
@@ -100,3 +110,19 @@ load("projects")
     host.removeAttribute("aria-busy");
     fail(host, err);
   });
+
+/* Шоурил: ролик грузится только по нажатию — preload="none" и src
+   ставится при открытии, чтобы тридцать секунд видео не тянулись с
+   каждой загрузкой /work. Закрытие останавливает звук. */
+if (reelButton && reelBox) {
+  reelButton.addEventListener("click", () => {
+    if (reelVideo.getAttribute("src") !== reelSrc) reelVideo.src = reelSrc;
+    reelBox.showModal();
+    reelVideo.play().catch(() => {});
+  });
+  reelBox.querySelector("[data-reel-close]").addEventListener("click", () => reelBox.close());
+  reelBox.addEventListener("click", (e) => {
+    if (e.target === reelBox) reelBox.close();
+  });
+  reelBox.addEventListener("close", () => reelVideo.pause());
+}
