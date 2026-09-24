@@ -572,141 +572,214 @@
       "todo": [],
       "media": [
         {
-          "src": "work/mardini-2026/Day_1_01.png",
+          "src": "work/mardini-2026/mardini-reel.mp4",
+          "caption": "Reel — 31 days"
+        },
+        {
+          "src": "work/mardini-2026/day-1-01.webp",
           "caption": "Day 1 — Plant"
         },
         {
-          "src": "work/mardini-2026/Day_2_01.png",
+          "src": "work/mardini-2026/day-1-04.webp"
+        },
+        {
+          "src": "work/mardini-2026/day1.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-2-01.webp",
           "caption": "Day 2 — Animal"
         },
         {
-          "src": "work/mardini-2026/Day_3_01.png",
+          "src": "work/mardini-2026/day-2-03.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-2-02.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-3-01.webp",
           "caption": "Day 3 — Aquatic"
         },
         {
-          "src": "work/mardini-2026/day4_sq.jpg",
+          "src": "work/mardini-2026/day-3-05.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-3-02.webp"
+        },
+        {
+          "src": "work/mardini-2026/day4_sq.webp",
           "caption": "Day 4 — Architecture"
         },
         {
-          "src": "work/mardini-2026/day5_6.jpg",
+          "src": "work/mardini-2026/day-4-04.webp"
+        },
+        {
+          "src": "work/mardini-2026/day4_11.webp"
+        },
+        {
+          "src": "work/mardini-2026/day5_6.webp",
           "caption": "Day 5 — Environment"
         },
         {
-          "src": "work/mardini-2026/Day6_-_Miniature.png",
+          "src": "work/mardini-2026/day-5-04.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-5-02.webp"
+        },
+        {
+          "src": "work/mardini-2026/day6_-_miniature.webp",
           "caption": "Day 6 — Miniature"
         },
         {
-          "src": "work/mardini-2026/Day7_01.png",
+          "src": "work/mardini-2026/day06-02.webp"
+        },
+        {
+          "src": "work/mardini-2026/day7-01.webp",
           "caption": "Day 7 — Galactic"
         },
         {
-          "src": "work/mardini-2026/Day8_Explode-SE.webm",
-          "poster": "work/mardini-2026/Day8_Explode_0-00-02.jpg",
+          "src": "work/mardini-2026/day7-02.webp"
+        },
+        {
+          "src": "work/mardini-2026/day7-03.webp"
+        },
+        {
+          "src": "work/mardini-2026/day8-explode-se.webm",
+          "poster": "work/mardini-2026/day8-explode-0-00-02-23.webp",
           "caption": "Day 8 — Explode"
         },
         {
-          "src": "work/mardini-2026/Day9_Gooey-SE.webm",
-          "poster": "work/mardini-2026/Day9_Gooey_0-00-01-1.jpg",
+          "src": "work/mardini-2026/day9-gooey-se.webm",
+          "poster": "work/mardini-2026/day9-gooey-0-00-01-14.webp",
           "caption": "Day 9 — Gooey"
         },
         {
-          "src": "work/mardini-2026/Day10_Grow_1-SE.webm",
-          "poster": "work/mardini-2026/Day10_Grow_0-00-07-0.jpg",
+          "src": "work/mardini-2026/day10-grow_1-se.webm",
+          "poster": "work/mardini-2026/day10-grow-0-00-07-05.webp",
           "caption": "Day 10 — Grow"
         },
         {
-          "src": "work/mardini-2026/Day11_Disintegrate_1.webm",
-          "poster": "work/mardini-2026/Day11_Disintegrate_0.jpg",
+          "src": "work/mardini-2026/day11-disintegrate_1-se.webm",
+          "poster": "work/mardini-2026/day11-disintegrate-0-00-00-27.webp",
           "caption": "Day 11 — Disintegrate"
         },
         {
-          "src": "work/mardini-2026/Day12_Jiggle_1-SE.webm",
-          "poster": "work/mardini-2026/Day12_Jiggle_0-00-05.jpg",
+          "src": "work/mardini-2026/day12-jiggle_1-se.webm",
+          "poster": "work/mardini-2026/day12-jiggle-0-00-05-29.webp",
           "caption": "Day 12 — Jiggle"
         },
         {
-          "src": "work/mardini-2026/Fur_-_Copy.png",
+          "src": "work/mardini-2026/fur.webp",
           "caption": "Day 13 — Fur"
         },
         {
-          "src": "work/mardini-2026/day14_4.png",
+          "src": "work/mardini-2026/frame-24.webp"
+        },
+        {
+          "src": "work/mardini-2026/frame-23.webp"
+        },
+        {
+          "src": "work/mardini-2026/day14_4.webp",
           "caption": "Day 14 — Clothing"
         },
         {
-          "src": "work/mardini-2026/day15_Fonts-SE.webm",
-          "poster": "work/mardini-2026/day15_Fonts_0-00-00-.jpg",
+          "src": "work/mardini-2026/frame-28.webp"
+        },
+        {
+          "src": "work/mardini-2026/frame-30.webp"
+        },
+        {
+          "src": "work/mardini-2026/day15_fonts-se.webm",
+          "poster": "work/mardini-2026/day15_fonts-0-00-00-28.webp",
           "caption": "Day 15 — Fonts"
         },
         {
-          "src": "work/mardini-2026/day16_Fractal-SE.webm",
-          "poster": "work/mardini-2026/day16_Fractal_0-00-0.jpg",
+          "src": "work/mardini-2026/day16-fractal-se.webm",
+          "poster": "work/mardini-2026/day16-fractal-0-00-00-00.webp",
           "caption": "Day 16 — Fractal"
         },
         {
-          "src": "work/mardini-2026/Day17_Damaged_1-SE.webm",
-          "poster": "work/mardini-2026/Day17_Damaged_0-00-0.jpg",
+          "src": "work/mardini-2026/day17-damaged_1-se.webm",
+          "poster": "work/mardini-2026/day17-damaged-0-00-05-03.webp",
           "caption": "Day 17 — Damaged"
         },
         {
-          "src": "work/mardini-2026/9_Gooey_90055.png",
+          "src": "work/mardini-2026/9_gooey_9.0055.webp",
           "caption": "Day 18 — Organic"
         },
         {
-          "src": "work/mardini-2026/Day_19_4.png",
+          "src": "work/mardini-2026/day-19-4.webp",
           "caption": "Day 19 — Neon"
         },
         {
-          "src": "work/mardini-2026/Stylish_Otto.png",
+          "src": "work/mardini-2026/day-19-3.webp"
+        },
+        {
+          "src": "work/mardini-2026/day_19_2.webp"
+        },
+        {
+          "src": "work/mardini-2026/stylish-otto.webp",
           "caption": "Day 20 — Stylized"
         },
         {
-          "src": "work/mardini-2026/day21_Food-SE.webm",
-          "poster": "work/mardini-2026/day21_Food_0-00-01-2.jpg",
+          "src": "work/mardini-2026/day20_5.webp"
+        },
+        {
+          "src": "work/mardini-2026/day21_food-se.webm",
+          "poster": "work/mardini-2026/day21_food-0-00-01-24.webp",
           "caption": "Day 21 — Food"
         },
         {
-          "src": "work/mardini-2026/22_Transformer_5.png",
+          "src": "work/mardini-2026/22_transformer_5.webp",
           "caption": "Day 22 — Transformer"
         },
         {
-          "src": "work/mardini-2026/23_orbit.png",
+          "src": "work/mardini-2026/22_transformer_3.webp"
+        },
+        {
+          "src": "work/mardini-2026/day-19-9.webp"
+        },
+        {
+          "src": "work/mardini-2026/23_orbit.webp",
           "caption": "Day 23 — Orbit"
         },
         {
-          "src": "work/mardini-2026/Frame_361.png",
+          "src": "work/mardini-2026/frame-361.webp",
           "caption": "Day 24 — Swarm"
         },
         {
-          "src": "work/mardini-2026/Day25_Dance_1-SE.webm",
-          "poster": "work/mardini-2026/Day25_Dance_0-00-00-.jpg",
+          "src": "work/mardini-2026/frame-37.webp"
+        },
+        {
+          "src": "work/mardini-2026/day25-dance_1-se.webm",
+          "poster": "work/mardini-2026/day25-dance-0-00-00-00.webp",
           "caption": "Day 25 — Dance"
         },
         {
-          "src": "work/mardini-2026/Day26_Collapse_1-SE.webm",
-          "poster": "work/mardini-2026/Day26_Collapse_0-00-.jpg",
+          "src": "work/mardini-2026/day26-collapse_1-se.webm",
+          "poster": "work/mardini-2026/day26-collapse-0-00-01-15.webp",
           "caption": "Day 26 — Collapse"
         },
         {
-          "src": "work/mardini-2026/Day27_Talk-SE.webm",
-          "poster": "work/mardini-2026/Day27_Talk_0-00-03-1.jpg",
+          "src": "work/mardini-2026/day27-talk-se.webm",
+          "poster": "work/mardini-2026/day27-talk-0-00-03-14.webp",
           "caption": "Day 27 — Talk"
         },
         {
-          "src": "work/mardini-2026/Crowdsday28_7.jpg",
+          "src": "work/mardini-2026/crowds.day28_7.webp",
           "caption": "Day 28 — Crowds"
         },
         {
-          "src": "work/mardini-2026/Day29_Volumetric-SE.webm",
-          "poster": "work/mardini-2026/Day29_Volumetric_0-0.jpg",
+          "src": "work/mardini-2026/day29_volumetric-se.webm",
+          "poster": "work/mardini-2026/day29_volumetric-0-00-01-14.webp",
           "caption": "Day 29 — Volumetric"
         },
         {
-          "src": "work/mardini-2026/Day30_motion_blur-SE.webm",
-          "poster": "work/mardini-2026/Day30_motion_blur_0-.jpg",
+          "src": "work/mardini-2026/day30_motion_blur-se.webm",
+          "poster": "work/mardini-2026/day30_motion_blur-0-00-03-07.webp",
           "caption": "Day 30 — Motion Blur"
         },
         {
-          "src": "work/mardini-2026/Day31_Refract_v2_l.jpg",
+          "src": "work/mardini-2026/day31_refract_v2_l.webp",
           "caption": "Day 31 — Refract"
         }
       ]
