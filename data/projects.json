@@ -82,82 +82,6 @@
       "todo": []
     },
     {
-      "slug": "yandex-music",
-      "title": "Yandex Music",
-      "titleRu": "Яндекс музыка Итоги года 2025",
-      "client": "Yandex Music",
-      "year": 2025,
-      "branch": "motion",
-      "kicker": "3D for Year in Review 2025",
-      "role": "3D generalist",
-      "summary": "3D for Yandex Music's Year in Review 2025: genre hearts, characters and achievement badges.",
-      "capabilities": [
-        "3D",
-        "Lookdev",
-        "Animation"
-      ],
-      "cover": null,
-      "logo": "assets/logos/yandex-music.svg",
-      "link": null,
-      "linkLabel": null,
-      "featured": false,
-      "published": true,
-      "status": "done",
-      "body": [],
-      "todo": [
-        "Текст кейса: задача и что именно делал",
-        "Подтвердить, что можно показывать"
-      ],
-      "media": [
-        {
-          "src": "work/yandex-music/sborka.mp4",
-          "caption": "Year in Review 2025",
-          "size": "half"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-acoustic.webp"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-electro.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-folk.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-hip-hop.webp",
-          "size": "third"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-classic.webp"
-        },
-        {
-          "src": "work/yandex-music/09-zhanr-hardcore.webp"
-        },
-        {
-          "src": "work/yandex-music/25-geroi-folk-bg-fallback.webp"
-        },
-        {
-          "src": "work/yandex-music/25-geroi-indie-bg-fallback.webp"
-        },
-        {
-          "src": "work/yandex-music/25-geroi-jazz-bg-fallback.webp"
-        },
-        {
-          "src": "work/yandex-music/25-geroi-indie-bg-first-image.webp"
-        },
-        {
-          "src": "work/yandex-music/04-fallback.webp"
-        },
-        {
-          "src": "work/yandex-music/10-fallback.webp"
-        }
-      ],
-      "logoRatio": 1,
-      "color": "#FFBC0D"
-    },
-    {
       "slug": "zhenya",
       "title": "Zhenya",
       "titleRu": "Женя",
@@ -336,6 +260,173 @@
       "logoRatio": 1
     },
     {
+      "slug": "yandex-music",
+      "title": "Yandex Music",
+      "titleRu": "Яндекс музыка Итоги года 2025",
+      "client": "Yandex Music",
+      "year": 2025,
+      "branch": "motion",
+      "kicker": "3D for Year in Review 2025",
+      "role": "3D generalist",
+      "summary": "3D for Yandex Music's Year in Review 2025: genre hearts, characters and achievement badges.",
+      "capabilities": [
+        "3D",
+        "Lookdev",
+        "Animation"
+      ],
+      "cover": null,
+      "logo": "assets/logos/yandex-music.svg",
+      "link": null,
+      "linkLabel": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Текст кейса: задача и что именно делал",
+        "Подтвердить, что можно показывать"
+      ],
+      "media": [
+        {
+          "src": "work/yandex-music/sborka.mp4",
+          "caption": "Year in Review 2025",
+          "size": "half"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-acoustic.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-electro.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-folk.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-hip-hop.webp",
+          "size": "third"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-classic.webp"
+        },
+        {
+          "src": "work/yandex-music/09-zhanr-hardcore.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-folk-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-indie-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-jazz-bg-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/25-geroi-indie-bg-first-image.webp"
+        },
+        {
+          "src": "work/yandex-music/04-fallback.webp"
+        },
+        {
+          "src": "work/yandex-music/10-fallback.webp"
+        }
+      ],
+      "logoRatio": 1,
+      "color": "#FFBC0D"
+    },
+    {
+      "slug": "vk-video",
+      "title": "VK Video - Manifest",
+      "titleRu": "VK Видео",
+      "client": "VK Video",
+      "year": 2025,
+      "branch": "motion",
+      "kicker": "Promotional videos",
+      "role": "Motion Designer",
+      "summary": "Promotional films for VK Video.",
+      "capabilities": [
+        "Motion design",
+        "working with typography"
+      ],
+      "cover": null,
+      "logo": "assets/logos/vk.svg",
+      "link": "http://vk.com/",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [],
+      "todo": [
+        "Текст кейса: на старом сайте страница только с видео",
+        "Обложка: положить assets/work/vk-video-cover.webp"
+      ],
+      "logoRatio": 1,
+      "color": "#0077FF",
+      "media": [
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-1-6s.mp4",
+          "caption": "Manifest 1"
+        },
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-3-5s.mp4",
+          "size": "full",
+          "caption": "Manifest 2"
+        },
+        {
+          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-2-7s.mp4",
+          "size": "full",
+          "caption": "Manifest 3"
+        }
+      ],
+      "linkLabel": "vk"
+    },
+    {
+      "slug": "honor",
+      "title": "Honor",
+      "titleRu": "Honor",
+      "client": "Honor",
+      "year": null,
+      "branch": "motion",
+      "kicker": "Product commercials",
+      "role": "Execution to the agency storyboard and art",
+      "summary": "Two product films — Honor X6c and Honor Pad 10 — built on clean geometry, refined materials and precise camera work.",
+      "capabilities": [
+        "3D motion",
+        "Lookdev",
+        "Lighting",
+        "Compositing"
+      ],
+      "cover": null,
+      "logo": "assets/logos/honor.svg",
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Honor X6c — a brand film exploring the product through clean geometry and refined materials. Slim silhouette, camera system, surface detail. Role: modelling, shading, fluid simulations, photorealistic rendering, compositing.",
+        "Honor Pad 10 — a fast product film on the key features. Macro shots on design, display and material; soft controlled light and precise animation. Role: lookdev, lighting, camera animation, compositing, final rendering."
+      ],
+      "todo": [
+        "Год не подтверждён",
+        "Обложка: положить assets/work/honor-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/honor/honor-x6c-my-1.mp4"
+        },
+        {
+          "src": "work/honor/honor-pad10-v1.mp4",
+          "size": "full"
+        },
+        {
+          "src": "work/honor/frame-2.webp",
+          "size": "full"
+        }
+      ],
+      "logoRatio": 5.2,
+      "color": "#60D9C8"
+    },
+    {
       "slug": "pervaya-tsifra",
       "title": "Pervaya Tsifra",
       "titleRu": "Первая Цифра",
@@ -412,87 +503,6 @@
       "logoRatio": 2.153
     },
     {
-      "slug": "vk-video",
-      "title": "VK Video - Manifest",
-      "titleRu": "VK Видео",
-      "client": "VK Video",
-      "year": 2025,
-      "branch": "motion",
-      "kicker": "Promotional videos",
-      "role": "Motion Designer",
-      "summary": "Promotional films for VK Video.",
-      "capabilities": [
-        "Motion design",
-        "working with typography"
-      ],
-      "cover": null,
-      "logo": "assets/logos/vk.svg",
-      "link": "http://vk.com/",
-      "featured": true,
-      "published": true,
-      "status": "done",
-      "body": [],
-      "todo": [
-        "Текст кейса: на старом сайте страница только с видео",
-        "Обложка: положить assets/work/vk-video-cover.webp"
-      ],
-      "logoRatio": 1,
-      "color": "#0077FF",
-      "media": [
-        {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-1-6s.mp4",
-          "caption": "Manifest 1"
-        },
-        {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-3-5s.mp4",
-          "size": "full",
-          "caption": "Manifest 2"
-        },
-        {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-2-7s.mp4",
-          "size": "full",
-          "caption": "Manifest 3"
-        }
-      ],
-      "linkLabel": "vk"
-    },
-    {
-      "slug": "smallteatrik",
-      "title": "Small Puppet Theatre",
-      "titleRu": "Маленький театрик кукол",
-      "client": "Маленький театрик кукол, Геленджик",
-      "year": 2026,
-      "branch": "web",
-      "kicker": "Web design and front-end",
-      "role": "Design and hand-written front-end",
-      "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
-      "capabilities": [
-        "Web design",
-        "Hand-written front-end"
-      ],
-      "cover": "assets/work/smallteatrik/site-home.webp",
-      "logo": "assets/logos/smallteatrik.svg",
-      "link": "https://smallteatrik.vercel.app/",
-      "linkLabel": "smallteatrik.vercel.app",
-      "featured": true,
-      "published": true,
-      "status": "done",
-      "body": [
-        "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
-        "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
-      ],
-      "todo": [],
-      "logoRatio": 0.792,
-      "color": "#FF6A2B",
-      "media": [
-        {
-          "src": "assets/work/smallteatrik/site-home.webp",
-          "size": "full",
-          "caption": "Home"
-        }
-      ]
-    },
-    {
       "slug": "2x2",
       "title": "2x2 TV Channel",
       "titleRu": "Телеканал 2x2",
@@ -542,134 +552,6 @@
       "color": "#FFFFFF4D"
     },
     {
-      "slug": "honor",
-      "title": "Honor",
-      "titleRu": "Honor",
-      "client": "Honor",
-      "year": null,
-      "branch": "motion",
-      "kicker": "Product commercials",
-      "role": "Execution to the agency storyboard and art",
-      "summary": "Two product films — Honor X6c and Honor Pad 10 — built on clean geometry, refined materials and precise camera work.",
-      "capabilities": [
-        "3D motion",
-        "Lookdev",
-        "Lighting",
-        "Compositing"
-      ],
-      "cover": null,
-      "logo": "assets/logos/honor.svg",
-      "link": null,
-      "featured": true,
-      "published": true,
-      "status": "done",
-      "body": [
-        "Honor X6c — a brand film exploring the product through clean geometry and refined materials. Slim silhouette, camera system, surface detail. Role: modelling, shading, fluid simulations, photorealistic rendering, compositing.",
-        "Honor Pad 10 — a fast product film on the key features. Macro shots on design, display and material; soft controlled light and precise animation. Role: lookdev, lighting, camera animation, compositing, final rendering."
-      ],
-      "todo": [
-        "Год не подтверждён",
-        "Обложка: положить assets/work/honor-cover.webp"
-      ],
-      "media": [
-        {
-          "src": "work/honor/honor-x6c-my-1.mp4"
-        },
-        {
-          "src": "work/honor/honor-pad10-v1.mp4",
-          "size": "full"
-        },
-        {
-          "src": "work/honor/frame-2.webp",
-          "size": "full"
-        }
-      ],
-      "logoRatio": 5.2,
-      "color": "#FFFFFF4D"
-    },
-    {
-      "slug": "b",
-      "title": "BTZ Historical museum",
-      "titleRu": "БТЗ",
-      "client": "BTZ",
-      "year": 2026,
-      "branch": "motion",
-      "kicker": "Houdini simulation",
-      "role": "3D Generalist",
-      "summary": "",
-      "capabilities": [
-        "Simulation",
-        "Lookdev"
-      ],
-      "cover": "",
-      "logo": null,
-      "link": "https://belsteel.com/",
-      "linkLabel": "belsteel",
-      "featured": false,
-      "published": false,
-      "status": "done",
-      "body": [],
-      "todo": [],
-      "color": "#E6B620"
-    },
-    {
-      "slug": "interactive",
-      "title": "Interactive Installations",
-      "titleRu": "Интерактив",
-      "client": "Personal project",
-      "year": 2021,
-      "branch": "motion",
-      "kicker": "Installations, generative content",
-      "role": "Everything — concept, systems, visuals, sound",
-      "summary": "Around twenty audiovisual experiments on interactive and generative installation content: voice input, motion tracking, audio-driven sync.",
-      "capabilities": [
-        "TouchDesigner",
-        "Notch VFX",
-        "Ableton Live",
-        "Generative systems",
-        "Leap Motion",
-        "Arturia BeatStep"
-      ],
-      "cover": null,
-      "logo": "assets/logos/nt.png",
-      "link": null,
-      "featured": false,
-      "published": true,
-      "status": "done",
-      "body": [
-        "In autumn 2021 I ran a series of audiovisual experiments on interactive and generative installation content. It ended at around twenty pieces, each examining a different interaction method — voice input, motion tracking, audio-driven synchronisation.",
-        "Three workstations: an MSI Creator for real-time visuals in Notch VFX, a laptop generating audio in Ableton Live, and an HP NUC running TouchDesigner for input and system integration. Everything spoke OSC.",
-        "Eight pieces from the series: beat-driven fluid simulations played live on faders; sound and generative systems that follow the hand through Leap Motion; fragments, particles and spheres that scatter on gesture; gesture-driven audio and smoke with typography built into the scene; generative visuals and sound performed live on faders and pads of an Arturia BeatStep."
-      ],
-      "todo": [
-        "Обложка assets/work/interactive-cover.webp"
-      ],
-      "media": [
-        {
-          "src": "work/interactive/pipeline.webp",
-          "caption": "Pipeline: Notch VFX, Ableton Live, TouchDesigner over OSC",
-          "size": "full"
-        },
-        {
-          "src": "work/interactive/17-liquid-a.mp4",
-          "poster": "work/interactive/17-liquid-a_image100.webp"
-        },
-        {
-          "src": "work/interactive/16-reel-d.mp4"
-        },
-        {
-          "src": "work/interactive/10-reel.mp4"
-        },
-        {
-          "src": "work/interactive/14-reel-c.mp4"
-        },
-        {
-          "src": "work/interactive/04-post.mp4"
-        }
-      ],
-      "logoRatio": 1.284
-    },
-    {
       "slug": "mardini-2026",
       "title": "Mardini 2026",
       "titleRu": "Mardini 2026",
@@ -688,7 +570,7 @@
       "logo": "assets/logos/houdini.svg",
       "link": null,
       "linkLabel": null,
-      "featured": false,
+      "featured": true,
       "published": true,
       "status": "done",
       "body": [
@@ -914,6 +796,125 @@
       "color": "#F26722"
     },
     {
+      "slug": "smallteatrik",
+      "title": "Small Puppet Theatre",
+      "titleRu": "Маленький театрик кукол",
+      "client": "Маленький театрик кукол, Геленджик",
+      "year": 2026,
+      "branch": "web",
+      "kicker": "Web design and front-end",
+      "role": "Design and hand-written front-end",
+      "summary": "A touring puppet theatre with no building of its own — so the site had to be the building: repertoire, schedule, actors, and a way to book the troupe.",
+      "capabilities": [
+        "Web design",
+        "Hand-written front-end"
+      ],
+      "cover": "assets/work/smallteatrik/site-home.webp",
+      "logo": "assets/logos/smallteatrik.svg",
+      "link": "https://smallteatrik.vercel.app/",
+      "linkLabel": "smallteatrik.vercel.app",
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "Six shows, each with an age rating, a running time and a source — a parent decides in one screen whether it fits a one-year-old or a seven-year-old.",
+        "The theatre tours. The strongest page is not the repertoire but the one that says invite the theatre to you: four steps and one phone number."
+      ],
+      "todo": [],
+      "logoRatio": 0.792,
+      "color": "#FF6A2B",
+      "media": [
+        {
+          "src": "assets/work/smallteatrik/site-home.webp",
+          "size": "full",
+          "caption": "Home"
+        }
+      ]
+    },
+    {
+      "slug": "interactive",
+      "title": "Interactive Installations",
+      "titleRu": "Интерактив",
+      "client": "Personal project",
+      "year": 2021,
+      "branch": "motion",
+      "kicker": "Installations, generative content",
+      "role": "Everything — concept, systems, visuals, sound",
+      "summary": "Around twenty audiovisual experiments on interactive and generative installation content: voice input, motion tracking, audio-driven sync.",
+      "capabilities": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live",
+        "Generative systems",
+        "Leap Motion",
+        "Arturia BeatStep"
+      ],
+      "cover": null,
+      "logo": "assets/logos/nt.png",
+      "link": null,
+      "featured": true,
+      "published": true,
+      "status": "done",
+      "body": [
+        "In autumn 2021 I ran a series of audiovisual experiments on interactive and generative installation content. It ended at around twenty pieces, each examining a different interaction method — voice input, motion tracking, audio-driven synchronisation.",
+        "Three workstations: an MSI Creator for real-time visuals in Notch VFX, a laptop generating audio in Ableton Live, and an HP NUC running TouchDesigner for input and system integration. Everything spoke OSC.",
+        "Eight pieces from the series: beat-driven fluid simulations played live on faders; sound and generative systems that follow the hand through Leap Motion; fragments, particles and spheres that scatter on gesture; gesture-driven audio and smoke with typography built into the scene; generative visuals and sound performed live on faders and pads of an Arturia BeatStep."
+      ],
+      "todo": [
+        "Обложка assets/work/interactive-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/interactive/pipeline.webp",
+          "caption": "Pipeline: Notch VFX, Ableton Live, TouchDesigner over OSC",
+          "size": "full"
+        },
+        {
+          "src": "work/interactive/17-liquid-a.mp4",
+          "poster": "work/interactive/17-liquid-a_image100.webp"
+        },
+        {
+          "src": "work/interactive/16-reel-d.mp4"
+        },
+        {
+          "src": "work/interactive/10-reel.mp4"
+        },
+        {
+          "src": "work/interactive/14-reel-c.mp4"
+        },
+        {
+          "src": "work/interactive/04-post.mp4"
+        }
+      ],
+      "logoRatio": 1.284,
+      "color": "#2C02FE"
+    },
+    {
+      "slug": "b",
+      "title": "BTZ Historical museum",
+      "titleRu": "БТЗ",
+      "client": "BTZ",
+      "year": 2026,
+      "branch": "motion",
+      "kicker": "Houdini simulation",
+      "role": "3D Generalist",
+      "summary": "",
+      "capabilities": [
+        "Simulation",
+        "Lookdev"
+      ],
+      "cover": "",
+      "logo": null,
+      "link": "https://belsteel.com/",
+      "linkLabel": "belsteel",
+      "featured": false,
+      "published": false,
+      "status": "done",
+      "body": [],
+      "todo": [],
+      "color": "#E6B620"
+    },
+    {
       "slug": "waydeal",
       "title": "WayDeal",
       "titleRu": "WayDeal",
@@ -974,45 +975,6 @@
       ],
       "color": "#6734FF",
       "logoRatio": 1.079
-    },
-    {
-      "titleRu": "VK Music",
-      "year": null,
-      "role": null,
-      "capabilities": [
-        "3D",
-        "Motion"
-      ],
-      "cover": null,
-      "logo": "assets/logos/vk.svg",
-      "color": "#0077FF",
-      "link": null,
-      "linkLabel": null,
-      "featured": false,
-      "published": true,
-      "status": "done",
-      "body": [],
-      "slug": "vk-music",
-      "title": "VK Music",
-      "client": "VK Music",
-      "branch": "motion",
-      "kicker": "Manifesto films",
-      "summary": "Three manifesto films for VK Music.",
-      "todo": [
-        "Год, роль, задача"
-      ],
-      "media": [
-        {
-          "src": "work/vk-music/manifest-1-6s.mp4"
-        },
-        {
-          "src": "work/vk-music/manifest-2-7s.mp4"
-        },
-        {
-          "src": "work/vk-music/manifest-3-5s.mp4"
-        }
-      ],
-      "logoRatio": 1
     },
     {
       "titleRu": "Out Digital",
