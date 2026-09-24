@@ -274,75 +274,145 @@
 
 
 /* --- 404 (404.html, js/lost.js) -----------------------------------------------
-   Граф в языке нод сайта: входы-страницы, выход с превью. Без сигнала на
-   выходе крупно «404», с сигналом — имя подключённой страницы акцентом. */
-.lost { padding-block: calc(200 * var(--u)) calc(160 * var(--u)); }
-.lost__title { margin-block: calc(24 * var(--u)) 0; }
+   Один экран без прокрутки: шапка текста и граф на всю оставшуюся высоту
+   (граф сам масштабируется, чтобы влезть). Входы → Switch → выход. Без
+   сигнала выход в рамке алертного цвета и с крупным «404». */
+body:has(> main.lost) { height: 100svh; overflow: hidden; }
+.lost {
+  --alert: #FF6B5E;
+  box-sizing: border-box;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-block: calc(118 * var(--u)) calc(24 * var(--u));
+}
+.lost__head { flex: none; }
+.lost__title { margin-block: calc(12 * var(--u)) 0; }
 .lost__text {
-  margin-block: calc(16 * var(--u)) 0;
+  margin-block: calc(10 * var(--u)) 0;
   color: color-mix(in srgb, var(--fg) 60%, var(--bg));
 }
-.lost-graph {
+.lost-stage {
   position: relative;
-  margin-block: calc(64 * var(--u)) calc(56 * var(--u));
-  touch-action: pan-y;
+  flex: 1;
+  min-height: 0;
+  margin-block-start: calc(28 * var(--u));
+  touch-action: none;
 }
-.lost-graph .node { user-select: none; }
-.lost-graph .node__body { background: var(--bg); }
-.lost-graph .node__tool { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.lost-graph .node:focus-visible { outline: none; }
-.lost-graph .node:focus-visible .node__body { box-shadow: 0 0 0 var(--line) var(--accent-2); }
-.lost-graph.is-live .wire__flow { opacity: 0.9; animation: wire-flow 1.4s linear infinite; }
+.lost-probe { position: absolute; width: calc(100 * var(--u)); height: 0; visibility: hidden; }
+.lost-canvas { position: absolute; inset-block-start: 0; transform-origin: 0 0; }
+.lost-canvas .node { user-select: none; }
+.lost-canvas .node__body { background: var(--bg); }
+.lost-canvas .node__tool { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.lost-canvas .node:focus-visible { outline: none; }
+.lost-canvas .node:focus-visible .node__body { box-shadow: 0 0 0 var(--line) var(--accent-2); }
+.lost-canvas .node.is-hot .node__body { box-shadow: 0 0 0 var(--line) var(--accent); }
+.lost-canvas .wire.is-hot .wire__flow { opacity: 0.9; animation: wire-flow 1.4s linear infinite; }
+.lost-canvas .wire.is-alert .wire__line { stroke: var(--alert); stroke-dasharray: 3 6; }
+.lost-node.is-off .node__port { background: var(--bg); border-style: dashed; }
 
-/* Вход с этим адресом: пунктир — страницы нет. */
+/* Вход 0 — этот адрес: пунктир, страницы нет. */
 .lost-node.is-broken .node__body { border-style: dashed; }
 .lost-node.is-broken .node__text { color: var(--accent-2); }
-.lost-node.is-broken .node__port { border-style: dashed; }
 .lost-node.is-nope { animation: lost-nope 420ms var(--ease-out); }
 @keyframes lost-nope {
   20%, 60% { translate: calc(-5 * var(--u)) 0; }
   40%, 80% { translate: calc(5 * var(--u)) 0; }
 }
-/* Оборванный провод от выхода к этому адресу. */
-.lost-stub {
-  fill: none;
-  stroke: var(--hair);
-  stroke-width: var(--line-px);
-  stroke-dasharray: 3 6;
-}
+.lost-stub { fill: none; stroke: var(--hair); stroke-width: var(--line-px); stroke-dasharray: 3 6; }
 .lost-plug { fill: var(--bg); stroke: var(--hair); stroke-width: var(--line-px); }
+.lost-stub.is-alert, .lost-plug.is-alert { stroke: var(--alert); }
 
-/* Выход. */
-.lost-out { cursor: default; }
-.lost-out.is-live { cursor: pointer; }
+/* Картинка: превью во всю ноду. */
+.lost-img .node__body { border: var(--line) solid var(--hair); }
+.lost-img__pic {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: calc(7 * var(--u));
+  pointer-events: none;
+}
+
+/* Switch: номер входа — ячейки. */
+.lost-sw .node__body {
+  display: grid;
+  gap: calc(8 * var(--u));
+  padding: calc(10 * var(--u)) calc(12 * var(--u)) calc(12 * var(--u));
+  border: var(--line) solid var(--hair);
+}
+.lost-sw.is-target .node__body { border-color: var(--accent); }
+.lost-stage.is-wiring .lost-sw .node__body { border-style: dashed; }
+.lost-stage.is-wiring .lost-sw.is-target .node__body { border-style: solid; }
+.lost-sw__label {
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+}
+.lost-sw__cells { display: flex; gap: calc(6 * var(--u)); }
+.lost-sw__cell {
+  flex: 1;
+  height: calc(26 * var(--u));
+  padding: 0;
+  border: var(--line) solid var(--hair);
+  border-radius: calc(5 * var(--u));
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-family: var(--mono);
+  font-size: calc(11 * var(--u));
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
+}
+.lost-sw__cell:hover { border-color: var(--accent); }
+.lost-sw__cell.is-empty { border-style: dashed; color: color-mix(in srgb, var(--fg) 45%, var(--bg)); }
+.lost-sw__cell.is-on { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.lost-sw__cell.is-on.is-empty { border-color: var(--alert); background: transparent; color: var(--alert); }
+.lost-sw__cell:focus-visible { outline: var(--line) solid var(--accent-2); outline-offset: calc(2 * var(--u)); }
+
+/* Выход. Без сигнала — рамка алертным цветом. */
 .lost-out .node__body {
   border: var(--line) solid var(--hair);
-  transition: box-shadow var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+  transition: border-color var(--dur-ui) var(--ease);
 }
-.lost-graph.is-wiring .lost-out .node__body { border-style: dashed; }
-.lost-out.is-target .node__body,
-.lost-out.is-live .node__body { border-style: solid; border-color: var(--accent); }
+.lost-out.is-live { cursor: pointer; }
+.lost-out.is-live .node__body { border-color: var(--accent); }
+.lost-out.is-alert .node__body { border-color: var(--alert); }
 .lost-out__view {
+  position: relative;
   display: grid;
   place-items: center;
+  overflow: hidden;
   aspect-ratio: 16 / 9;
-  border-radius: calc(8 * var(--u)) calc(8 * var(--u)) 0 0;
+  border-radius: calc(7 * var(--u)) calc(7 * var(--u)) 0 0;
   background-color: var(--bg);
 }
+.lost-out__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.lost-out__img[hidden] { display: none; }
 .lost-out__big {
+  position: relative;
   font-family: var(--display);
   font-weight: 700;
-  font-size: calc(104 * var(--u));
+  font-size: calc(96 * var(--u));
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--fg);
-  transition: color var(--dur-ui) var(--ease);
 }
 .lost-out.is-live .lost-out__big { color: var(--accent); }
 .lost-out__foot {
   display: flex;
   align-items: center;
-  min-height: calc(48 * var(--u));
+  min-height: calc(46 * var(--u));
   padding-inline: calc(12 * var(--u));
   border-block-start: var(--line) solid var(--hair);
 }
@@ -351,19 +421,20 @@
   font-size: calc(10 * var(--u));
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  color: var(--alert);
 }
-.lost-out__hint.is-nope { color: var(--accent-2); }
 .lost-out__go[hidden], .lost-out__hint[hidden] { display: none; }
 
-/* На узком экране поток сверху вниз: выходы нод снизу, вход выхода сверху. */
-.lost-graph.is-vertical .lost-node .node__port--out { inset-block-start: 100%; inset-inline-start: 50%; }
-.lost-graph.is-vertical .lost-out .node__port--in { inset-block-start: 0; inset-inline-start: 50%; }
+/* Узкий экран: поток сверху вниз — выходы снизу, входы сверху. */
+.lost-canvas.is-vertical .lost-node .node__port--out,
+.lost-canvas.is-vertical .lost-sw .node__port--out { inset-block-start: 100%; inset-inline-start: 50%; }
+.lost-canvas.is-vertical .lost-sw .node__port--in,
+.lost-canvas.is-vertical .lost-out .node__port--in { inset-block-start: 0; inset-inline-start: 50%; }
 
-.lost__nav { justify-content: flex-start; }
 @media (max-width: 760px) {
-  .lost { padding-block: calc(150 * var(--u)) calc(100 * var(--u)); }
-  .lost-out__big { font-size: calc(90 * var(--u)); }
+  .lost { padding-block: calc(96 * var(--u)) calc(16 * var(--u)); }
+  .lost-stage { margin-block-start: calc(20 * var(--u)); }
+  .lost-out__big { font-size: calc(80 * var(--u)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .lost-node.is-nope { animation: none; }

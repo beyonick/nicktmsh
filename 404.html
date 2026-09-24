@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- 404: Vercel отдаёт этот файл на любой несуществующий адрес, в том числе
      вложенный (/case/x/y), поэтому все пути здесь абсолютные. Сюжет — в
-     языке нод: вход с этим адресом не подключён, остальные страницы можно
-     подключить к выходу самому (js/lost.js). -->
+     языке нод: вход с этим адресом не подключён; Switch, как в Houdini,
+     переключает выход на другие страницы (js/lost.js). -->
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
@@ -45,50 +45,15 @@
 </header>
 
 <main id="main" class="lost wrap">
-  <p class="label">404/ Not found</p>
-  <h1 class="display lost__title">Nothing is <em>wired</em> <em class="alt">here</em>.</h1>
-  <p class="lost__text">This address isn’t wired to anything. Drag a page into the output — or just click one.</p>
-
-  <!-- Нодовый граф (js/lost.js): вход с этим адресом не подключён — на
-       выходе 404. Протяни провод от другой страницы к выходу (или нажми на
-       ноду) — выход ведёт туда. Кнопки ниже — то же без графа. -->
-  <div data-lost></div>
-
-  <nav class="pills lost__nav" aria-label="Where to">
-    <a class="pill" href="/">back home</a>
-    <a class="pill" href="/work">work</a>
-    <a class="pill" href="/lab">lab</a>
-  </nav>
+  <div class="lost__head">
+    <p class="label">404/ Not found</p>
+    <h1 class="display lost__title">Nothing is <em>wired</em> <em class="alt">here</em>.</h1>
+    <p class="lost__text">Input 0 — this address — isn’t connected. Flip the switch, drag the nodes, rewire them.</p>
+  </div>
+  <!-- Нодовый граф (js/lost.js): входы → Switch, как в Houdini → выход.
+       Страница в один экран, без подвала и прокрутки. -->
+  <div class="lost-stage" data-lost></div>
 </main>
-
-  <footer class="footer invert">
-    <div class="footer__in wrap">
-      <div class="footer__grid">
-        <div class="footer__object" data-vg="corners" aria-hidden="true">
-          <div class="footer__compass" data-vg="compass"></div>
-        </div>
-        <div class="footer__body">
-          <p class="footer__line">
-            Nikita Tomash — identity,<br>
-            motion and websites,<br>
-            built by hand
-          </p>
-          <ul class="socials footer__socials" data-socials></ul>
-          <nav class="footer__nav" aria-label="Footer">
-            <a class="pill" href="/work">work</a>
-            <a class="pill" href="/lab">lab</a>
-            <a class="pill" href="mailto:n27tomash@gmail.com" data-contact>get in touch</a>
-          </nav>
-        </div>
-      </div>
-      <div class="footer__base">
-        <span>&copy; 2026 nicktmsh</span>
-        <span class="footer__coords" data-vg="coords" aria-hidden="true"></span>
-        <span>Designed and coded by me</span>
-        <a class="footer__top" href="#top">back to top<span class="footer__up arrow" aria-hidden="true"></span></a>
-      </div>
-    </div>
-  </footer>
 
 <script src="/js/main.js" defer></script>
 <script src="/js/vectors.js" type="module"></script>

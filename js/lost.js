@@ -1,25 +1,30 @@
 /* 404: нодовый граф, в который можно играть.
 
-   Слева — входы: этот адрес (страницы нет — вход не подключён, от выхода
-   к нему висит оборванный провод) и живые страницы сайта. Справа — выход:
-   без сигнала на нём «404». Подключить страницу — протянуть от неё провод
-   на выход или просто нажать на ноду; выход показывает, что пришло, и по
-   нажатию ведёт туда. Провод можно снять с порта выхода и перекинуть.
-   Битый вход не подключается: провод отскакивает, нода вздрагивает.
-   На телефоне поток идёт сверху вниз. */
+   Входы — этот адрес, страницы сайта, картинка из Lab и контакты —
+   сходятся в Switch, как в Houdini: переключатель выбирает, какой вход
+   пройдёт на выход. Вход 0 — этот адрес — не подключён (к нему тянется
+   оборванный провод), поэтому сразу на выходе 404 и рамка алертным
+   цветом. Переключи Switch — нажатием на ноду или на номер входа — и
+   выход покажет страницу или картинку и поведёт туда.
 
-const host = document.querySelector("[data-lost]");
+   Ноды таскаются. Провод снимается с порта входа и цепляется обратно на
+   Switch; вход 0 не цепляется — страницы нет. Нажатие на картинку
+   подключает её, повторное — меняет картинку. Граф вписан в экран:
+   масштабируется по высоте, ноды не выходят за края. */
+
+const stage = document.querySelector("[data-lost]");
 const NS = "http://www.w3.org/2000/svg";
 const ARROW = '<span class="pill__arrow arrow" aria-hidden="true"></span>';
 const narrow = matchMedia("(max-width: 760px)");
-
 const path = decodeURI(location.pathname);
+
 const INPUTS = [
-  { type: "Request", tool: path, text: "not found", broken: true },
-  { type: "Page", tool: "/", text: "home", href: "/" },
-  { type: "Page", tool: "/work", text: "work", href: "/work" },
-  { type: "Page", tool: "/lab", text: "lab", href: "/lab" },
-  { type: "Contact", tool: "mail · telegram", text: "talk", href: "mailto:n27tomash@gmail.com", contact: true },
+  { kind: "request", type: "Request", tool: path, text: "not found" },
+  { kind: "page", type: "Page", tool: "/", text: "home", href: "/" },
+  { kind: "page", type: "Page", tool: "/work", text: "work", href: "/work" },
+  { kind: "page", type: "Page", tool: "/lab", text: "lab", href: "/lab" },
+  { kind: "image", type: "File", tool: "image", text: "", href: "/lab" },
+  { kind: "page", type: "Contact", tool: "mail · tg", text: "talk", href: "mailto:n27tomash@gmail.com", contact: true },
 ];
 
 function el(tag, cls, text) {
@@ -33,274 +38,408 @@ function svg(tag, cls) {
   if (cls) n.setAttribute("class", cls);
   return n;
 }
-function wire() {
+function wire(draws) {
   const g = svg("g", "wire");
   const line = svg("path", "wire__line");
   const flow = svg("path", "wire__flow");
+  if (draws) line.setAttribute("pathLength", "1");
   g.append(line, flow);
-  return { g, line, flow, set: (d) => (line.setAttribute("d", d), flow.setAttribute("d", d)) };
+  return { g, set: (d) => (line.setAttribute("d", d), flow.setAttribute("d", d)) };
 }
 
-if (host) {
-  host.classList.add("lost-graph");
+if (stage) {
+  const canvas = el("div", "lost-canvas");
+  const probe = el("div", "lost-probe");
   const wires = svg("svg", "nodes__wires");
   wires.setAttribute("aria-hidden", "true");
-  host.append(wires);
+  canvas.append(wires);
+  stage.append(probe, canvas);
 
-  // Входы.
-  const ins = INPUTS.map((spec, i) => {
-    const n = el("div", `node node--text lost-node${spec.broken ? " is-broken" : ""}`);
+  // --- Ноды ---------------------------------------------------------------
+  function node(cls, type, toolText) {
+    const n = el("div", `node ${cls}`);
     const head = el("div", "node__head");
-    head.append(el("span", "node__type", spec.type), el("span", "node__tool", spec.tool));
+    const tool = el("span", "node__tool", toolText);
+    head.append(el("span", "node__type", type), tool);
     const body = el("div", "node__body");
-    const port = el("span", "node__port node__port--out");
-    body.append(el("p", "node__text", spec.text), port);
     n.append(head, body);
     n.tabIndex = 0;
-    n.setAttribute("role", "button");
-    n.setAttribute("aria-pressed", "false");
-    n.setAttribute("aria-label", spec.broken ? `${spec.tool} — not found` : `Connect ${spec.text} to the output`);
-    host.append(n);
-    return { n, port, spec, i };
+    canvas.append(n);
+    return { n, body, tool, x: 0, y: 0, w: 100 };
+  }
+
+  const ins = INPUTS.map((spec, i) => {
+    const image = spec.kind === "image";
+    const item = node(`lost-node${image ? " lost-img" : " node--text"}${spec.kind === "request" ? " is-broken" : ""}`, spec.type, spec.tool);
+    if (image) {
+      item.pic = el("img", "lost-img__pic");
+      item.pic.alt = "";
+      item.pic.draggable = false;
+      item.body.append(item.pic);
+    } else item.body.append(el("p", "node__text", spec.text));
+    item.port = el("span", "node__port node__port--out");
+    item.body.append(item.port);
+    item.n.setAttribute("role", "button");
+    item.n.setAttribute("aria-label", spec.kind === "request" ? `${spec.tool} — not found` : `Switch to ${spec.text || "a picture"}`);
+    item.wire = wire(true);
+    wires.append(item.wire.g);
+    return Object.assign(item, { spec, i });
   });
 
-  // Выход.
-  const out = el("div", "node lost-out");
-  const oHead = el("div", "node__head");
-  oHead.append(el("span", "node__type", "Output"), el("span", "node__tool", "screen"));
-  const oBody = el("div", "node__body");
+  // Switch, как в Houdini: номер входа — ячейки, нажатие на ноду — следующий.
+  const sw = node("lost-sw", "Switch", "switch1");
+  sw.n.setAttribute("role", "group");
+  sw.n.setAttribute("aria-label", "Switch — select input");
+  const swLabel = el("span", "lost-sw__label");
+  const cellRow = el("div", "lost-sw__cells");
+  const cells = INPUTS.map((_, i) => {
+    const c = el("button", "lost-sw__cell", String(i));
+    c.type = "button";
+    c.setAttribute("aria-label", `Input ${i}`);
+    c.addEventListener("pointerdown", (e) => e.stopPropagation());
+    c.addEventListener("click", () => select(i));
+    cellRow.append(c);
+    return c;
+  });
+  sw.inPort = el("span", "node__port node__port--in");
+  sw.outPort = el("span", "node__port node__port--out");
+  sw.body.append(swLabel, cellRow, sw.inPort, sw.outPort);
+
+  const out = node("lost-out", "Output", "screen");
+  out.n.setAttribute("role", "button");
   const view = el("div", "lost-out__view graph");
   const big = el("span", "lost-out__big", "404");
-  view.append(big);
+  const outImg = el("img", "lost-out__img");
+  outImg.alt = "";
+  outImg.draggable = false;
+  view.append(outImg, big);
   const foot = el("div", "lost-out__foot");
-  const hint = el("span", "lost-out__hint", "no signal");
+  const hint = el("span", "lost-out__hint");
   const go = el("a", "pill lost-out__go");
-  go.hidden = true;
+  go.addEventListener("pointerdown", (e) => e.stopPropagation());
   foot.append(hint, go);
-  const inPort = el("span", "node__port node__port--in");
-  oBody.append(view, foot, inPort);
-  out.append(oHead, oBody);
-  host.append(out);
+  out.inPort = el("span", "node__port node__port--in");
+  out.body.append(view, foot, out.inPort);
 
-  // Провода: подключённый, тянущийся за курсором и оборванный — к этому адресу.
-  const main = wire();
-  main.line.setAttribute("pathLength", "1");
-  const live = wire();
+  const outWire = wire(false);
+  const live = wire(false);
   const stub = svg("path", "lost-stub");
   const plug = svg("circle", "lost-plug");
   plug.setAttribute("r", "4");
-  wires.append(stub, plug, main.g, live.g);
+  wires.append(outWire.g, stub, plug, live.g);
 
-  let current = -1; // какой вход подключён к выходу
-  let drag = null; // { from, id, sx, sy, moved, x, y }
-  let vertical = narrow.matches;
+  const all = [...ins, sw, out];
 
-  const rel = (r, H) => ({ x: r.left - H.left + r.width / 2, y: r.top - H.top + r.height / 2 });
-  function curve(a, b) {
-    if (vertical) {
-      const dy = Math.max(30, Math.abs(b.y - a.y) * 0.5);
-      return `M${a.x},${a.y} C${a.x},${a.y + dy} ${b.x},${b.y - dy} ${b.x},${b.y}`;
+  // --- Картинка: любой постер из Lab --------------------------------------
+  let pics = [{ src: "/assets/me/lebowski.webp", title: "lebowski" }];
+  let picAt = 0;
+  const img = ins.find((x) => x.spec.kind === "image");
+  function showPic() {
+    const p = pics[picAt];
+    img.pic.src = p.src;
+    outImg.src = p.src;
+    img.tool.textContent = p.title;
+  }
+  function shuffle() {
+    if (pics.length > 1) picAt = (picAt + 1 + Math.floor(Math.random() * (pics.length - 1))) % pics.length;
+    showPic();
+  }
+  showPic();
+  fetch("/data/lab.json")
+    .then((r) => r.json())
+    .then((d) => {
+      const base = d.mediaBase || "";
+      const list = (d.items || [])
+        .filter((it) => it.poster && it.published !== false)
+        .map((it) => ({
+          src: /^(https?:)?\//.test(it.poster) ? it.poster : base + it.poster,
+          title: String(it.title || it.slug).toLowerCase(),
+        }));
+      if (list.length) {
+        pics = list;
+        picAt = Math.floor(Math.random() * pics.length);
+        showPic();
+      }
+    })
+    .catch(() => {});
+
+  // --- Состояние ----------------------------------------------------------
+  const links = new Set(INPUTS.map((_, i) => i).filter((i) => INPUTS[i].kind !== "request"));
+  let sel = 0; // вход 0 — этот адрес, не подключён
+  const valid = () => links.has(sel) && INPUTS[sel].kind !== "request";
+
+  function render() {
+    const ok = valid();
+    const spec = INPUTS[sel];
+    ins.forEach((x) => {
+      x.n.classList.toggle("is-hot", ok && x.i === sel);
+      x.n.classList.toggle("is-off", !links.has(x.i));
+    });
+    cells.forEach((c, i) => {
+      c.classList.toggle("is-on", i === sel);
+      c.classList.toggle("is-empty", !links.has(i) || INPUTS[i].kind === "request");
+      c.setAttribute("aria-pressed", String(i === sel));
+    });
+    swLabel.textContent = `select input · ${sel}`;
+    out.n.classList.toggle("is-live", ok);
+    out.n.classList.toggle("is-alert", !ok);
+    const image = ok && spec.kind === "image";
+    big.textContent = ok ? (image ? "" : spec.text) : "404";
+    outImg.hidden = !image;
+    hint.hidden = ok;
+    hint.textContent = ok ? "" : `input ${sel} · not connected`;
+    go.hidden = !ok;
+    if (ok) {
+      go.href = spec.href;
+      go.innerHTML = `${spec.contact ? "open contacts" : image ? "open lab" : `open ${spec.tool}`}${ARROW}`;
+      go.toggleAttribute("data-contact", !!spec.contact);
     }
-    const dx = Math.max(40, Math.abs(b.x - a.x) * 0.5);
-    return `M${a.x},${a.y} C${a.x + dx},${a.y} ${b.x - dx},${b.y} ${b.x},${b.y}`;
+    out.n.setAttribute("aria-label", ok ? go.textContent : "No signal");
+    draw();
+  }
+  function select(i) {
+    sel = (i + INPUTS.length) % INPUTS.length;
+    render();
+    if (INPUTS[sel].kind === "request") nope();
+  }
+  function nope() {
+    const n = ins[0].n;
+    n.classList.remove("is-nope");
+    void n.offsetWidth;
+    n.classList.add("is-nope");
+  }
+  function fresh(i) {
+    const g = ins[i].wire.g;
+    g.classList.add("is-new");
+    setTimeout(() => g.classList.remove("is-new"), 900);
   }
 
+  // --- Раскладка: в единицах сайта, вписана в экран -------------------------
+  let u = 1;
+  let fit = 1;
+  let vertical = null;
+  let touched = false;
+  const L = { W: 912, H: 480 };
+
+  function setW(item, w) {
+    item.w = w;
+    item.n.style.setProperty("--w", w.toFixed(2));
+  }
+  const tall = (item) => item.n.offsetHeight / u;
+  function place(item, x, y) {
+    item.x = Math.max(0, Math.min(L.W - item.w, x));
+    item.y = Math.max(0, Math.min(L.H - tall(item), y));
+    item.n.style.setProperty("--x", item.x.toFixed(2));
+    item.n.style.setProperty("--y", item.y.toFixed(2));
+  }
+
+  // По умолчанию: широкий экран — входы колонкой слева, Switch посередине,
+  // выход справа; узкий — входы сеткой сверху, дальше Switch и выход.
+  function defaults() {
+    const W = L.W;
+    const at = new Map();
+    if (!vertical) {
+      const iw = 176;
+      ins.forEach((x) => setW(x, iw));
+      let y = 0;
+      ins.forEach((x) => {
+        at.set(x, [0, y]);
+        y += tall(x) + 12;
+      });
+      const colH = y - 12;
+      setW(sw, 196);
+      setW(out, 330);
+      const outX = W - 330;
+      const outY = Math.max(0, (colH - tall(out)) / 2);
+      at.set(out, [outX, outY]);
+      at.set(sw, [iw + (outX - iw - 196) / 2, outY + (tall(out) - tall(sw)) / 2]);
+      L.H = Math.max(colH, outY + tall(out));
+    } else {
+      const gap = 10;
+      const iw = (W - 2 * gap) / 3;
+      ins.forEach((x) => setW(x, iw));
+      const rowH = [0, 1].map((r) => Math.max(...ins.slice(r * 3, r * 3 + 3).map(tall)));
+      ins.forEach((x, i) => at.set(x, [(i % 3) * (iw + gap), Math.floor(i / 3) * (rowH[0] + 14)]));
+      const swY = rowH[0] + 14 + rowH[1] + 40;
+      setW(sw, Math.min(240, W));
+      setW(out, W);
+      at.set(sw, [(W - sw.w) / 2, swY]);
+      const outY = swY + tall(sw) + 40;
+      at.set(out, [0, outY]);
+      L.H = outY + tall(out);
+    }
+    at.forEach(([x, y], item) => place(item, x, y));
+  }
+
+  let laid = false;
+  function layout(reset) {
+    // Пока сцена без размера (вкладка скрыта) — раскладывать не во что.
+    if (!stage.clientWidth || !probe.offsetWidth) return;
+    if (!laid) reset = laid = true;
+    u = probe.offsetWidth / 100;
+    const v = narrow.matches;
+    if (v !== vertical) {
+      vertical = v;
+      canvas.classList.toggle("is-vertical", v);
+      reset = true;
+    }
+    L.W = stage.clientWidth / u;
+    if (reset) defaults();
+    else all.forEach((x) => place(x, x.x, x.y));
+    const w = L.W * u;
+    const h = L.H * u;
+    fit = Math.min(1, stage.clientHeight / h || 1);
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    canvas.style.scale = String(fit);
+    canvas.style.left = `${(stage.clientWidth - w * fit) / 2}px`;
+    wires.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    draw();
+  }
+
+  // --- Провода ------------------------------------------------------------
+  function local(node) {
+    const r = node.getBoundingClientRect();
+    const C = canvas.getBoundingClientRect();
+    return { x: (r.left + r.width / 2 - C.left) / fit, y: (r.top + r.height / 2 - C.top) / fit };
+  }
+  function curve(a, b) {
+    if (vertical) {
+      const dy = Math.max(24, Math.abs(b.y - a.y) * 0.5);
+      return `M${a.x},${a.y} C${a.x},${a.y + dy} ${b.x},${b.y - dy} ${b.x},${b.y}`;
+    }
+    const dx = Math.max(30, Math.abs(b.x - a.x) * 0.5);
+    return `M${a.x},${a.y} C${a.x + dx},${a.y} ${b.x - dx},${b.y} ${b.x},${b.y}`;
+  }
+  let act = null; // жест: { mode: "node" | "wire", item, id, sx, sy, ox, oy, moved, x, y }
+
   function draw() {
-    const H = host.getBoundingClientRect();
-    wires.setAttribute("viewBox", `0 0 ${H.width} ${H.height}`);
-    const pin = rel(inPort.getBoundingClientRect(), H);
-    main.g.style.display = current >= 0 ? "" : "none";
-    if (current >= 0) main.set(curve(rel(ins[current].port.getBoundingClientRect(), H), pin));
-    live.g.style.display = drag && drag.moved ? "" : "none";
-    if (drag && drag.moved) live.set(curve(rel(ins[drag.from].port.getBoundingClientRect(), H), { x: drag.x, y: drag.y }));
-    // Оборванный провод: от выхода к этому адресу, до середины пути.
-    const idle = current < 0 && !(drag && drag.moved);
-    stub.style.display = plug.style.display = idle ? "" : "none";
-    if (idle) {
-      const src = rel(ins[0].port.getBoundingClientRect(), H);
+    const ok = valid();
+    const pin = local(sw.inPort);
+    ins.forEach((x) => {
+      const on = links.has(x.i);
+      x.wire.g.style.display = on ? "" : "none";
+      if (on) x.wire.set(curve(local(x.port), pin));
+      x.wire.g.classList.toggle("is-hot", ok && x.i === sel);
+    });
+    outWire.set(curve(local(sw.outPort), local(out.inPort)));
+    outWire.g.classList.toggle("is-hot", ok);
+    outWire.g.classList.toggle("is-alert", !ok);
+    // Оборванный провод от Switch к этому адресу.
+    const loose = !links.has(0) && !(act && act.mode === "wire" && act.item === ins[0]);
+    stub.style.display = plug.style.display = loose ? "" : "none";
+    if (loose) {
+      const src = local(ins[0].port);
       const end = { x: pin.x + (src.x - pin.x) * 0.45, y: pin.y + (src.y - pin.y) * 0.45 };
       stub.setAttribute("d", curve(end, pin));
       plug.setAttribute("cx", end.x);
       plug.setAttribute("cy", end.y);
     }
+    stub.classList.toggle("is-alert", sel === 0);
+    plug.classList.toggle("is-alert", sel === 0);
+    const wiring = act && act.mode === "wire";
+    live.g.style.display = wiring ? "" : "none";
+    if (wiring) live.set(curve(local(act.item.port), { x: act.x, y: act.y }));
   }
 
-  function render() {
-    ins.forEach((x) => {
-      x.n.classList.toggle("is-hot", x.i === current);
-      x.n.setAttribute("aria-pressed", String(x.i === current));
-    });
-    const spec = INPUTS[current];
-    host.classList.toggle("is-live", !!spec);
-    out.classList.toggle("is-live", !!spec);
-    big.textContent = spec ? spec.text : "404";
-    hint.hidden = !!spec;
-    hint.classList.remove("is-nope");
-    hint.textContent = "no signal";
-    go.hidden = !spec;
-    if (spec) {
-      go.href = spec.href;
-      go.innerHTML = `${spec.contact ? "open contacts" : `open ${spec.tool}`}${ARROW}`;
-      go.toggleAttribute("data-contact", !!spec.contact);
-    }
-    draw();
-  }
-
-  function connect(i) {
-    if (INPUTS[i].broken) return nope(i);
-    const fresh = current !== i;
-    current = i;
-    render();
-    if (fresh) {
-      main.g.classList.add("is-new");
-      setTimeout(() => main.g.classList.remove("is-new"), 900);
-    }
-  }
-  let nopeTimer = 0;
-  function nope(i) {
-    const n = ins[i].n;
-    n.classList.remove("is-nope");
-    void n.offsetWidth;
-    n.classList.add("is-nope");
-    current = -1;
-    render();
-    hint.textContent = "nothing at this address";
-    hint.classList.add("is-nope");
-    clearTimeout(nopeTimer);
-    nopeTimer = setTimeout(render, 1600);
-  }
-
-  // Протянуть провод от входа (или снять его с порта выхода и перекинуть).
-  const overOut = (x, y) => {
-    const r = out.getBoundingClientRect();
-    const pad = 16;
-    return x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad;
+  // --- Жесты --------------------------------------------------------------
+  const inside = (node, e, pad = 12) => {
+    const r = node.getBoundingClientRect();
+    return e.clientX > r.left - pad && e.clientX < r.right + pad && e.clientY > r.top - pad && e.clientY < r.bottom + pad;
   };
-  function start(from, e, moved = false) {
-    const H = host.getBoundingClientRect();
-    drag = { from, id: e.pointerId, sx: e.clientX, sy: e.clientY, moved, x: e.clientX - H.left, y: e.clientY - H.top };
+  function point(e) {
+    const C = canvas.getBoundingClientRect();
+    act.x = (e.clientX - C.left) / fit;
+    act.y = (e.clientY - C.top) / fit;
+  }
+  function down(e, item) {
+    if (e.button !== 0 || act) return;
+    const wireMode = item.port && e.target.closest(".node__port--out");
+    act = { mode: wireMode ? "wire" : "node", item, id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: item.x, oy: item.y, moved: false };
     try {
-      e.currentTarget.setPointerCapture(e.pointerId);
+      item.n.setPointerCapture(e.pointerId);
     } catch {
       /* указатель уже отпущен */
     }
-    if (moved) host.classList.add("is-wiring");
+    if (wireMode) {
+      // Провод снимается с Switch и идёт за курсором.
+      links.delete(item.i);
+      point(e);
+      stage.classList.add("is-wiring");
+      render();
+    }
   }
   function move(e) {
-    if (!drag || e.pointerId !== drag.id) return;
-    const H = host.getBoundingClientRect();
-    drag.x = e.clientX - H.left;
-    drag.y = e.clientY - H.top;
-    if (!drag.moved && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 4) {
-      drag.moved = true;
-      host.classList.add("is-wiring");
-      if (current === drag.from) {
-        current = -1;
-        render();
-      }
-    }
-    if (drag.moved) {
-      out.classList.toggle("is-target", overOut(e.clientX, e.clientY));
+    if (!act || e.pointerId !== act.id) return;
+    if (act.mode === "wire") {
+      point(e);
+      sw.n.classList.toggle("is-target", inside(sw.n, e));
       draw();
+      return;
     }
+    const dx = e.clientX - act.sx;
+    const dy = e.clientY - act.sy;
+    if (!act.moved && Math.hypot(dx, dy) < 4) return;
+    act.moved = true;
+    touched = true;
+    act.item.n.classList.add("is-dragging");
+    place(act.item, act.ox + dx / (u * fit), act.oy + dy / (u * fit));
+    draw();
   }
-  function end(e) {
-    if (!drag || e.pointerId !== drag.id) return;
-    const { from, moved } = drag;
-    drag = null;
-    host.classList.remove("is-wiring");
-    out.classList.remove("is-target");
-    if (!moved) {
-      // Нажатие без протяжки — подключить или отключить.
-      if (current === from) {
-        current = -1;
-        render();
-      } else connect(from);
-    } else if (overOut(e.clientX, e.clientY)) connect(from);
-    else draw();
+  function up(e) {
+    if (!act || e.pointerId !== act.id) return;
+    const a = act;
+    act = null;
+    stage.classList.remove("is-wiring");
+    sw.n.classList.remove("is-target");
+    a.item.n.classList.remove("is-dragging");
+    if (a.mode === "wire") {
+      if (e.type === "pointerup" && inside(sw.n, e)) {
+        if (a.item.spec.kind === "request") nope();
+        else {
+          links.add(a.item.i);
+          fresh(a.item.i);
+        }
+      }
+      render();
+      return;
+    }
+    if (!a.moved && e.type === "pointerup") tap(a.item);
+  }
+  // Нажатие без перетаскивания.
+  function tap(item) {
+    if (item === sw) return select(sel + 1);
+    if (item === out) {
+      if (valid()) go.click();
+      return;
+    }
+    if (item.spec.kind === "image" && sel === item.i && links.has(item.i)) shuffle();
+    if (item.spec.kind !== "request" && !links.has(item.i)) {
+      links.add(item.i);
+      fresh(item.i);
+    }
+    select(item.i);
   }
 
-  ins.forEach((x) => {
-    x.n.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0) return;
-      start(x.i, e);
-    });
-    x.n.addEventListener("pointermove", move);
-    x.n.addEventListener("pointerup", end);
-    x.n.addEventListener("pointercancel", end);
-    x.n.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter" && e.key !== " ") return;
+  all.forEach((item) => {
+    item.n.addEventListener("pointerdown", (e) => down(e, item));
+    item.n.addEventListener("pointermove", move);
+    item.n.addEventListener("pointerup", up);
+    item.n.addEventListener("pointercancel", up);
+    item.n.addEventListener("keydown", (e) => {
+      if (item === sw && /^Arrow/.test(e.key)) {
+        e.preventDefault();
+        return select(sel + (e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 1));
+      }
+      if (e.target !== item.n || (e.key !== "Enter" && e.key !== " ")) return;
       e.preventDefault();
-      if (current === x.i) {
-        current = -1;
-        render();
-      } else connect(x.i);
+      tap(item);
     });
   });
-  // С порта выхода провод снимается и тянется дальше.
-  inPort.addEventListener("pointerdown", (e) => {
-    if (current < 0 || e.button !== 0) return;
-    e.stopPropagation();
-    const from = current;
-    current = -1;
-    render();
-    start(from, e, true);
-    draw();
-  });
-  inPort.addEventListener("pointermove", move);
-  inPort.addEventListener("pointerup", end);
-  inPort.addEventListener("pointercancel", end);
-  // Выход с сигналом нажимается целиком.
-  out.addEventListener("click", (e) => {
-    if (current >= 0 && !e.target.closest("a, .node__port")) go.click();
-  });
 
-  // Раскладка: на широком экране входы колонкой слева, выход справа; на
-  // узком — входы сеткой сверху, выход под ними.
-  function layout() {
-    vertical = narrow.matches;
-    host.classList.toggle("is-vertical", vertical);
-    const W = host.clientWidth;
-    let bottom = 0;
-    if (!vertical) {
-      const k = W / 912;
-      const w = 200 * k;
-      ins.forEach((x) => (x.n.style.width = `${w}px`));
-      const step = Math.max(...ins.map((x) => x.n.offsetHeight)) + 22 * k;
-      ins.forEach((x, i) => {
-        x.n.style.left = "0px";
-        x.n.style.top = `${i * step}px`;
-      });
-      const colH = (ins.length - 1) * step + ins[0].n.offsetHeight;
-      const ow = 380 * k;
-      out.style.width = `${ow}px`;
-      out.style.left = `${W - ow}px`;
-      out.style.top = `${Math.max(0, (colH - out.offsetHeight) / 2)}px`;
-      bottom = Math.max(colH, out.offsetTop + out.offsetHeight);
-    } else {
-      const k = W / 320;
-      const w = 150 * k;
-      const gap = 20 * k;
-      ins.forEach((x) => (x.n.style.width = `${w}px`));
-      const step = Math.max(...ins.map((x) => x.n.offsetHeight)) + 28 * k;
-      ins.forEach((x, i) => {
-        x.n.style.left = `${(i % 2) * (w + gap)}px`;
-        x.n.style.top = `${Math.floor(i / 2) * step}px`;
-      });
-      const rows = Math.ceil(ins.length / 2);
-      const top = (rows - 1) * step + ins[0].n.offsetHeight + 56 * k;
-      out.style.width = `${W}px`;
-      out.style.left = "0px";
-      out.style.top = `${top}px`;
-      bottom = top + out.offsetHeight;
-    }
-    host.style.height = `${Math.ceil(bottom)}px`;
-    draw();
-  }
-
-  new ResizeObserver(layout).observe(host);
-  narrow.addEventListener("change", layout);
-  if (document.fonts) document.fonts.ready.then(layout);
+  new ResizeObserver(() => layout(false)).observe(stage);
+  narrow.addEventListener("change", () => layout(true));
+  if (document.fonts) document.fonts.ready.then(() => layout(!touched));
+  layout(true);
   render();
-  layout();
 }
