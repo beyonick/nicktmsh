@@ -1,0 +1,147 @@
+/* Нодовая схема (js/nodes.js). Холст — колонка сайта 912, фон в точку, как
+   у нодовых редакторов. Все размеры — макетные пиксели через --u; позиции
+   нод приходят из json (--x, --y, --w). На телефоне холст шире экрана и
+   прокручивается вбок: схема не пересобирается, а остаётся схемой. */
+
+.nodes { margin-block-start: calc(40 * var(--u)); }
+@media (max-width: 760px) {
+  .nodes {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+}
+.nodes__canvas {
+  position: relative;
+  width: calc(912 * var(--u));
+  height: calc(var(--h, 520) * var(--u));
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--fg) 16%, transparent) 0 calc(1 * var(--u)),
+    transparent calc(1.2 * var(--u))
+  );
+  background-size: calc(19 * var(--u)) calc(19 * var(--u));
+  touch-action: pan-y;
+}
+
+/* --- Провода --------------------------------------------------------------- */
+
+.nodes__wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.wire__line,
+.wire__flow {
+  fill: none;
+  stroke-width: var(--line-px);
+  stroke-linecap: round;
+  transition: stroke var(--dur-ui) var(--ease), opacity var(--dur-ui) var(--ease);
+}
+.wire__line { stroke: var(--hair); }
+.wire__flow {
+  stroke: var(--accent);
+  stroke-dasharray: 2 14;
+  opacity: 0;
+}
+.nodes.is-live .wire__flow {
+  opacity: 0.9;
+  animation: wire-flow 1.4s linear infinite;
+}
+@keyframes wire-flow { to { stroke-dashoffset: -16; } }
+.wire.is-hot .wire__line { stroke: var(--accent); }
+.nodes.is-focus .wire:not(.is-hot) { opacity: 0.25; }
+
+.wire__label {
+  position: absolute;
+  z-index: 1;
+  translate: -50% -50%;
+  padding: calc(2 * var(--u)) calc(8 * var(--u));
+  border: var(--line) solid var(--hair);
+  border-radius: 100px;
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0.1em;
+  color: color-mix(in srgb, var(--fg) 60%, var(--bg));
+  pointer-events: none;
+}
+
+/* --- Ноды ------------------------------------------------------------------- */
+
+.node {
+  position: absolute;
+  inset-inline-start: calc(var(--x) * var(--u));
+  inset-block-start: calc(var(--y) * var(--u));
+  z-index: 2;
+  width: calc(var(--w) * var(--u));
+  margin: 0;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transition: opacity var(--dur-ui) var(--ease);
+}
+.node.is-dragging { z-index: 3; cursor: grabbing; }
+.nodes.is-focus .node:not(.is-hot, .is-near) { opacity: 0.35; }
+
+.node__head {
+  display: flex;
+  gap: calc(10 * var(--u));
+  margin-block-end: calc(6 * var(--u));
+  font-family: var(--mono);
+  font-size: calc(10 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.node__tool { color: color-mix(in srgb, var(--fg) 50%, var(--bg)); }
+
+.node__body {
+  position: relative;
+  border-radius: calc(8 * var(--u));
+  background: color-mix(in srgb, var(--fg) 5%, var(--bg));
+  transition: box-shadow var(--dur-ui) var(--ease);
+}
+.node.is-hot .node__body { box-shadow: 0 0 0 var(--line) var(--accent); }
+.node--text .node__body {
+  padding: calc(10 * var(--u)) calc(12 * var(--u));
+  border: var(--line) solid var(--hair);
+}
+.node__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(8 * var(--u));
+  pointer-events: none;
+}
+.node__text {
+  font-family: var(--mono);
+  font-size: calc(12 * var(--u));
+  line-height: calc(17 * var(--u));
+  color: color-mix(in srgb, var(--fg) 70%, var(--bg));
+}
+
+/* Порты — кружки на середине краёв тела ноды; к ним подходят провода. */
+.node__port {
+  position: absolute;
+  inset-block-start: 50%;
+  width: calc(10 * var(--u));
+  height: calc(10 * var(--u));
+  border: var(--line) solid var(--hair);
+  border-radius: 50%;
+  background: var(--bg);
+  translate: -50% -50%;
+  transition: border-color var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease);
+}
+.node__port--in { inset-inline-start: 0; }
+.node__port.is-idle { display: none; } /* к порту ничего не подключено */
+.node__port--out { inset-inline-start: 100%; }
+.node.is-hot .node__port { border-color: var(--accent); background: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nodes.is-live .wire__flow { animation: none; }
+}

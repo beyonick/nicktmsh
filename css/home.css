@@ -712,8 +712,8 @@ button.pill {
 
 /* --- Футер ---------------------------------------------------------------------
    Светлая плита со скруглением 24 сверху. Внутри та же сетка 3×304, что
-   на странице: сверху линейка с отметками колонок, в первой колонке —
-   роза векторов в угловых метках, во второй и третьей — строка,
+   на странице: в первой колонке роза векторов в угловых метках, во
+   второй и третьей — строка,
    контакты и разделы; внизу моно-строка с координатами курсора.
    Круги здесь цвета текста, стрелки — второй акцент: лайм на светлой
    плите не читается. */
@@ -727,37 +727,11 @@ button.pill {
   padding-block: calc(96 * var(--u)) calc(40 * var(--u));
 }
 
-/* Линейка: тики шагом 38 (клетка миллиметровки), длинные — по колонкам,
-   под ними номера колонок в макетных пикселях. */
-.footer__scale {
-  position: relative;
-  height: calc(34 * var(--u));
-  font-family: var(--mono);
-  font-size: calc(11 * var(--u));
-  line-height: 1;
-  color: color-mix(in srgb, var(--bg) 55%, var(--fg));
-}
-.footer .vg-rule::after {
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--bg) 0 var(--line-px),
-    transparent var(--line-px) var(--col)
-  );
-  opacity: 1;
-}
-.footer__scale span {
-  position: absolute;
-  inset-block-start: calc(20 * var(--u));
-  inset-inline-start: calc(var(--at) * var(--col));
-  translate: calc(var(--at) / 3 * -100%) 0;
-}
-
 .footer__grid {
   display: grid;
   grid-template-columns: var(--col) 1fr;
   gap: calc(40 * var(--u));
   align-items: center;
-  margin-block-start: calc(48 * var(--u));
 }
 .footer__object {
   aspect-ratio: 1;
