@@ -652,3 +652,33 @@ addEventListener("beforeunload", (e) => {
 });
 
 probeServer().then(() => loadTab("lab"));
+
+/* Панели настройки на сайте (ink / tilt / grid / ease). На публичных
+   страницах их нет; эта кнопка включает их в этом браузере — флаг читает
+   js/main.js. */
+const devButton = document.querySelector("[data-devui]");
+if (devButton) {
+  const KEY = "nicktmsh:dev";
+  const read = () => {
+    try {
+      return localStorage.getItem(KEY) === "1";
+    } catch (err) {
+      return false;
+    }
+  };
+  const show = () => {
+    const on = read();
+    devButton.setAttribute("aria-pressed", String(on));
+    devButton.textContent = on ? "Панели на сайте: вкл" : "Панели на сайте: выкл";
+  };
+  devButton.addEventListener("click", () => {
+    try {
+      if (read()) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, "1");
+    } catch (err) {
+      // нет localStorage — переключить нечем
+    }
+    show();
+  });
+  show();
+}

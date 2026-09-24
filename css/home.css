@@ -712,29 +712,121 @@ button.pill {
 .lab__word { padding-inline: 0.11em; }
 
 /* --- Футер ---------------------------------------------------------------------
-   Светлая плита со скруглением 24 сверху, набор по центру. */
+   Светлая плита со скруглением 24 сверху. Внутри та же сетка 3×304, что
+   на странице: сверху линейка с отметками колонок, в первой колонке —
+   проволочная сфера в угловых метках, во второй и третьей — строка,
+   контакты и разделы; внизу моно-строка с координатами курсора.
+   Линии здесь цвета текста, точки объекта — второй акцент: лайм на
+   светлой плите не читается. */
 
 .footer {
+  --vg-line: color-mix(in srgb, var(--bg) 55%, var(--fg));
+  --vg-dot: var(--accent-2);
+  --hair: color-mix(in srgb, var(--bg) 22%, var(--fg));
   border-start-start-radius: calc(24 * var(--u));
   border-start-end-radius: calc(24 * var(--u));
-  padding-block: calc(192 * var(--u)) calc(65 * var(--u));
-  text-align: center;
+  padding-block: calc(96 * var(--u)) calc(40 * var(--u));
 }
+
+/* Линейка: тики шагом 38 (клетка миллиметровки), длинные — по колонкам,
+   под ними номера колонок в макетных пикселях. */
+.footer__scale {
+  position: relative;
+  height: calc(34 * var(--u));
+  font-family: var(--mono);
+  font-size: calc(11 * var(--u));
+  line-height: 1;
+  color: color-mix(in srgb, var(--bg) 55%, var(--fg));
+}
+.footer .vg-rule::after {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--bg) 0 var(--line-px),
+    transparent var(--line-px) var(--col)
+  );
+  opacity: 1;
+}
+.footer__scale span {
+  position: absolute;
+  inset-block-start: calc(20 * var(--u));
+  inset-inline-start: calc(var(--at) * var(--col));
+  translate: calc(var(--at) / 3 * -100%) 0;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: var(--col) 1fr;
+  gap: calc(40 * var(--u));
+  align-items: center;
+  margin-block-start: calc(48 * var(--u));
+}
+.footer__object {
+  aspect-ratio: 1;
+  padding: calc(18 * var(--u));
+}
+.footer .vg-corners i {
+  border-color: var(--bg);
+  opacity: 1;
+}
+.footer__solid { width: 100%; height: 100%; }
+
 .footer__line {
   font-family: var(--display);
   font-weight: 700;
-  font-size: var(--fs-footer);
-  line-height: calc(29 * var(--u));
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
   letter-spacing: var(--track);
 }
-.footer__note {
-  margin-block-start: calc(61 * var(--u));
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: var(--fs-note);
-  line-height: calc(22 * var(--u));
-  letter-spacing: var(--track);
+.footer__socials { margin-block-start: calc(32 * var(--u)); }
+.footer .social { color: var(--bg); }
+.footer .social:hover,
+.footer .social:focus-visible {
+  background: var(--bg);
+  color: var(--fg);
 }
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(5 * var(--u));
+  margin-block-start: calc(12 * var(--u));
+  color: var(--bg);
+}
+
+.footer__base {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(16 * var(--u));
+  margin-block-start: calc(64 * var(--u));
+  padding-block-start: calc(16 * var(--u));
+  border-block-start: var(--line) solid var(--hair);
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  line-height: calc(18 * var(--u));
+  color: color-mix(in srgb, var(--bg) 60%, var(--fg));
+}
+.footer__coords {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-2);
+}
+/* «Наверх» — стрелка сайта (.arrow), повёрнутая вверх. */
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  color: var(--bg);
+  transition: opacity var(--dur-ui) var(--ease);
+}
+.footer__up {
+  --head: calc(7 * var(--u));
+  position: relative;
+  width: calc(16 * var(--u));
+  height: calc(10 * var(--u));
+  rotate: -90deg;
+  transition: translate var(--dur-ui) var(--ease);
+}
+.footer__top:hover .footer__up { translate: 0 calc(-4 * var(--u)); }
 
 /* --- Мобильная раскладка ---------------------------------------------------
    Не сжатый десктоп: --u уже ужимает композицию пропорционально, но ниже
@@ -775,6 +867,10 @@ button.pill {
 
   .branches { grid-template-columns: 1fr; gap: calc(8 * var(--u)); }
   .me { grid-template-columns: 1fr; gap: calc(24 * var(--u)); }
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__object { width: 60%; justify-self: center; }
+  .footer__base { grid-template-columns: 1fr 1fr; }
+  .footer__coords { display: none; }
   .me__bio { max-width: none; }
   .contact { padding: calc(20 * var(--u)); }
   .contact__title { font-size: calc(24 * var(--u)); line-height: calc(26 * var(--u)); }
@@ -805,7 +901,11 @@ html.show-grid .grid-overlay { opacity: 1; }
 }
 .grid-overlay__col { border-inline-start: 1px solid var(--grid-line); }
 
-/* Панель разработчика: переключатели сетки и кривых стоят в один ряд. */
+/* Панель разработчика: переключатели сетки и кривых стоят в один ряд.
+   Видна только в режиме разработчика (html.is-dev, js/main.js) —
+   включается из админки. */
+.devbar { display: none !important; }
+html.is-dev .devbar { display: flex !important; }
 .devbar {
   position: fixed;
   inset-block-end: 1.25rem;

@@ -4,6 +4,22 @@
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Панели настройки (ink / tilt / grid / ease) — инструмент разработчика,
+// посетителю сайта они не нужны. Включаются из админки (кнопка «Панели на
+// сайте») или адресом с ?dev; ?dev=0 выключает. Флаг живёт в localStorage
+// этого браузера, поэтому после включения панели есть на всех страницах.
+const DEV = "nicktmsh:dev";
+try {
+  const flag = new URL(location.href).searchParams.get("dev");
+  if (flag !== null) {
+    if (flag === "0") localStorage.removeItem(DEV);
+    else localStorage.setItem(DEV, "1");
+  }
+  document.documentElement.classList.toggle("is-dev", localStorage.getItem(DEV) === "1");
+} catch (err) {
+  // localStorage недоступен — панели просто не показываем
+}
+
 function clamp(v, min, max) {
   return v < min ? min : v > max ? max : v;
 }

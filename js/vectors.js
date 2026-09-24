@@ -228,6 +228,10 @@ function mountSolid(host, name, seed) {
   let w = 0;
   let h = 0;
 
+  // Цвета — у самого блока (--vg-line, --vg-dot), иначе у страницы: на
+  // светлой плите подвала линия должна быть тёмной, а не лаймовой.
+  let line = hair;
+  let dot = ink;
   const size = () => {
     const box = host.getBoundingClientRect();
     w = Math.max(1, box.width);
@@ -235,8 +239,26 @@ function mountSolid(host, name, seed) {
     canvas.width = Math.round(w * DPR());
     canvas.height = Math.round(h * DPR());
     ctx.setTransform(DPR(), 0, 0, DPR(), 0, 0);
+    line = hostColor(host, "--vg-line") || hair;
+    dot = hostColor(host, "--vg-dot") || ink;
   };
   size();
+
+  // Курсор доворачивает объект: к базовому вращению прибавляется наклон
+  // в сторону указателя, с инерцией — объект «смотрит» на курсор.
+  const aim = { x: 0, y: 0 };
+  const turn = { x: 0, y: 0 };
+  if (!reduced) {
+    addEventListener(
+      "pointermove",
+      (e) => {
+        const r = canvas.getBoundingClientRect();
+        aim.x = Math.max(-1, Math.min(1, ((e.clientX - r.left - r.width / 2) / innerWidth) * 2));
+        aim.y = Math.max(-1, Math.min(1, ((e.clientY - r.top - r.height / 2) / innerHeight) * 2));
+      },
+      { passive: true }
+    );
+  }
 
   // Фаза у каждой ячейки своя: сетка из шести объектов не должна пульсировать
   // в такт — синхронное вращение читается как заставка, а не как объекты.
@@ -248,8 +270,10 @@ function mountSolid(host, name, seed) {
   const scene = {
     visible: false,
     draw(t) {
-      const a = t * speed + phase;
-      const b = t * speed * 0.62 + phase * 0.5;
+      turn.x += (aim.x - turn.x) * 0.05;
+      turn.y += (aim.y - turn.y) * 0.05;
+      const a = t * speed + phase + turn.x * 0.9;
+      const b = t * speed * 0.62 + phase * 0.5 + turn.y * 0.6;
       const ca = Math.cos(a), sa = Math.sin(a);
       const cb = Math.cos(b), sb = Math.sin(b);
 
@@ -259,7 +283,7 @@ function mountSolid(host, name, seed) {
 
       ctx.clearRect(0, 0, w, h);
       ctx.lineWidth = lineW;
-      ctx.strokeStyle = hair;
+      ctx.strokeStyle = line;
       ctx.beginPath();
 
       const project = (p, out) => {
@@ -286,7 +310,7 @@ function mountSolid(host, name, seed) {
 
       // Ближние вершины помечаются акцентом — объект получает глубину без
       // заливки и без света.
-      ctx.fillStyle = ink;
+      ctx.fillStyle = dot;
       for (const p of v) {
         project(p, pt);
         if (pt[2] < 0.55) continue;
@@ -443,6 +467,40 @@ function mountGrid(host) {
   host.prepend(svg);
 }
 
+/* --- Координаты курсора ------------------------------------------------------
+   Моно-строка «X 0412 · Y 0133»: где сейчас курсор внутри блока-хозяина
+   (ближайший footer или section), в макетных пикселях. Приборная деталь,
+   как отметки и линейки. */
+
+function mountCoords(host) {
+  const area = host.closest("footer, section") || document.body;
+  const pad = (n) => String(Math.max(0, Math.round(n))).padStart(4, "0");
+  const idle = () => (host.textContent = "X ---- · Y ----");
+  idle();
+  area.addEventListener(
+    "pointermove",
+    (e) => {
+      const r = area.getBoundingClientRect();
+      host.textContent = `X ${pad((e.clientX - r.left) / unit)} · Y ${pad((e.clientY - r.top) / unit)}`;
+    },
+    { passive: true }
+  );
+  area.addEventListener("pointerleave", idle);
+}
+
+/* Цвет из кастомного свойства блока: значение может быть color-mix(), а
+   холст понимает не всякую запись — поэтому пропускаем через probe. */
+function hostColor(host, prop) {
+  const raw = getComputedStyle(host).getPropertyValue(prop).trim();
+  if (!raw) return "";
+  const probe = document.createElement("span");
+  probe.style.color = raw;
+  host.append(probe);
+  const out = getComputedStyle(probe).color;
+  probe.remove();
+  return out;
+}
+
 /* --- Монтаж ------------------------------------------------------------------ */
 
 export function mountVectors(root = document) {
@@ -455,6 +513,7 @@ export function mountVectors(root = document) {
     if (spec === "corners") return mountCorners(host);
     if (spec === "grid") return mountGrid(host);
     if (spec === "field") return mountField(host);
+    if (spec === "coords") return mountCoords(host);
     if (spec.startsWith("solid:")) return mountSolid(host, spec.slice(6), i);
   });
 }
@@ -464,5 +523,8 @@ new MutationObserver(readPalette).observe(document.documentElement, {
   attributes: true,
   attributeFilter: ["data-theme", "style"],
 });
+
+// Макетная единица нужна координатам и после изменения окна.
+addEventListener("resize", readMetrics);
 
 mountVectors();

@@ -42,14 +42,42 @@
 
 <main id="main" data-case aria-busy="true"></main>
 
-<footer class="footer invert">
-  <p class="footer__line">
-    Nikita Tomash — identity,<br>
-    motion and websites, built by hand<br>
-    &copy; 2026
-  </p>
-  <p class="footer__note">This site was designed and coded by me.</p>
-</footer>
+  <!-- Подвал: светлая плита. Векторная графика в духе vectors-group:
+       измерительная линейка по колонкам сетки, проволочная сфера в угловых
+       метках (доворачивается за курсором) и живые координаты курсора.
+       Иконки контактов собирает js/contact.js, графику — js/vectors.js. -->
+  <footer class="footer invert">
+    <div class="footer__in wrap">
+      <div class="footer__scale" aria-hidden="true">
+        <div class="vg-rule"></div>
+        <span style="--at:0">000</span><span style="--at:1">304</span><span style="--at:2">608</span><span style="--at:3">912</span>
+      </div>
+      <div class="footer__grid">
+        <div class="footer__object" data-vg="corners" aria-hidden="true">
+          <div class="footer__solid" data-vg="solid:spiral"></div>
+        </div>
+        <div class="footer__body">
+          <p class="footer__line">
+            Nikita Tomash — identity,<br>
+            motion and websites,<br>
+            built by hand
+          </p>
+          <ul class="socials footer__socials" data-socials></ul>
+          <nav class="footer__nav" aria-label="Footer">
+            <a class="pill" href="work.html">work</a>
+            <a class="pill" href="lab.html">lab</a>
+            <a class="pill" href="mailto:n27tomash@gmail.com" data-contact>get in touch</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer__base">
+        <span>&copy; 2026 nicktmsh</span>
+        <span class="footer__coords" data-vg="coords" aria-hidden="true"></span>
+        <span>Designed and coded by me</span>
+        <a class="footer__top" href="#top">back to top<span class="footer__up arrow" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </footer>
 
 <script src="js/main.js" defer></script>
 <script src="js/vectors.js" type="module"></script>

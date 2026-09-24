@@ -89,6 +89,7 @@
 }
 .ad-btn--go:hover { background: color-mix(in srgb, var(--accent) 80%, var(--fg)); }
 .ad-btn--sm { padding: 0.25rem 0.6rem; font-size: 0.75rem; }
+.ad-btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 
 /* --- Три колонки -----------------------------------------------------------
    Список, форма, превью. Скроллятся независимо: правка длинного кейса не
