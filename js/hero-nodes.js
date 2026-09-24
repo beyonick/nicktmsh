@@ -260,10 +260,15 @@ function mount(hero) {
     [reel.node, () => playReel && playReel()],
     [
       about.node,
-      () =>
-        document
-          .querySelector(".me, #talk")
-          ?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }),
+      () => {
+        // К началу блока «05/ Lets talk», с запасом под фиксированную шапку, —
+        // а не к центру фото: иначе страница проезжает метку и заголовок.
+        const talk = document.querySelector("#talk");
+        if (!talk) return;
+        const nav = document.querySelector(".nav");
+        const top = talk.getBoundingClientRect().top + scrollY - (nav ? nav.offsetHeight : 0) - 24;
+        scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+      },
     ],
   ]);
 

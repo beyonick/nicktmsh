@@ -479,7 +479,8 @@ button.pill {
 /* --- 05 / Обо мне -----------------------------------------------------------
    Сетка 3×304, как у проектов: фото в первой колонке, текст во второй и
    третьей. Только имя, абзац и кнопки контактов — без подписей и рамок.
-   Фото чёрно-белое. */
+   Фото чёрно-белое, в круге с пунктирной орбитой; клик меняет кадр
+   цифровым переходом (js/avatar.js). */
 
 .me {
   margin-block-start: calc(40 * var(--u));
@@ -490,30 +491,52 @@ button.pill {
 }
 .me__photo {
   position: relative;
-  margin: 0;
-  overflow: hidden;
+  margin: calc(18 * var(--u));
+  cursor: pointer;
 }
-/* Шторки (js/avatar.js): полосы акцента въезжают по очереди с разных
-   сторон, закрывают кадр, кадр меняется, полосы разъезжаются. */
-.me__shutter {
+/* Кадр — круг. Снаружи пунктирная орбита, по ней ползёт точка акцента. */
+.me__photo img,
+.me__fx {
+  border-radius: 50%;
+}
+.me__photo::before {
+  content: "";
   position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-rows: repeat(7, 1fr);
+  inset: calc(-14 * var(--u));
+  border: var(--line) dashed var(--hair);
+  border-radius: 50%;
+  animation: me-orbit 60s linear infinite;
   pointer-events: none;
 }
-.me__shutter i {
-  background: var(--accent);
-  scale: 0 1;
-  transform-origin: calc(100% * mod(var(--i), 2)) 50%;
-  transition: scale 380ms var(--ease);
-  transition-delay: calc(var(--i) * 40ms);
+.me__photo::after {
+  content: "";
+  position: absolute;
+  inset: calc(-14 * var(--u));
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 0, var(--accent) 0 calc(3 * var(--u)), transparent calc(3.5 * var(--u)));
+  animation: me-orbit 14s linear infinite;
+  pointer-events: none;
 }
-.me__photo.is-closed .me__shutter i { scale: 1 1; }
+@keyframes me-orbit { to { rotate: 1turn; } }
+/* Холст цифрового перехода (js/avatar.js) — поверх фото, только на время
+   перехода. */
+.me__fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.me__photo.is-fx .me__fx { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .me__photo::before, .me__photo::after { animation: none; }
+}
 .me__count {
   position: absolute;
-  inset-block-end: calc(10 * var(--u));
-  inset-inline-end: calc(12 * var(--u));
+  inset-block-end: calc(-6 * var(--u));
+  inset-inline-start: 50%;
+  translate: -50% 0;
   padding: calc(2 * var(--u)) calc(8 * var(--u));
   border-radius: 100px;
   background: color-mix(in srgb, var(--bg) 70%, transparent);
