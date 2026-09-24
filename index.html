@@ -99,7 +99,7 @@
        Сетка рисуется из data/projects.json (js/home.js): шесть проектов
        с featured: true. Разметки здесь нет намеренно — иначе добавление
        кейса требовало бы правки трёх файлов. -->
-  <section class="band wrap" id="work">
+  <section class="band wrap" id="work" data-dots-off>
     <p class="label rise">03/ Projects</p>
     <ul class="work rise" style="--delay:80ms" data-featured aria-busy="true"></ul>
     <p class="work__more rise" style="--delay:160ms">
@@ -108,7 +108,7 @@
   </section>
 
   <!-- 04 / Happy clients ------------------------------------------------ -->
-  <section class="band" id="clients">
+  <section class="band" id="clients" data-dots-off>
     <div class="wrap">
       <p class="label rise">04/ Happy clients</p>
     </div>
@@ -169,7 +169,7 @@
        Потом миллиметровка с вопросом: весь блок — кнопка, открывает окно
        контактов (js/contact.js). Поверх миллиметровки — поле векторов,
        единственное место на странице, где графика ловит мышь. -->
-  <section class="band wrap" id="talk">
+  <section class="band wrap" id="talk" data-dots-off>
     <p class="label rise">05/ Lets talk</p>
     <div class="me">
       <!-- Фото чёрно-белое, плоскость наклоняется за курсором (js/tilt.js).
@@ -202,7 +202,7 @@
        Между словами — пиктограммы тонкой линией (реф: vectors-group.com).
        Нарисованы один раз символами и подставляются через <use>: в ленте
        по двадцать четыре копии, и каждая правка знака — в одном месте. -->
-  <section class="marquee" aria-hidden="true">
+  <section class="marquee" aria-hidden="true" data-dots-off>
     <svg class="picto-sprite" width="0" height="0">
       <symbol id="p-orbit" viewBox="0 0 100 100">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">

@@ -5,6 +5,30 @@
    подсветка гаснет. Только для мыши. */
 
 const layer = document.querySelector(".dots");
+
+// Блоки с data-dots-off (работы, клиенты, «поговорим», бегущая строка) идут
+// без точек: там свои сильные картинки. Узор гаснет градиентом в верхнем
+// отступе первого такого блока и зажигается в верхнем отступе блока после
+// последнего. Границы — координаты на странице, пересчёт при любом
+// изменении высоты страницы.
+const off = [...document.querySelectorAll("[data-dots-off]")];
+if (layer && off.length) {
+  const pad = (el) => (el ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0);
+  const cut = () => {
+    const first = off[0];
+    const last = off[off.length - 1];
+    const a = first.getBoundingClientRect().top + scrollY + pad(first);
+    const b = last.getBoundingClientRect().bottom + scrollY;
+    const set = (k, px) => layer.style.setProperty(k, `${Math.round(px)}px`);
+    set("--cut-a0", a - Math.max(80, pad(first)));
+    set("--cut-a", a);
+    set("--cut-b", b);
+    set("--cut-b1", b + Math.max(80, pad(last.nextElementSibling)));
+    layer.classList.add("is-cut");
+  };
+  cut();
+  new ResizeObserver(cut).observe(document.body);
+}
 const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
