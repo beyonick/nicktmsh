@@ -1,7 +1,8 @@
 <!doctype html>
 <!-- 404: Vercel отдаёт этот файл на любой несуществующий адрес, в том числе
      вложенный (/case/x/y), поэтому все пути здесь абсолютные. Сюжет — в
-     языке нод: запрос есть, провод до выхода оборван. -->
+     языке нод: вход с этим адресом не подключён, остальные страницы можно
+     подключить к выходу самому (js/lost.js). -->
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
@@ -46,30 +47,12 @@
 <main id="main" class="lost wrap">
   <p class="label">404/ Not found</p>
   <h1 class="display lost__title">Nothing is <em>wired</em> <em class="alt">here</em>.</h1>
-  <p class="lost__text">The link is broken, or the page has moved.</p>
+  <p class="lost__text">This address isn’t wired to anything. Drag a page into the output — or just click one.</p>
 
-  <!-- Запрос → нода-картинка, как TOP в TouchDesigner, с ошибкой и «404»
-       в превью → провод оборван → выход без сигнала. -->
-  <div class="lost__graph" aria-hidden="true">
-    <figure class="node node--text lost__node lost__side">
-      <figcaption class="node__head"><span class="node__type">Input</span><span class="node__tool">request</span></figcaption>
-      <div class="node__body"><p class="node__text" data-path>/</p><span class="node__port node__port--out"></span></div>
-    </figure>
-    <span class="lost__wire lost__side"><span class="lost__half lost__half--live"></span></span>
-    <figure class="lost__top">
-      <figcaption class="lost__bar"><span class="lost__op">moviefilein1</span><span class="lost__type">TOP · 1920×1080</span><span class="lost__flag">×</span></figcaption>
-      <div class="lost__view">
-        <span class="lost__big">404</span>
-        <span class="node__port node__port--in"></span><span class="node__port node__port--out"></span>
-      </div>
-      <p class="lost__bar lost__msg"><span class="lost__bad">error</span><span class="lost__why">file not found: <span data-path>/</span></span></p>
-    </figure>
-    <span class="lost__wire lost__side"><span class="lost__half"></span><span class="lost__cut">×</span><span class="lost__half"></span></span>
-    <figure class="node node--text lost__node lost__side">
-      <figcaption class="node__head"><span class="node__type">Output</span><span class="node__tool">screen</span></figcaption>
-      <div class="node__body"><p class="node__text">no signal</p><span class="node__port node__port--in"></span></div>
-    </figure>
-  </div>
+  <!-- Нодовый граф (js/lost.js): вход с этим адресом не подключён — на
+       выходе 404. Протяни провод от другой страницы к выходу (или нажми на
+       ноду) — выход ведёт туда. Кнопки ниже — то же без графа. -->
+  <div data-lost></div>
 
   <nav class="pills lost__nav" aria-label="Where to">
     <a class="pill" href="/">back home</a>
@@ -107,17 +90,11 @@
     </div>
   </footer>
 
-<script>
-  // Какой адрес запросили — в ноду запроса и в текст ошибки.
-  {
-    const path = decodeURI(location.pathname);
-    document.querySelectorAll("[data-path]").forEach((n) => (n.textContent = path));
-  }
-</script>
 <script src="/js/main.js" defer></script>
 <script src="/js/vectors.js" type="module"></script>
 <script src="/js/contact.js" type="module"></script>
 <script src="/js/cursor.js" type="module"></script>
 <script src="/js/dots.js" type="module"></script>
+<script src="/js/lost.js" type="module"></script>
 </body>
 </html>

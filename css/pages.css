@@ -273,151 +273,98 @@
 .work-bar .reel-open { margin-inline-end: auto; }
 
 
-/* --- 404 (404.html) -----------------------------------------------------------
-   Запрос → нода-картинка, как TOP в TouchDesigner: шапка с именем
-   оператора, превью с «404», флаг ошибки и её текст → провод оборван →
-   выход без сигнала. У всех звеньев графа середина — на линии портов,
-   поэтому провода ровные при выравнивании по центру. */
-.lost {
-  --error: #FF6B5E;
-  padding-block: calc(200 * var(--u)) calc(160 * var(--u));
-}
+/* --- 404 (404.html, js/lost.js) -----------------------------------------------
+   Граф в языке нод сайта: входы-страницы, выход с превью. Без сигнала на
+   выходе крупно «404», с сигналом — имя подключённой страницы акцентом. */
+.lost { padding-block: calc(200 * var(--u)) calc(160 * var(--u)); }
 .lost__title { margin-block: calc(24 * var(--u)) 0; }
 .lost__text {
   margin-block: calc(16 * var(--u)) 0;
   color: color-mix(in srgb, var(--fg) 60%, var(--bg));
 }
-.lost__graph {
-  display: flex;
-  align-items: center;
-  margin-block: calc(64 * var(--u)) calc(56 * var(--u));
-}
-/* Боковые ноды: снизу отступ, равный шапке, — середина ноды = середина тела. */
-.lost .node {
+.lost-graph {
   position: relative;
-  inset: auto;
-  z-index: auto;
-  flex: none;
-  width: calc(170 * var(--u));
-  padding-block-end: calc(20 * var(--u));
-  cursor: default;
+  margin-block: calc(64 * var(--u)) calc(56 * var(--u));
+  touch-action: pan-y;
 }
-.lost .node__body { background: var(--bg); }
-.lost .node__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.lost__wire {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: calc(10 * var(--u));
-  min-width: calc(40 * var(--u));
-}
-.lost__half { flex: 1; height: var(--line); background: var(--hair); }
-.lost__half--live {
-  background:
-    repeating-linear-gradient(90deg, var(--accent) 0 calc(2 * var(--u)), transparent calc(2 * var(--u)) calc(16 * var(--u))),
-    var(--hair);
-  animation: lost-flow 1.4s linear infinite;
-}
-@keyframes lost-flow { to { background-position: calc(16 * var(--u)) 0, 0 0; } }
-.lost__cut {
-  font-family: var(--mono);
-  font-size: calc(14 * var(--u));
-  line-height: 1;
-  color: var(--error);
-}
+.lost-graph .node { user-select: none; }
+.lost-graph .node__body { background: var(--bg); }
+.lost-graph .node__tool { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.lost-graph .node:focus-visible { outline: none; }
+.lost-graph .node:focus-visible .node__body { box-shadow: 0 0 0 var(--line) var(--accent-2); }
+.lost-graph.is-live .wire__flow { opacity: 0.9; animation: wire-flow 1.4s linear infinite; }
 
-/* Нода-картинка. Шапка и строка ошибки одной высоты — середина = превью. */
-.lost__top {
-  flex: none;
-  width: calc(340 * var(--u));
-  margin: 0;
+/* Вход с этим адресом: пунктир — страницы нет. */
+.lost-node.is-broken .node__body { border-style: dashed; }
+.lost-node.is-broken .node__text { color: var(--accent-2); }
+.lost-node.is-broken .node__port { border-style: dashed; }
+.lost-node.is-nope { animation: lost-nope 420ms var(--ease-out); }
+@keyframes lost-nope {
+  20%, 60% { translate: calc(-5 * var(--u)) 0; }
+  40%, 80% { translate: calc(5 * var(--u)) 0; }
 }
-.lost__bar {
+/* Оборванный провод от выхода к этому адресу. */
+.lost-stub {
+  fill: none;
+  stroke: var(--hair);
+  stroke-width: var(--line-px);
+  stroke-dasharray: 3 6;
+}
+.lost-plug { fill: var(--bg); stroke: var(--hair); stroke-width: var(--line-px); }
+
+/* Выход. */
+.lost-out { cursor: default; }
+.lost-out.is-live { cursor: pointer; }
+.lost-out .node__body {
+  border: var(--line) solid var(--hair);
+  transition: box-shadow var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.lost-graph.is-wiring .lost-out .node__body { border-style: dashed; }
+.lost-out.is-target .node__body,
+.lost-out.is-live .node__body { border-style: solid; border-color: var(--accent); }
+.lost-out__view {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  border-radius: calc(8 * var(--u)) calc(8 * var(--u)) 0 0;
+  background-color: var(--bg);
+}
+.lost-out__big {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: calc(104 * var(--u));
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  transition: color var(--dur-ui) var(--ease);
+}
+.lost-out.is-live .lost-out__big { color: var(--accent); }
+.lost-out__foot {
   display: flex;
   align-items: center;
-  gap: calc(10 * var(--u));
-  height: calc(26 * var(--u));
-  margin: 0;
+  min-height: calc(48 * var(--u));
+  padding-inline: calc(12 * var(--u));
+  border-block-start: var(--line) solid var(--hair);
+}
+.lost-out__hint {
   font-family: var(--mono);
   font-size: calc(10 * var(--u));
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  white-space: nowrap;
+  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
 }
-.lost__op { color: var(--accent-2); text-transform: none; letter-spacing: 0.04em; }
-.lost__type { color: color-mix(in srgb, var(--fg) 45%, var(--bg)); }
-/* Флаг ошибки, как у оператора в TouchDesigner. */
-.lost__flag {
-  display: grid;
-  place-items: center;
-  width: calc(16 * var(--u));
-  height: calc(16 * var(--u));
-  margin-inline-start: auto;
-  border-radius: calc(3 * var(--u));
-  background: var(--error);
-  color: var(--bg);
-  font-weight: 700;
-  letter-spacing: 0;
-  animation: lost-alarm 1.2s ease-in-out infinite;
-}
-@keyframes lost-alarm { 50% { opacity: 0.35; } }
-.lost__msg { overflow: hidden; }
-.lost__bad { color: var(--error); }
-.lost__why {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: none;
-  letter-spacing: 0.04em;
-  color: color-mix(in srgb, var(--fg) 60%, var(--bg));
-}
-/* Превью: шахматка прозрачности, как во вьюере тача, поверх — «404»
-   с расслоением каналов в цветах сайта и строки развёртки. */
-.lost__view {
-  position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 9;
-  border: var(--line) solid var(--error);
-  border-radius: calc(8 * var(--u));
-  background:
-    repeating-conic-gradient(color-mix(in srgb, var(--graph) 60%, var(--bg)) 0 25%, var(--bg) 0 50%)
-    0 0 / calc(16 * var(--u)) calc(16 * var(--u));
-}
-.lost__view::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: repeating-linear-gradient(transparent 0 calc(3 * var(--u)), color-mix(in srgb, var(--bg) 55%, transparent) calc(3 * var(--u)) calc(4 * var(--u)));
-  pointer-events: none;
-}
-.lost__big {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: calc(120 * var(--u));
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-  text-shadow: calc(-4 * var(--u)) 0 var(--accent-2), calc(4 * var(--u)) 0 var(--accent);
-  animation: lost-glitch 3.2s steps(1) infinite;
-}
-@keyframes lost-glitch {
-  0%, 86%, 100% { translate: 0 0; }
-  88% { translate: calc(-6 * var(--u)) 0; }
-  90% { translate: calc(5 * var(--u)) 0; }
-  92% { translate: 0 0; }
-}
-.lost__view .node__port { z-index: 1; }
-.lost__view .node__port--out { border-color: var(--error); }
+.lost-out__hint.is-nope { color: var(--accent-2); }
+.lost-out__go[hidden], .lost-out__hint[hidden] { display: none; }
+
+/* На узком экране поток сверху вниз: выходы нод снизу, вход выхода сверху. */
+.lost-graph.is-vertical .lost-node .node__port--out { inset-block-start: 100%; inset-inline-start: 50%; }
+.lost-graph.is-vertical .lost-out .node__port--in { inset-block-start: 0; inset-inline-start: 50%; }
 
 .lost__nav { justify-content: flex-start; }
 @media (max-width: 760px) {
   .lost { padding-block: calc(150 * var(--u)) calc(100 * var(--u)); }
-  .lost__side { display: none; }
-  .lost__top { width: 100%; }
-  .lost__view .node__port { display: none; }
-  .lost__big { font-size: calc(96 * var(--u)); }
+  .lost-out__big { font-size: calc(90 * var(--u)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lost__half--live, .lost__flag, .lost__big { animation: none; }
+  .lost-node.is-nope { animation: none; }
 }
