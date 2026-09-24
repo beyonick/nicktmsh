@@ -372,6 +372,26 @@
       "todo": [
         "Год не подтверждён",
         "Обложка assets/work/2x2-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/2x2/tomash-2x2-3-muted.mp4",
+          "caption": "Winter 24/25"
+        },
+        {
+          "src": "work/2x2/steel-0-00-04-26.webp"
+        },
+        {
+          "src": "work/2x2/breykdaun.webp",
+          "caption": "Breakdown"
+        },
+        {
+          "src": "work/2x2/ridesmoke2audio.mp4",
+          "caption": "Summer 25"
+        },
+        {
+          "src": "work/2x2/2x2.webp"
+        }
       ]
     },
     {
@@ -403,6 +423,17 @@
       "todo": [
         "Год не подтверждён",
         "Обложка: положить assets/work/honor-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/honor/honor-x6c-my-1.mp4"
+        },
+        {
+          "src": "work/honor/honor-pad10-v1.mp4"
+        },
+        {
+          "src": "work/honor/frame-2.webp"
+        }
       ]
     },
     {
@@ -434,6 +465,43 @@
       "todo": [
         "Год не подтверждён",
         "Обложка: положить assets/work/dzen-cover.webp"
+      ],
+      "media": [
+        {
+          "src": "work/dzen/dzen-full-color-titles.mp4"
+        },
+        {
+          "src": "work/dzen/all-in-one.webp"
+        },
+        {
+          "src": "work/dzen/podarok-f.mp4"
+        },
+        {
+          "src": "work/dzen/artboard-67.webp"
+        },
+        {
+          "src": "work/dzen/dzen.webp"
+        },
+        {
+          "src": "work/dzen/10-obschestvo-v3-gr-40s.mp4",
+          "caption": "Society"
+        },
+        {
+          "src": "work/dzen/4-ogorod-gr-40s.mp4",
+          "caption": "Garden"
+        },
+        {
+          "src": "work/dzen/6-avto-v4-gr-30s.mp4",
+          "caption": "Auto"
+        },
+        {
+          "src": "work/dzen/7-lichnosti-v3-2-40s.mp4",
+          "caption": "People"
+        },
+        {
+          "src": "work/dzen/9-nauka-v3-gr-50s.mp4",
+          "caption": "Science"
+        }
       ]
     },
     {
