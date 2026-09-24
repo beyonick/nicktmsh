@@ -472,7 +472,8 @@ function mountGrid(host) {
    со стрелками на обоих концах через общий центр и три пунктирных круга.
    У каждой линии своя фаза: веер то собирается неровно, то встаёт ровной
    звездой через 45°. Круги медленно поворачиваются навстречу друг другу —
-   пунктир течёт. SVG, а не холст: линия той же толщины, что вся графика
+   пунктир течёт. Роза отвечает на мышь (веер тянется к курсору) и на
+   скролл (раскручивается его скоростью). SVG, а не холст: линия той же толщины, что вся графика
    сайта (--line-px через non-scaling-stroke), и чёткая на любом экране. */
 
 function mountCompass(host) {
@@ -509,18 +510,72 @@ function mountCompass(host) {
 
   host.append(svg);
 
+  /* Отклик. Мышь: чем ближе курсор к розе, тем сильнее стрелки перестают
+     покачиваться и собираются веером, который смотрит на курсор; ушёл —
+     веер распускается обратно в звезду. Скролл: скорость прокрутки
+     раскручивает розу — стрелки в одну сторону, круги навстречу, — а на
+     резком броске круги слегка расходятся. Всё с инерцией: состояние
+     догоняет цель, а не прыгает к ней. */
+  const pointer = { angle: 0, pull: 0 };
+  const eased = { angle: 0, pull: 0 };
+  let spin = 0;
+  let vel = 0;
+  let lastY = scrollY;
+
+  if (!reduced) {
+    addEventListener(
+      "pointermove",
+      (e) => {
+        const r = svg.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        pointer.angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+        // Полная сила в пределах розы, к трём её размерам сходит на нет.
+        const reach = r.width * 3;
+        pointer.pull = Math.max(0, Math.min(1, 1 - (Math.hypot(dx, dy) - r.width / 2) / reach));
+      },
+      { passive: true }
+    );
+    document.documentElement.addEventListener("pointerleave", () => (pointer.pull = 0));
+    addEventListener(
+      "scroll",
+      () => {
+        // Прыжок по якорю («back to top») — не прокрутка: вклад одного
+        // события ограничен, иначе роза улетала бы в бешеный волчок.
+        vel += Math.max(-120, Math.min(120, scrollY - lastY));
+        lastY = scrollY;
+      },
+      { passive: true }
+    );
+  }
+
+  // Разница углов для двусторонней стрелки: направление и обратное — одно
+  // и то же, поэтому берём кратчайший поворот по модулю 180°.
+  const turn180 = (from, to) => ((((to - from + 90) % 180) + 180) % 180) - 90;
+
   const scene = {
     visible: false,
     draw(t) {
-      // Базовая звезда через 45° плюс собственное покачивание каждой линии
-      // и общее медленное вращение.
+      eased.pull += (pointer.pull - eased.pull) * 0.06;
+      eased.angle += turn180(eased.angle, pointer.angle) * 0.12;
+      vel *= 0.9;
+      spin += vel * 0.12;
+      const swell = 1 + Math.min(Math.abs(vel) * 0.004, 0.12);
+
+      // Базовая звезда через 45°, собственное покачивание каждой линии,
+      // медленное вращение и докрутка от скролла; поверх — стягивание к
+      // курсору веером в ±15°.
       arrows.forEach((g, i) => {
-        const a = i * 45 + Math.sin(t * 0.9 + i * 1.7) * 22 + t * 9;
+        const base = i * 45 + Math.sin(t * 0.9 + i * 1.7) * 22 + t * 9 + spin;
+        const target = eased.angle + (i - 1.5) * 10;
+        const a = base + turn180(base, target) * eased.pull;
         g.setAttribute("transform", `rotate(${a.toFixed(2)} 100 100)`);
       });
       rings.forEach((c, i) => {
         const dir = i % 2 ? -1 : 1;
-        c.setAttribute("transform", `rotate(${(dir * t * (6 + i * 3)).toFixed(2)} 100 100)`);
+        const a = dir * (t * (6 + i * 3) + spin * (0.6 + i * 0.3));
+        const k = 1 + (swell - 1) * (i + 1) * 0.6;
+        c.setAttribute("transform", `rotate(${a.toFixed(2)} 100 100) translate(100 100) scale(${k.toFixed(3)}) translate(-100 -100)`);
       });
     },
   };
