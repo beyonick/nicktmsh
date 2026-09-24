@@ -66,7 +66,7 @@
         "Graphic materials"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/pervaya-tsifra.svg",
       "link": "https://1-cifra.ru/",
       "linkLabel": "1-cifra.ru",
       "featured": true,
@@ -77,35 +77,75 @@
         "The brand shipped: the live site is the proof, not a mockup."
       ],
       "todo": [
-        "Текст кейса: задача, решения, результат, 2–3 цифры (пришлёт)",
-        "Знак SVG и цвет бренда"
+        "Текст кейса: задача, решения, результат, 2–3 цифры (пришлёт)"
       ],
       "media": [
         {
-          "src": "work/pervaya-tsifra/Artboard_51.png"
+          "src": "work/pervaya-tsifra/dr-shot.webp"
         },
         {
-          "src": "work/pervaya-tsifra/2.png"
+          "src": "work/pervaya-tsifra/pervaya-tsifra-logo.webp"
         },
         {
-          "src": "work/pervaya-tsifra/image-4a6082f7-f484-.jpg"
+          "src": "work/pervaya-tsifra/artboard-27-2x-80.webp"
         },
         {
-          "src": "work/pervaya-tsifra/image-5548268a-3105-.jpg"
+          "src": "work/pervaya-tsifra/avocado-sc.mp4",
+          "caption": "Mascot"
         },
         {
-          "src": "work/pervaya-tsifra/image-6eef3626-b6e4-.jpg"
+          "src": "work/pervaya-tsifra/avocado-dr.mp4"
         },
         {
-          "src": "work/pervaya-tsifra/image-91b347a2-bb13-.jpg"
+          "src": "work/pervaya-tsifra/image-4a6082f7-f484-4c16-b4ec-4b8dae8fdd24.webp"
         },
         {
-          "src": "work/pervaya-tsifra/image-9822001c-6ca3-.jpg"
+          "src": "work/pervaya-tsifra/image-6eef3626-b6e4-4c89-8ab1-8b0f1997ae86.webp"
         },
         {
-          "src": "work/pervaya-tsifra/image-b959ad10-a7d0-.jpg"
+          "src": "work/pervaya-tsifra/2.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/3.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-91b347a2-bb13-463f-86c9-9e58f8a76f51.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/image-9822001c-6ca3-400e-8b72-081cc167be22.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarblack-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarlime-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avatarwhite-youtube.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/pervaya-bc-back.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/pervaya-bc-yellowt.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avocado-w3-copy.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/avocado-w3-copy-4.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/172.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/4e0a0f7a-32ea-49c3-b3f8-f6c921572f78.webp"
+        },
+        {
+          "src": "work/pervaya-tsifra/track.mp4"
         }
-      ]
+      ],
+      "color": "#D3FF00"
     },
     {
       "slug": "smallteatrik",
@@ -170,97 +210,108 @@
       ],
       "media": [
         {
-          "src": "work/mts-money/Dengi_01.jpg"
+          "src": "work/mts-money/dengi-01.webp",
+          "caption": "MTS Money"
         },
         {
-          "src": "work/mts-money/Dengi_02.jpg"
+          "src": "work/mts-money/dengi-02.webp"
         },
         {
-          "src": "work/mts-money/Dengi_03.jpg"
+          "src": "work/mts-money/dengi-03.webp"
         },
         {
-          "src": "work/mts-money/Dengi_04.jpg"
+          "src": "work/mts-money/dengi-04.webp"
         },
         {
-          "src": "work/mts-money/Dengi_05.jpg"
+          "src": "work/mts-money/dengi-05.webp"
         },
         {
-          "src": "work/mts-money/Dengi_06.jpg"
+          "src": "work/mts-money/dengi-06.webp"
         },
         {
-          "src": "work/mts-money/Dengi_07.jpg"
+          "src": "work/mts-money/dengi-07.webp"
         },
         {
-          "src": "work/mts-money/Dengi_08.jpg"
+          "src": "work/mts-money/dengi-08.webp"
         },
         {
-          "src": "work/mts-money/Dengi_09.jpg"
+          "src": "work/mts-money/dengi-09.webp"
         },
         {
-          "src": "work/mts-money/Dengi_10.jpg"
+          "src": "work/mts-money/dengi-10.webp"
         },
         {
-          "src": "work/mts-money/Dengi_13.jpg"
+          "src": "work/mts-money/premium-01.webp",
+          "caption": "MTS Premium"
         },
         {
-          "src": "work/mts-money/Premium_01.jpg"
+          "src": "work/mts-money/premium-02.webp"
         },
         {
-          "src": "work/mts-money/Premium_02.jpg"
+          "src": "work/mts-money/premium-03.webp"
         },
         {
-          "src": "work/mts-money/Premium_03.jpg"
+          "src": "work/mts-money/premium-04.webp"
         },
         {
-          "src": "work/mts-money/Premium_04.jpg"
+          "src": "work/mts-money/premium-05.webp"
         },
         {
-          "src": "work/mts-money/Premium_05.jpg"
+          "src": "work/mts-money/premium-06.webp"
         },
         {
-          "src": "work/mts-money/Premium_06.jpg"
+          "src": "work/mts-money/premium-07.webp"
         },
         {
-          "src": "work/mts-money/Premium_07.jpg"
+          "src": "work/mts-money/premium-08.webp"
         },
         {
-          "src": "work/mts-money/Premium_08.jpg"
+          "src": "work/mts-money/premium-09.webp"
         },
         {
-          "src": "work/mts-money/Premium_11.jpg"
+          "src": "work/mts-money/premium-10.webp"
         },
         {
-          "src": "work/mts-money/Premium_12.jpg"
+          "src": "work/mts-money/premium-11.webp"
         },
         {
-          "src": "work/mts-money/Premium_13.jpg"
+          "src": "work/mts-money/premium-12.webp"
         },
         {
-          "src": "work/mts-money/Premium_15.jpg"
+          "src": "work/mts-money/premium-13.webp"
         },
         {
-          "src": "work/mts-money/Premium_16se.jpg"
+          "src": "work/mts-money/premium-14.webp"
         },
         {
-          "src": "work/mts-money/Premium_17.jpg"
+          "src": "work/mts-money/premium-15.webp"
         },
         {
-          "src": "work/mts-money/Premium_18.jpg"
+          "src": "work/mts-money/premium-16se.webp"
         },
         {
-          "src": "work/mts-money/Premium_19.jpg"
+          "src": "work/mts-money/premium-17.webp"
         },
         {
-          "src": "work/mts-money/Premium_20.jpg"
+          "src": "work/mts-money/premium-18.webp"
         },
         {
-          "src": "work/mts-money/Premium_21.jpg"
+          "src": "work/mts-money/premium-19.webp"
         },
         {
-          "src": "work/mts-money/Premium_22.jpg"
+          "src": "work/mts-money/premium-20.webp"
         },
         {
-          "src": "work/mts-money/Premium_23.jpg"
+          "src": "work/mts-money/premium-21.webp"
+        },
+        {
+          "src": "work/mts-money/premium-22.webp"
+        },
+        {
+          "src": "work/mts-money/premium-23.webp"
+        },
+        {
+          "src": "work/mts-money/premium-24.webp"
         }
       ]
     },
@@ -401,7 +452,7 @@
         "Corporate portal"
       ],
       "cover": null,
-      "logo": null,
+      "logo": "assets/logos/waydeal.svg",
       "link": null,
       "featured": false,
       "published": true,
@@ -409,38 +460,38 @@
       "body": [],
       "todo": [
         "Материалы портала (пришлёт)",
-        "Что за компания, год, роль",
-        "Знак SVG и точный фиолетовый"
+        "Что за компания, год, роль"
       ],
       "media": [
         {
-          "src": "work/waydeal/1HD.jpg"
+          "src": "work/waydeal/1hd.webp"
         },
         {
-          "src": "work/waydeal/2HD.jpg"
+          "src": "work/waydeal/2hd.webp"
         },
         {
-          "src": "work/waydeal/3HD.jpg"
+          "src": "work/waydeal/3hd.webp"
         },
         {
-          "src": "work/waydeal/4HD.jpg"
+          "src": "work/waydeal/4hd.webp"
         },
         {
-          "src": "work/waydeal/5HD.jpg"
+          "src": "work/waydeal/5hd.webp"
         },
         {
-          "src": "work/waydeal/6HD.jpg"
+          "src": "work/waydeal/6hd.webp"
         },
         {
-          "src": "work/waydeal/7HD.jpg"
+          "src": "work/waydeal/7hd.webp"
         },
         {
-          "src": "work/waydeal/8HD.jpg"
+          "src": "work/waydeal/8hd.webp"
         },
         {
-          "src": "work/waydeal/9HD.jpg"
+          "src": "work/waydeal/9hd.webp"
         }
-      ]
+      ],
+      "color": "#6734FF"
     },
     {
       "slug": "interactive",
@@ -472,73 +523,50 @@
         "Eight pieces from the series: beat-driven fluid simulations played live on faders; sound and generative systems that follow the hand through Leap Motion; fragments, particles and spheres that scatter on gesture; gesture-driven audio and smoke with typography built into the scene; generative visuals and sound performed live on faders and pads of an Arturia BeatStep."
       ],
       "todo": [
-        "Обложка assets/work/interactive-cover.webp",
-        "Ссылки на Vimeo для 8 работ — заменить ими кадры"
+        "Обложка assets/work/interactive-cover.webp"
       ],
       "media": [
         {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%202.0/td_leapmotion.mp4",
-          "caption": "Process"
+          "src": "work/interactive/td_leapmotion.mp4",
+          "caption": "Process — Leap Motion into TouchDesigner"
         },
         {
-          "src": "work/interactive/17_Liquid_C_0-00-26-.jpg"
+          "src": "work/interactive/pipeline.webp",
+          "caption": "Pipeline: Notch VFX, Ableton Live, TouchDesigner over OSC"
         },
         {
-          "src": "work/interactive/Content_0-00-17-28.jpg"
+          "src": "work/interactive/10-reel.mp4"
         },
         {
-          "src": "work/interactive/Content_13_B_2_0-00-.jpg"
+          "src": "work/interactive/14-reel-c.mp4"
         },
         {
-          "src": "work/interactive/Content_14_0-00-13-2.jpg"
+          "src": "work/interactive/16-reel-d.mp4"
         },
         {
-          "src": "work/interactive/Content_15_0-00-06-0.jpg"
+          "src": "work/interactive/16-reel-e.mp4"
         },
         {
-          "src": "work/interactive/Content_D_0-00-32-09.jpg"
+          "src": "work/interactive/17-liquid-a.mp4",
+          "poster": "work/interactive/17-liquid-a_image100.webp"
         },
         {
-          "src": "work/interactive/image-110e20c3-d054-.jpg"
+          "src": "work/interactive/04-post.mp4"
         },
         {
-          "src": "work/interactive/image-36a90fab-bc18-.webp"
+          "src": "work/interactive/frame-702.webp"
         },
         {
-          "src": "work/interactive/image-552168db-c400-.png"
+          "src": "work/interactive/frame-704.webp"
         },
         {
-          "src": "work/interactive/image-56be6b35-0b09-.webp"
+          "src": "work/interactive/frame-705.webp"
         },
         {
-          "src": "work/interactive/image-c5f84e36-642b-.png"
+          "src": "work/interactive/frame-751.webp"
         },
         {
-          "src": "work/interactive/image-eb445cd0-99ce-.webp"
-        },
-        {
-          "src": "work/interactive/image-fa4516d6-f487-.jpg"
-        },
-        {
-          "src": "work/interactive/pipeline.jpg"
-        },
-        {
-          "src": "work/interactive/Screenshot_2021-11-0.png"
-        },
-        {
-          "src": "work/interactive/Screenshot_2021-11-1.png"
-        },
-        {
-          "src": "work/interactive/Screenshot_2021-11-2.png"
-        },
-        {
-          "src": "work/interactive/tild3732-Screenshot_2021-11-0.png"
-        },
-        {
-          "src": "work/interactive/tild3835-Screenshot_2021-11-0.png"
-        },
-        {
-          "src": "work/interactive/tild6331-Screenshot_2021-11-0.png"
+          "src": "work/interactive/frame-756.webp"
         }
       ]
     },
