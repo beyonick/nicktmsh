@@ -408,13 +408,13 @@ button.pill {
 
 /* Логотипы одноцветные: mask + background-color. Высоты сняты с макета
    поштучно — знаки выровнены на глаз по оптике, а не по одной высоте. */
-/* Логотипы клиентов стоят почти в тон фону (#302B3D — цвет миллиметровки)
-   и проявляются вторым акцентом под курсором. */
+/* Логотипы клиентов одного приглушённого тона (#B5B3C8) и проявляются
+   вторым акцентом под курсором. */
 .logo {
   flex: none;
   height: var(--h, calc(48 * var(--u)));
   aspect-ratio: var(--ar, 4);
-  background: #302B3D;
+  background: #B5B3C8;
   -webkit-mask: var(--src) center / contain no-repeat;
   mask: var(--src) center / contain no-repeat;
   transition: background-color var(--dur-ui) var(--ease);
@@ -900,7 +900,9 @@ button.pill {
   .hero__sub { font-size: calc(13 * var(--u)); line-height: calc(20 * var(--u)); }
 
   .branches { grid-template-columns: 1fr; gap: calc(8 * var(--u)); }
-  .me { grid-template-columns: 1fr; gap: calc(24 * var(--u)); }
+  /* Орбиту крутит rotate на квадратном блоке: углы повёрнутого квадрата
+     выходят за экран и раздувают страницу вбок. Сам круг внутри .me. */
+  .me { grid-template-columns: 1fr; gap: calc(24 * var(--u)); overflow: clip; }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__object { width: 60%; justify-self: center; }
   .footer__base { grid-template-columns: 1fr 1fr; }
@@ -909,7 +911,22 @@ button.pill {
   .contact { padding: calc(20 * var(--u)); }
   .contact__title { font-size: calc(24 * var(--u)); line-height: calc(26 * var(--u)); }
   .work { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: 100%; }
-  .card { aspect-ratio: 1; }
+  .card { aspect-ratio: 1; padding-inline: calc(14 * var(--u)); }
+  /* Ховера на телефоне нет — вторая строка не нужна, а длинное название
+     переносится, а не режется. */
+  .card__cap {
+    height: auto;
+    font-size: calc(12 * var(--u));
+    line-height: calc(16 * var(--u));
+  }
+  .card__title,
+  .card:hover .card__title,
+  .card:focus-within .card__title { position: static; white-space: normal; transform: none; }
+  .card__kicker { display: none; }
+
+  /* Лента клиентов вполовину: иначе на экран влезает один знак. Все
+     размеры ленты — от --u, поэтому достаточно ужать его локально. */
+  .ticker { --u: calc(100vw / 357 * 0.5); margin-block-start: calc(60 * 100vw / 357); }
 }
 
 /* --- Переключатель сетки ----------------------------------------------------
