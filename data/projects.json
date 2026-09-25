@@ -364,16 +364,16 @@
       "color": "#0077FF",
       "media": [
         {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-1-6s.mp4",
+          "src": "work/vk/manifest-1-6s.mp4",
           "caption": "Manifest 1"
         },
         {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-3-5s.mp4",
+          "src": "work/vk/manifest-3-5s.mp4",
           "size": "full",
           "caption": "Manifest 2"
         },
         {
-          "src": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/work/vk/manifest-2-7s.mp4",
+          "src": "work/vk/manifest-2-7s.mp4",
           "size": "full",
           "caption": "Manifest 3"
         }
@@ -1380,7 +1380,7 @@
       ]
     }
   ],
-  "mediaBase": "https://a0ba653b-2b38-41d5-ab30-999a5a6aa985.selstorage.ru/website%203.0/",
+  "mediaBase": "https://a6f47274-068b-4675-ac6a-8dc03bc219a0.selcdn.net/nicktmsh/",
   "showreel": {
     "title": "Showreel 2025",
     "video": "lab/showreel-2025/2025-showreel-nikita-tomash-se.webm"
