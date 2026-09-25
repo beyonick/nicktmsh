@@ -37,8 +37,15 @@ PY
 echo "built: $(find "$OUT" -type f | wc -l) files, clean urls: $(ls "$CLEAN" | tr '\n' ' ')"
 [[ "${1:-}" == "--upload" ]] || exit 0
 
-: "${BUCKET:?}" "${S3_ENDPOINT:?}"
+fail() { echo "::error::$*"; exit 1; }
+[[ -n "${BUCKET:-}" ]] || fail "SELECTEL_BUCKET пуст: нужна Repository variable, не Environment"
+[[ -n "${AWS_ACCESS_KEY_ID:-}" ]] || fail "секрет SELECTEL_S3_ACCESS_KEY пуст или не виден"
+[[ -n "${AWS_SECRET_ACCESS_KEY:-}" ]] || fail "секрет SELECTEL_S3_SECRET_KEY пуст или не виден"
+echo "bucket=$BUCKET endpoint=$S3_ENDPOINT region=${AWS_DEFAULT_REGION:-} key_len=${#AWS_ACCESS_KEY_ID}/${#AWS_SECRET_ACCESS_KEY}"
 s3() { aws s3 --endpoint-url "$S3_ENDPOINT" "$@"; }
+if ! err=$(s3 ls "s3://$BUCKET" 2>&1 >/dev/null); then
+  fail "нет доступа к бакету $BUCKET ($S3_ENDPOINT): $(echo "$err" | tr '\n' ' ')"
+fi
 
 KEEP=()
 for f in "$CLEAN"/*; do KEEP+=(--exclude "$(basename "$f")"); done
