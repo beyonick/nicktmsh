@@ -15,7 +15,7 @@ import { load } from "./store.js";
 
 const NS = "http://www.w3.org/2000/svg";
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const BASE = "https://a6f47274-068b-4675-ac6a-8dc03bc219a0.selcdn.net/nicktmsh/";
+const BASE = "https://7b969cfb-7fef-4b50-a362-6bebbf7ab72f.selstorage.ru/nicktmsh/";
 
 const INPUTS = [
   { type: "01", tool: "Design", icons: ["figma", "illustrator", "photoshop"] },
