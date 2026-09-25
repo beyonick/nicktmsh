@@ -21,6 +21,8 @@ jobs:
       # Новые aws cli шлют CRC-контрольные суммы, которые S3-совместимые хранилища не всегда принимают.
       AWS_REQUEST_CHECKSUM_CALCULATION: when_required
       AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+      # Встроенный в aws cli список корневых сертификатов не знает GlobalSign R6, которым подписан Selectel.
+      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
     steps:
       - uses: actions/checkout@v4
       - run: bash .github/deploy-selectel.sh --upload

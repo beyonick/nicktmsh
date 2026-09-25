@@ -44,7 +44,9 @@ fail() { echo "::error::$*"; exit 1; }
 echo "bucket=$BUCKET endpoint=$S3_ENDPOINT region=${AWS_DEFAULT_REGION:-} key_len=${#AWS_ACCESS_KEY_ID}/${#AWS_SECRET_ACCESS_KEY}"
 s3() { aws s3 --endpoint-url "$S3_ENDPOINT" "$@"; }
 if ! err=$(s3 ls "s3://$BUCKET" 2>&1 >/dev/null); then
-  fail "нет доступа к бакету $BUCKET ($S3_ENDPOINT): $(echo "$err" | tr '\n' ' ')"
+  host=${S3_ENDPOINT#https://}
+  chain=$(echo | openssl s_client -connect "$host:443" -servername "$host" 2>/dev/null | grep -E '^ *[0-9] s:' | tr '\n' ' ')
+  fail "нет доступа к бакету $BUCKET ($S3_ENDPOINT): $(echo "$err" | tr '\n' ' ') | chain: $chain"
 fi
 
 KEEP=()
