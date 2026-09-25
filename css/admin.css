@@ -424,3 +424,22 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* --- Подключение к GitHub ---------------------------------------------------- */
+
+.ad-connect {
+  width: min(30rem, calc(100vw - 32px));
+  padding: 1.25rem;
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+.ad-connect::backdrop { background: color-mix(in srgb, var(--bg) 80%, transparent); }
+.ad-connect form { display: grid; gap: 0.75rem; }
+.ad-connect .ad-hint { opacity: 0.6; }
+.ad-connect a { color: var(--accent); }
+.ad-connect .ad-status { margin: 0; padding: 0; min-height: 1em; }
+.ad-connect .ad-actions { justify-content: flex-end; }

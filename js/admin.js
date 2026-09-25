@@ -6,14 +6,21 @@
 
    Куда пишем
    ----------
-   Если рядом работает tools/dev-server.py, «Сохранить» кладёт json прямо
-   в data/ и файл постера в assets/. Если сервера нет, панель отдаёт тот
-   же json скачиванием: результат одинаковый, разница только в числе
-   движений. Молча терять правки она не должна ни в одном случае.
+   Три режима, выбираются сами:
+   - рядом работает tools/dev-server.py — «Сохранить» кладёт json прямо
+     в data/ и файл постера в assets/;
+   - панель открыта с хостинга и подключена к GitHub — «Сохранить» делает
+     один коммит в репозиторий, сайт выкладывается сам (admin-github.js).
+     До нажатия ничего никуда не уходит: перетащенные файлы ждут в
+     браузере и едут тем же коммитом;
+   - ни того ни другого — тот же json отдаётся скачиванием.
+   Молча терять правки панель не должна ни в одном случае.
 
    Схема описана в data/README.md. Панель её не изобретает: она читает
    существующий файл, правит и кладёт обратно — незнакомые поля
    сохраняются как были. */
+
+import * as github from "./admin-github.js";
 
 const TABS = {
   lab: {
@@ -115,7 +122,17 @@ let base = null; // файл, каким он был при загрузке и�
 let list = [];
 let index = 0;
 let dirty = false;
-let canWrite = false;
+let mode = "offline"; // local · cloud · offline
+let cloud = null; // { repo, branch, token } в облачном режиме
+
+/* Файлы, перетащенные в облачном режиме: до «Сохранить» они живут только
+   в браузере. Ключ — путь, под которым файл встанет в репозиторий. */
+const pending = new Map(); // путь → File
+const previews = new Map(); // путь → blob: адрес для миниатюр
+
+function local(path) {
+  return previews.get(path) || path;
+}
 
 /* --- Утилиты --------------------------------------------------------------- */
 
@@ -154,17 +171,27 @@ function markDirty() {
 
 /* --- Загрузка и запись ------------------------------------------------------ */
 
-async function probeServer() {
+async function detectMode() {
   // Отличаем dev-сервер от обычной статики. Запрос должен быть безобидным
   // и успешным: проверка через заведомо неверный POST работала, но
   // оставляла в консоли красную строку при каждом открытии панели.
+  let server = false;
   try {
     const r = await fetch("/api/ping", { cache: "no-store" });
-    canWrite = r.ok && (await r.json()).write === true;
+    server = r.ok && (await r.json()).write === true;
   } catch {
-    canWrite = false;
+    server = false;
   }
+  cloud = server ? null : github.getConfig();
+  mode = server ? "local" : cloud ? "cloud" : "offline";
+  renderCloudButton();
 }
+
+const READY = {
+  local: ["готово · пишем в data/", "ok"],
+  cloud: ["готово · «Сохранить» публикует на сайт", "ok"],
+  offline: ["готово · не подключено, сохранение скачиванием", "warn"],
+};
 
 async function loadTab(name) {
   if (dirty && !confirm("Есть несохранённые правки. Уйти и потерять их?")) return;
@@ -181,14 +208,22 @@ async function loadTab(name) {
   els.listTitle.textContent = cfg.listTitle;
   status("загрузка…");
 
-  const res = await fetch(`data/${cfg.file}`, { cache: "no-cache" });
-  doc = await res.json();
+  clearPending();
+  try {
+    doc =
+      mode === "cloud"
+        ? await github.readJson(cloud, `data/${cfg.file}`)
+        : await fetch(`data/${cfg.file}`, { cache: "no-cache" }).then((r) => r.json());
+  } catch (e) {
+    status(`не загрузилось: ${e.message}`, "err");
+    return;
+  }
   base = JSON.parse(JSON.stringify(doc));
   list = doc[cfg.key] || [];
 
   renderList();
   renderForm();
-  status(canWrite ? "готово · пишем в data/" : "готово · сервера нет, сохранение скачиванием", canWrite ? "ok" : "warn");
+  status(...READY[mode]);
 }
 
 /* Файл мог измениться на диске, пока открыта панель: правка в коде,
@@ -227,10 +262,11 @@ function mergeFromDisk(disk, key) {
 }
 
 async function save() {
+  if (mode === "cloud") return saveCloud();
   const cfg = TABS[tab];
 
   let pulled = 0;
-  if (canWrite) {
+  if (mode === "local") {
     const disk = await fetch(`data/${cfg.file}`, { cache: "no-store" })
       .then((r) => r.json())
       .catch(() => null);
@@ -242,7 +278,7 @@ async function save() {
   doc[cfg.key] = list;
   doc.updated = new Date().toISOString().slice(0, 10);
 
-  if (!canWrite) return download();
+  if (mode !== "local") return download();
 
   status("сохраняю…");
   const r = await fetch(`/api/data/${cfg.file}`, {
@@ -270,6 +306,87 @@ async function save() {
   }
 }
 
+/* Облако: читаем свежий файл из репозитория, подтягиваем чужие правки
+   тем же mergeFromDisk и коммитим json вместе с ждущими файлами. Если
+   ветка сдвинулась между чтением и записью, пробуем ещё раз — один. */
+async function saveCloud(retry = true) {
+  const cfg = TABS[tab];
+  const path = `data/${cfg.file}`;
+  let sha;
+  let pulled = 0;
+  let message;
+
+  status("публикую…");
+  try {
+    const fresh = await github.readJson(cloud, path);
+    if (JSON.stringify(fresh) !== JSON.stringify(base)) pulled = mergeFromDisk(fresh, cfg.key);
+
+    message = commitMessage(cfg);
+    doc[cfg.key] = list;
+    doc.updated = new Date().toISOString().slice(0, 10);
+    const text = JSON.stringify(doc, clean, 2) + "\n";
+
+    // Файл, который перетащили, а потом заменили другим, в репозиторий
+    // не везём: на него больше ничто не ссылается.
+    const files = [{ path, text }];
+    for (const [p, blob] of pending) if (text.includes(`"${p}"`)) files.push({ path: p, blob });
+
+    sha = await github.commit(cloud, files, message);
+  } catch (e) {
+    if (retry && (e.status === 409 || e.status === 422)) return saveCloud(false);
+    status(`не опубликовалось: ${e.message}. Правки на месте — можно «Скачать json»`, "err");
+    return;
+  }
+
+  dirty = false;
+  base = JSON.parse(JSON.stringify(doc, clean));
+  pending.clear(); // превью оставляем: пока сайт выкладывается, файла там ещё нет
+  if (pulled) {
+    renderList();
+    renderForm();
+  }
+  const extra = pulled ? ` · подтянул чужих правок: ${pulled}` : "";
+  status(`сохранено${extra} · сайт обновляется…`, "ok");
+  watchDeploy(sha, extra);
+}
+
+/* Подпись коммита — какие записи тронуты, чтобы в истории репозитория
+   было видно, что и когда меняли, без открытия диффа. */
+function commitMessage(cfg) {
+  const was = new Map(((base && base[cfg.key]) || []).map((x) => [x.slug, JSON.stringify(x)]));
+  const touched = list
+    .filter((x) => was.get(x.slug) !== JSON.stringify(x, clean))
+    .map((x) => x.title || x.slug)
+    .slice(0, 6);
+  const removed = [...was.keys()].filter((s) => !list.some((x) => x.slug === s));
+  const parts = [];
+  if (touched.length) parts.push(touched.join(", "));
+  if (removed.length) parts.push(`removed ${removed.join(", ")}`);
+  return `Content from the admin: ${cfg.file}${parts.length ? " — " + parts.join("; ") : ""}`;
+}
+
+/* Сайт выкладывает workflow; ждём его, если токену разрешено смотреть
+   Actions. Не разрешено — честно говорим, сколько это обычно занимает. */
+async function watchDeploy(sha, extra) {
+  for (let i = 0; i < 60; i++) {
+    await new Promise((r) => setTimeout(r, 5000));
+    if (dirty) return; // пошли новые правки — статус теперь про них
+    const s = await github.deployState(cloud, sha);
+    if (!s) {
+      status(`сохранено${extra} · сайт обновится примерно через минуту`, "ok");
+      return;
+    }
+    if (s.state === "done") return status(`опубликовано${extra} · сайт обновлён`, "ok");
+    if (s.state === "failed") return status("сохранено, но выкладка упала — см. Actions на GitHub", "err");
+  }
+}
+
+function clearPending() {
+  pending.clear();
+  previews.forEach((u) => URL.revokeObjectURL(u));
+  previews.clear();
+}
+
 function download() {
   const cfg = TABS[tab];
   doc[cfg.key] = list;
@@ -284,12 +401,27 @@ function download() {
 
 async function upload(file, name) {
   const cfg = TABS[tab];
-  if (!canWrite) {
-    status("без dev-сервера файл не зальётся — положи его в assets вручную", "warn");
-    return null;
-  }
   const ext = (file.name.split(".").pop() || "bin").toLowerCase();
   const safe = `${slugify(name) || "file"}.${ext}`;
+
+  if (mode === "cloud") {
+    // Видео в репозиторий не кладём: ролики живут в Selectel, а GitHub
+    // не принимает файлы больше 100 МБ и раздувается от каждого.
+    if (file.type.startsWith("video/") || file.size > 20 * 1024 * 1024) {
+      status("видео и файлы больше 20 МБ — в Selectel, сюда вставь ссылку", "warn");
+      return null;
+    }
+    const path = `assets/${cfg.uploadDir}/${safe}`;
+    if (previews.has(path)) URL.revokeObjectURL(previews.get(path));
+    pending.set(path, file);
+    previews.set(path, URL.createObjectURL(file));
+    status(`${safe} уедет на сайт вместе с «Сохранить»`, "warn");
+    return path;
+  }
+  if (mode !== "local") {
+    status("без подключения файл не зальётся — положи его в assets вручную", "warn");
+    return null;
+  }
 
   status(`заливаю ${safe}…`);
   const r = await fetch(`/api/upload/${cfg.uploadDir}/${safe}`, {
@@ -589,6 +721,7 @@ const MEDIA_SIZES = [
 
 function mediaUrl(path) {
   if (!path) return "";
+  if (previews.has(path)) return previews.get(path);
   return /^(https?:|assets\/)/.test(path) ? path : (doc.mediaBase || "") + path;
 }
 
@@ -842,7 +975,7 @@ function renderPreview() {
     if (item.video) {
       const v = document.createElement("video");
       v.src = item.video;
-      v.poster = item.poster || "";
+      v.poster = local(item.poster || "");
       v.muted = true;
       v.loop = true;
       v.autoplay = true;
@@ -850,7 +983,7 @@ function renderPreview() {
       frame.append(v);
     } else if (item.poster) {
       const img = document.createElement("img");
-      img.src = item.poster;
+      img.src = local(item.poster);
       img.alt = "";
       frame.append(img);
     } else {
@@ -912,7 +1045,71 @@ addEventListener("beforeunload", (e) => {
   e.returnValue = "";
 });
 
-probeServer().then(() => loadTab("lab"));
+detectMode().then(() => loadTab("lab"));
+
+/* --- Подключение к GitHub -------------------------------------------------- */
+
+const cloudButton = $("[data-cloud]");
+
+function renderCloudButton() {
+  if (!cloudButton) return;
+  cloudButton.hidden = mode === "local";
+  cloudButton.textContent = mode === "cloud" ? `GitHub: ${cloud.repo.split("/")[1]}` : "Подключить GitHub";
+  cloudButton.setAttribute("aria-pressed", String(mode === "cloud"));
+}
+
+function openConnect() {
+  const dlg = $("[data-connect]");
+  const form = dlg.querySelector("form");
+  const msg = dlg.querySelector("[data-connect-msg]");
+  const was = github.getConfig();
+  form.repo.value = was ? was.repo : form.repo.defaultValue;
+  form.branch.value = was ? was.branch : "main";
+  form.token.value = "";
+  form.token.placeholder = was ? "сохранён — оставь пустым, чтобы не менять" : "github_pat_…";
+  msg.textContent = "";
+  dlg.querySelector("[data-disconnect]").hidden = !was;
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const repo = form.repo.value
+      .trim()
+      .replace(/^https:\/\/github\.com\//, "")
+      .replace(/\.git$|\/$/g, "");
+    const token = form.token.value.trim() || (was && was.token);
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !token) {
+      msg.textContent = "нужны репозиторий вида owner/name и токен";
+      return;
+    }
+    msg.textContent = "проверяю…";
+    try {
+      const ok = await github.check({ repo, branch: form.branch.value.trim(), token });
+      github.setConfig(ok);
+      dlg.close();
+      await detectMode();
+      dirty = false;
+      loadTab(tab);
+    } catch (err) {
+      msg.textContent = err.message;
+    }
+  };
+  dlg.querySelector("[data-disconnect]").onclick = async () => {
+    github.setConfig(null);
+    dlg.close();
+    await detectMode();
+    dirty = false;
+    loadTab(tab);
+  };
+  dlg.querySelector("[data-cancel]").onclick = () => dlg.close();
+  dlg.showModal();
+}
+
+if (cloudButton) {
+  cloudButton.onclick = () => {
+    if (dirty && !confirm("Есть несохранённые правки — после переподключения они пропадут. Продолжить?")) return;
+    openConnect();
+  };
+}
 
 /* Панели настройки на сайте (ink / tilt / grid / ease). На публичных
    страницах их нет; эта кнопка включает их в этом браузере — флаг читает

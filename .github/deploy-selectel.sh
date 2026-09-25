@@ -10,9 +10,9 @@ PY=${PYTHON:-python3}
 rm -rf "$OUT" "$CLEAN"
 mkdir -p "$OUT" "$CLEAN"
 
-# Админка живёт только на 127.0.0.1, в прод не идёт.
+# Админка едет на прод (/admin): без токена GitHub она только читает.
 git ls-files -z \
-  | grep -zvE '^(\.github/|\.gitignore$|vercel\.json$|admin\.html$|js/admin\.js$|css/admin\.css$|data/README\.md$)' \
+  | grep -zvE '^(\.github/|\.gitignore$|vercel\.json$|data/README\.md$)' \
   | xargs -0 cp --parents -t "$OUT"
 
 # У хранилища нет cleanUrls и redirects, как у Vercel: адреса без .html

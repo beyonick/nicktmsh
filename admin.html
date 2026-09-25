@@ -1,13 +1,14 @@
 <!doctype html>
-<!-- Админка. Локальный инструмент, не часть сайта.
+<!-- Админка сайта.
 
-     Работает поверх tools/dev-server.py: читает data/*.json, пишет их
-     обратно и заливает постеры в assets/. Если сервера нет (открыли с
-     обычной статики), панель остаётся рабочей, но вместо записи отдаёт
-     готовый json файлом — данные не теряются ни в одном из случаев.
+     Локально работает поверх tools/dev-server.py: читает data/*.json,
+     пишет их обратно и заливает постеры в assets/.
 
-     На прод не выкладывается: в вёрстке нет ни авторизации, ни защиты,
-     и она ей не нужна — адрес живёт только на 127.0.0.1. -->
+     На хостинге (/admin) пишет прямо в репозиторий на GitHub — один
+     коммит по кнопке «Сохранить», дальше сайт выкладывает workflow.
+     Своей защиты у страницы нет и не нужно: без токена GitHub с правом
+     записи в репозиторий она умеет только читать то, что и так
+     опубликовано. Как выпустить токен — в data/README.md. -->
 <html lang="ru" data-theme="dark">
 <head>
 <meta charset="utf-8">
@@ -38,6 +39,7 @@
 
   <div class="ad-actions">
     <button class="ad-btn" type="button" data-devui aria-pressed="false" title="Кнопки ink / tilt / grid / ease внизу справа на страницах сайта — только в этом браузере">Панели на сайте</button>
+    <button class="ad-btn" type="button" data-cloud hidden>Подключить GitHub</button>
     <button class="ad-btn" type="button" data-download>Скачать json</button>
     <button class="ad-btn ad-btn--go" type="button" data-save>Сохранить</button>
   </div>
@@ -66,6 +68,41 @@
   </aside>
 
 </main>
+
+<!-- Подключение к репозиторию. Токен остаётся в этом браузере и ходит
+     только на api.github.com. -->
+<dialog class="ad-connect" data-connect>
+  <form method="dialog" autocomplete="off">
+    <p class="ad-builder__title">Подключить GitHub</p>
+    <p class="ad-hint">«Сохранить» будет публиковать правки на сайт: коммит в репозиторий, через минуту сайт обновится сам.</p>
+
+    <label class="ad-row">
+      <span class="ad-label">Репозиторий</span>
+      <input class="ad-input" name="repo" value="beyonick/nicktmsh" placeholder="owner/name" required spellcheck="false">
+    </label>
+    <label class="ad-row">
+      <span class="ad-label">Ветка</span>
+      <input class="ad-input" name="branch" value="main" spellcheck="false">
+    </label>
+    <label class="ad-row">
+      <span class="ad-label">Токен</span>
+      <input class="ad-input" name="token" type="password" placeholder="github_pat_…" spellcheck="false">
+    </label>
+    <p class="ad-hint">
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Выпустить токен</a>:
+      Fine-grained → Only select repositories → этот репозиторий →
+      Contents: Read and write, Actions: Read-only.
+    </p>
+
+    <p class="ad-status" data-kind="err" data-connect-msg role="status"></p>
+
+    <div class="ad-actions">
+      <button class="ad-btn" type="button" data-disconnect hidden>Отключить</button>
+      <button class="ad-btn" type="button" data-cancel>Отмена</button>
+      <button class="ad-btn ad-btn--go" type="submit">Подключить</button>
+    </div>
+  </form>
+</dialog>
 
 <script src="js/admin.js" type="module"></script>
 </body>
