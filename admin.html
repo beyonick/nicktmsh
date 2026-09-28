@@ -25,81 +25,81 @@
 </head>
 <body class="admin">
 
-<header class="ad-top">
-  <a class="ad-mark" href="./">nicktmsh</a>
-  <span class="ad-dot" aria-hidden="true">/</span>
-  <span class="ad-where">admin</span>
+<header class="cms-top">
+  <a class="cms-mark" href="./">nicktmsh</a>
+  <span class="cms-dot" aria-hidden="true">/</span>
+  <span class="cms-where">admin</span>
 
-  <div class="ad-tabs" role="tablist" aria-label="Что редактируем">
-    <button class="ad-tab" type="button" role="tab" data-tab="lab" aria-selected="true">Lab</button>
-    <button class="ad-tab" type="button" role="tab" data-tab="projects" aria-selected="false">Projects</button>
+  <div class="cms-tabs" role="tablist" aria-label="Что редактируем">
+    <button class="cms-tab" type="button" role="tab" data-tab="lab" aria-selected="true">Lab</button>
+    <button class="cms-tab" type="button" role="tab" data-tab="projects" aria-selected="false">Projects</button>
   </div>
 
-  <p class="ad-status" data-status role="status">загрузка…</p>
+  <p class="cms-status" data-status role="status">загрузка…</p>
 
-  <div class="ad-actions">
-    <button class="ad-btn" type="button" data-devui aria-pressed="false" title="Кнопки ink / tilt / grid / ease внизу справа на страницах сайта — только в этом браузере">Панели на сайте</button>
-    <button class="ad-btn" type="button" data-cloud hidden>Подключить GitHub</button>
-    <button class="ad-btn" type="button" data-download>Скачать json</button>
-    <button class="ad-btn ad-btn--go" type="button" data-save>Сохранить</button>
+  <div class="cms-actions">
+    <button class="cms-btn" type="button" data-devui aria-pressed="false" title="Кнопки ink / tilt / grid / ease внизу справа на страницах сайта — только в этом браузере">Панели на сайте</button>
+    <button class="cms-btn" type="button" data-cloud hidden>Подключить GitHub</button>
+    <button class="cms-btn" type="button" data-download>Скачать json</button>
+    <button class="cms-btn cms-btn--go" type="button" data-save>Сохранить</button>
   </div>
 </header>
 
-<main class="ad-main">
+<main class="cms-main">
 
   <!-- Список записей. Порядок в файле — это порядок на сайте, поэтому
        стрелки вверх/вниз здесь не удобство, а основной инструмент. -->
-  <aside class="ad-list">
-    <div class="ad-list__top">
-      <p class="ad-list__title" data-list-title>Работы</p>
-      <button class="ad-btn ad-btn--sm" type="button" data-new>+ новая</button>
+  <aside class="cms-list">
+    <div class="cms-list__top">
+      <p class="cms-list__title" data-list-title>Работы</p>
+      <button class="cms-btn cms-btn--sm" type="button" data-new>+ новая</button>
     </div>
-    <ol class="ad-items" data-items></ol>
+    <ol class="cms-items" data-items></ol>
   </aside>
 
-  <section class="ad-form">
+  <section class="cms-form">
     <form data-form autocomplete="off"></form>
   </section>
 
-  <aside class="ad-preview">
-    <p class="ad-list__title">Как это встанет</p>
-    <div class="ad-preview__box" data-preview></div>
-    <p class="ad-hint" data-hint></p>
+  <aside class="cms-preview">
+    <p class="cms-list__title">Как это встанет</p>
+    <div class="cms-preview__box" data-preview></div>
+    <p class="cms-hint" data-hint></p>
   </aside>
 
 </main>
 
 <!-- Подключение к репозиторию. Токен остаётся в этом браузере и ходит
      только на api.github.com. -->
-<dialog class="ad-connect" data-connect>
+<dialog class="cms-connect" data-connect>
   <form method="dialog" autocomplete="off">
-    <p class="ad-builder__title">Подключить GitHub</p>
-    <p class="ad-hint">«Сохранить» будет публиковать правки на сайт: коммит в репозиторий, через минуту сайт обновится сам.</p>
+    <p class="cms-builder__title">Подключить GitHub</p>
+    <p class="cms-hint">«Сохранить» будет публиковать правки на сайт: коммит в репозиторий, через минуту сайт обновится сам.</p>
 
-    <label class="ad-row">
-      <span class="ad-label">Репозиторий</span>
-      <input class="ad-input" name="repo" value="beyonick/nicktmsh" placeholder="owner/name" required spellcheck="false">
+    <label class="cms-row">
+      <span class="cms-label">Репозиторий</span>
+      <input class="cms-input" name="repo" value="beyonick/nicktmsh" placeholder="owner/name" required spellcheck="false">
     </label>
-    <label class="ad-row">
-      <span class="ad-label">Ветка</span>
-      <input class="ad-input" name="branch" value="main" spellcheck="false">
+    <label class="cms-row">
+      <span class="cms-label">Ветка</span>
+      <input class="cms-input" name="branch" value="main" spellcheck="false">
     </label>
-    <label class="ad-row">
-      <span class="ad-label">Токен</span>
-      <input class="ad-input" name="token" type="password" placeholder="github_pat_…" spellcheck="false">
+    <label class="cms-row">
+      <span class="cms-label">Токен</span>
+      <input class="cms-input" name="token" type="password" placeholder="github_pat_…" spellcheck="false">
     </label>
-    <p class="ad-hint">
+    <p class="cms-hint">
       <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Выпустить токен</a>:
       Fine-grained → Only select repositories → этот репозиторий →
       Contents: Read and write, Actions: Read-only.
     </p>
 
-    <p class="ad-status" data-kind="err" data-connect-msg role="status"></p>
+    <p class="cms-status" data-kind="err" data-connect-msg role="status"></p>
 
-    <div class="ad-actions">
-      <button class="ad-btn" type="button" data-disconnect hidden>Отключить</button>
-      <button class="ad-btn" type="button" data-cancel>Отмена</button>
-      <button class="ad-btn ad-btn--go" type="submit">Подключить</button>
+    <div class="cms-actions">
+      <button class="cms-btn" type="button" data-disconnect hidden>Отключить</button>
+      <button class="cms-btn" type="button" data-cancel>Отмена</button>
+      <button class="cms-btn cms-btn--go" type="submit">Подключить</button>
     </div>
   </form>
 </dialog>

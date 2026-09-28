@@ -200,7 +200,7 @@ async function loadTab(name) {
   dirty = false;
   index = 0;
 
-  document.querySelectorAll(".ad-tab").forEach((b) => {
+  document.querySelectorAll(".cms-tab").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.tab === tab));
   });
 
@@ -446,11 +446,11 @@ function renderList() {
 
   list.forEach((item, i) => {
     const li = document.createElement("li");
-    li.className = "ad-item" + (i === index ? " is-current" : "");
+    li.className = "cms-item" + (i === index ? " is-current" : "");
 
     const pick = document.createElement("button");
     pick.type = "button";
-    pick.className = "ad-item__pick";
+    pick.className = "cms-item__pick";
     pick.onclick = () => {
       index = i;
       renderList();
@@ -458,11 +458,11 @@ function renderList() {
     };
 
     const title = document.createElement("span");
-    title.className = "ad-item__title";
+    title.className = "cms-item__title";
     title.textContent = item.title || "(без названия)";
 
     const flag = document.createElement("span");
-    flag.className = "ad-item__flag";
+    flag.className = "cms-item__flag";
     // Три состояния одной меткой: черновик, есть на сайте, вынесен на главную.
     flag.textContent = item.published === false ? "draft" : item.featured ? "home" : "live";
     flag.dataset.kind = item.published === false ? "draft" : item.featured ? "home" : "live";
@@ -470,7 +470,7 @@ function renderList() {
     pick.append(title, flag);
 
     const tools = document.createElement("span");
-    tools.className = "ad-item__tools";
+    tools.className = "cms-item__tools";
     tools.append(
       iconButton("↑", "Выше", () => move(i, -1)),
       iconButton("↓", "Ниже", () => move(i, 1)),
@@ -485,7 +485,7 @@ function renderList() {
 function iconButton(glyph, label, onclick) {
   const b = document.createElement("button");
   b.type = "button";
-  b.className = "ad-icon";
+  b.className = "cms-icon";
   b.title = label;
   b.setAttribute("aria-label", label);
   b.textContent = glyph;
@@ -541,17 +541,17 @@ function renderForm() {
 
 function row(label, control, hint) {
   const wrap = document.createElement("label");
-  wrap.className = "ad-row";
+  wrap.className = "cms-row";
   if (label) {
     const l = document.createElement("span");
-    l.className = "ad-label";
+    l.className = "cms-label";
     l.textContent = label;
     wrap.append(l);
   }
   wrap.append(control);
   if (hint) {
     const h = document.createElement("span");
-    h.className = "ad-hint";
+    h.className = "cms-hint";
     h.textContent = hint;
     wrap.append(h);
   }
@@ -560,7 +560,7 @@ function row(label, control, hint) {
 
 function note(text) {
   const p = document.createElement("p");
-  p.className = "ad-hint";
+  p.className = "cms-hint";
   p.textContent = text;
   return p;
 }
@@ -580,15 +580,15 @@ function field(f, item) {
   if (f.type === "bool") {
     const input = document.createElement("input");
     input.type = "checkbox";
-    input.className = "ad-check";
+    input.className = "cms-check";
     input.checked = value === true;
     input.onchange = () => commit(item, f.name, input.checked);
 
     const wrap = document.createElement("label");
-    wrap.className = "ad-row ad-row--flag";
+    wrap.className = "cms-row cms-row--flag";
     wrap.append(input);
     const l = document.createElement("span");
-    l.className = "ad-label";
+    l.className = "cms-label";
     l.textContent = f.label;
     wrap.append(l);
     if (f.hint) wrap.append(note(f.hint));
@@ -597,7 +597,7 @@ function field(f, item) {
 
   if (f.type === "select") {
     const sel = document.createElement("select");
-    sel.className = "ad-input";
+    sel.className = "cms-input";
     for (const o of f.options) {
       const opt = document.createElement("option");
       opt.value = o;
@@ -611,7 +611,7 @@ function field(f, item) {
 
   if (f.type === "textarea" || f.type === "paras" || f.type === "lines") {
     const ta = document.createElement("textarea");
-    ta.className = "ad-input ad-input--area";
+    ta.className = "cms-input cms-input--area";
     ta.rows = f.type === "paras" ? 8 : 4;
     ta.value = Array.isArray(value)
       ? value.join(f.type === "paras" ? "\n\n" : "\n")
@@ -630,23 +630,23 @@ function field(f, item) {
 
   if (f.type === "file") {
     const box = document.createElement("div");
-    box.className = "ad-file";
+    box.className = "cms-file";
 
     const path = document.createElement("input");
     path.type = "text";
-    path.className = "ad-input";
+    path.className = "cms-input";
     path.placeholder = "assets/…";
     path.value = value || "";
     path.oninput = () => commit(item, f.name, path.value);
 
     const drop = document.createElement("label");
-    drop.className = "ad-drop";
+    drop.className = "cms-drop";
     drop.textContent = "перетащи файл сюда или выбери";
 
     const picker = document.createElement("input");
     picker.type = "file";
     picker.accept = "image/*,video/*";
-    picker.className = "ad-drop__input";
+    picker.className = "cms-drop__input";
 
     const take = async (file) => {
       if (!file) return;
@@ -676,7 +676,7 @@ function field(f, item) {
   }
 
   const input = document.createElement("input");
-  input.className = "ad-input";
+  input.className = "cms-input";
   input.type = f.type === "number" ? "number" : f.type === "date" ? "date" : "text";
   input.value = Array.isArray(value) ? value.join(", ") : value === null ? "" : value;
   if (f.required) input.required = true;
@@ -757,17 +757,17 @@ function mediaThumb(it, cls) {
 
 function mediaField(f, item) {
   const box = document.createElement("div");
-  box.className = "ad-media";
+  box.className = "cms-media";
 
   const strip = document.createElement("div");
-  strip.className = "ad-media__strip";
+  strip.className = "cms-media__strip";
   const media = item.media || [];
-  media.slice(0, 12).forEach((it) => strip.append(mediaThumb(it, "ad-media__thumb")));
+  media.slice(0, 12).forEach((it) => strip.append(mediaThumb(it, "cms-media__thumb")));
   if (!media.length) strip.append(note("файлов пока нет"));
 
   const open = document.createElement("button");
   open.type = "button";
-  open.className = "ad-btn";
+  open.className = "cms-btn";
   open.textContent = `Открыть конструктор · ${media.length}`;
   open.onclick = () => openBuilder(item);
 
@@ -776,9 +776,9 @@ function mediaField(f, item) {
   // Не <label>, как у остальных полей: клик по миниатюре внутри label
   // «нажимал» бы кнопку конструктора.
   const wrap = document.createElement("div");
-  wrap.className = "ad-row";
+  wrap.className = "cms-row";
   const l = document.createElement("span");
-  l.className = "ad-label";
+  l.className = "cms-label";
   l.textContent = f.label;
   wrap.append(l, box);
   if (f.hint) wrap.append(note(f.hint));
@@ -790,16 +790,16 @@ function openBuilder(item) {
   const media = item.media;
 
   const dlg = document.createElement("dialog");
-  dlg.className = "ad-builder";
+  dlg.className = "cms-builder";
 
   const head = document.createElement("div");
-  head.className = "ad-builder__head";
+  head.className = "cms-builder__head";
   const title = document.createElement("p");
-  title.className = "ad-builder__title";
+  title.className = "cms-builder__title";
 
   const addPath = document.createElement("button");
   addPath.type = "button";
-  addPath.className = "ad-btn";
+  addPath.className = "cms-btn";
   addPath.textContent = "+ путь или ссылка";
   addPath.onclick = () => {
     const v = prompt(
@@ -811,7 +811,7 @@ function openBuilder(item) {
   };
 
   const addFile = document.createElement("label");
-  addFile.className = "ad-btn";
+  addFile.className = "cms-btn";
   addFile.textContent = "+ файл с диска";
   const picker = document.createElement("input");
   picker.type = "file";
@@ -831,19 +831,19 @@ function openBuilder(item) {
 
   const done = document.createElement("button");
   done.type = "button";
-  done.className = "ad-btn ad-btn--go";
+  done.className = "cms-btn cms-btn--go";
   done.textContent = "Готово";
   done.onclick = () => dlg.close();
 
   head.append(title, addPath, addFile, done);
 
   const hint = document.createElement("p");
-  hint.className = "ad-hint ad-builder__hint";
+  hint.className = "cms-hint cms-builder__hint";
   hint.textContent =
     "Тащи карточку, чтобы поменять порядок. 1/1 — вся строка, 1/2 — половина, 1/3 — треть. Так же встанет на странице кейса. Изменения сохраняются кнопкой «Сохранить» в шапке.";
 
   const grid = document.createElement("ol");
-  grid.className = "ad-builder__grid";
+  grid.className = "cms-builder__grid";
 
   let dragFrom = -1;
 
@@ -851,19 +851,19 @@ function openBuilder(item) {
     grid.replaceChildren();
     media.forEach((it, i) => {
       const li = document.createElement("li");
-      li.className = `ad-tile ad-tile--${mediaSize(it, i)}`;
+      li.className = `cms-tile cms-tile--${mediaSize(it, i)}`;
       li.draggable = true;
 
       const bar = document.createElement("div");
-      bar.className = "ad-tile__bar";
+      bar.className = "cms-tile__bar";
       const num = document.createElement("span");
-      num.className = "ad-tile__num";
+      num.className = "cms-tile__num";
       num.textContent = String(i + 1).padStart(2, "0");
       bar.append(num);
       for (const [key, label] of MEDIA_SIZES) {
         const b = document.createElement("button");
         b.type = "button";
-        b.className = "ad-tile__size";
+        b.className = "cms-tile__size";
         b.textContent = label;
         b.setAttribute("aria-pressed", String(mediaSize(it, i) === key));
         b.onclick = () => {
@@ -874,7 +874,7 @@ function openBuilder(item) {
       }
       const del = document.createElement("button");
       del.type = "button";
-      del.className = "ad-tile__del";
+      del.className = "cms-tile__del";
       del.title = "Убрать из галереи";
       del.textContent = "×";
       del.onclick = () => {
@@ -884,11 +884,11 @@ function openBuilder(item) {
       bar.append(del);
 
       const frame = document.createElement("div");
-      frame.className = "ad-tile__frame";
-      frame.append(mediaThumb(it, "ad-tile__media"));
+      frame.className = "cms-tile__frame";
+      frame.append(mediaThumb(it, "cms-tile__media"));
 
       const cap = document.createElement("input");
-      cap.className = "ad-input ad-tile__cap";
+      cap.className = "cms-input cms-tile__cap";
       cap.placeholder = "подпись (необязательно)";
       cap.value = it.caption || "";
       cap.oninput = () => {
@@ -901,7 +901,7 @@ function openBuilder(item) {
       cap.onblur = () => (li.draggable = true);
 
       const path = document.createElement("p");
-      path.className = "ad-tile__path";
+      path.className = "cms-tile__path";
       path.textContent = it.src;
       path.title = it.src;
 
@@ -916,7 +916,7 @@ function openBuilder(item) {
       li.ondragend = () => {
         dragFrom = -1;
         grid
-          .querySelectorAll(".ad-tile")
+          .querySelectorAll(".cms-tile")
           .forEach((t) => t.classList.remove("is-dragging", "is-before", "is-after"));
       };
       li.ondragover = (e) => {
@@ -971,7 +971,7 @@ function renderPreview() {
 
   if (tab === "lab") {
     const frame = document.createElement("div");
-    frame.className = "ad-reel";
+    frame.className = "cms-reel";
     if (item.video) {
       const v = document.createElement("video");
       v.src = item.video;
@@ -991,11 +991,11 @@ function renderPreview() {
     }
 
     const t = document.createElement("p");
-    t.className = "ad-reel__title";
+    t.className = "cms-reel__title";
     t.textContent = item.title || "(без названия)";
 
     const m = document.createElement("p");
-    m.className = "ad-reel__meta";
+    m.className = "cms-reel__meta";
     m.textContent = [item.tech && item.tech.join(" · "), item.date, item.series]
       .filter(Boolean)
       .join(" — ");
@@ -1003,15 +1003,15 @@ function renderPreview() {
     els.preview.append(frame, t, m);
   } else {
     const box = document.createElement("div");
-    box.className = "ad-card";
+    box.className = "cms-card";
     if (item.cover) box.style.backgroundImage = `url("${item.cover}")`;
 
     const t = document.createElement("p");
-    t.className = "ad-reel__title";
+    t.className = "cms-reel__title";
     t.textContent = `${item.title || "(без названия)"}${item.year ? " · " + item.year : ""}`;
 
     const m = document.createElement("p");
-    m.className = "ad-reel__meta";
+    m.className = "cms-reel__meta";
     m.textContent = item.kicker || "";
 
     els.preview.append(box, t, m);
@@ -1025,7 +1025,7 @@ function renderPreview() {
 
 /* --- Запуск ------------------------------------------------------------------ */
 
-document.querySelectorAll(".ad-tab").forEach((b) => {
+document.querySelectorAll(".cms-tab").forEach((b) => {
   b.onclick = () => loadTab(b.dataset.tab);
 });
 $("[data-new]").onclick = add;
