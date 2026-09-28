@@ -1,5 +1,5 @@
 /* Сжатие ролика прямо в браузере — то же, что tools/compress-video.py:
-   mp4 H.264 без звука, кадр вписан в 1920×1280 (вертикаль 1080×1920
+   mp4 H.264 со звуком AAC 128 кбит/с, кадр вписан в 1920×1280 (вертикаль 1080×1920
    станет 720×1280), плюс постер webp с трети ролика.
 
    Кодирует встроенный в браузер WebCodecs через Mediabunny, так что ни
@@ -29,6 +29,17 @@ export async function compress(file, onProgress) {
     const width = even(w * scale);
     const height = even(h * scale);
 
+    // Звук — AAC, а где браузер его не кодирует — Opus (тоже живёт в mp4).
+    // Если ни то ни другое, ролик уходит без звука, но об этом говорим.
+    const sound = { numberOfChannels: 2, sampleRate: 48000, bitrate: 128_000 };
+    const audioTrack = await input.getPrimaryAudioTrack();
+    const audioCodec =
+      audioTrack && (await audioTrack.canDecode())
+        ? await mb.getFirstEncodableAudioCodec(["aac", "opus"], sound)
+        : null;
+    const audio = audioCodec ? { codec: audioCodec, ...sound } : { discard: true };
+    const lostSound = Boolean(audioTrack) && !audioCodec;
+
     const output = new mb.Output({
       format: new mb.Mp4OutputFormat({ fastStart: "in-memory" }),
       target: new mb.BufferTarget(),
@@ -44,7 +55,7 @@ export async function compress(file, onProgress) {
         bitrate: Math.round(Math.min(4_000_000, Math.max(800_000, width * height * BITS_PER_PIXEL))),
         forceTranscode: true,
       },
-      audio: { discard: true },
+      audio,
       showWarnings: false,
     });
     if (!conversion.isValid) {
@@ -61,7 +72,11 @@ export async function compress(file, onProgress) {
     const webReady = /\.(mp4|webm)$/i.test(file.name) && scale === 1;
     const kept = webReady && video.size >= file.size;
     if (kept) video = new Blob([file], { type: /\.webm$/i.test(file.name) ? "video/webm" : "video/mp4" });
-    return { video, width, height, kept, poster: await posterOf(video) };
+    return {
+      video, width, height, kept,
+      sound: kept ? "как в исходнике" : audioCodec ? audioCodec.toUpperCase() : lostSound ? "потерян" : "нет",
+      poster: await posterOf(video),
+    };
   } finally {
     input.dispose();
   }

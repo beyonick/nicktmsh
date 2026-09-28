@@ -477,7 +477,7 @@ async function takeVideo(file, slug, dir) {
   previews.set(poster, URL.createObjectURL(out.poster));
   const note = out.kept
     ? `${mb(file.size)} МБ — файл уже был сжат под веб, залил как есть`
-    : `${mb(file.size)} → ${mb(out.video.size)} МБ, ${out.width}×${out.height}`;
+    : `${mb(file.size)} → ${mb(out.video.size)} МБ, ${out.width}×${out.height}, звук: ${out.sound}`;
   return { video, poster, note };
 }
 
