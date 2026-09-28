@@ -1203,26 +1203,48 @@ html.has-cursor :is(input, textarea, select, [contenteditable="true"]) { cursor:
   width: 28px;
   height: 28px;
   margin: -14px 0 0 -14px;
-  border: 1.5px solid #fff;
-  border-radius: 50%;
+  border: 0;
   mix-blend-mode: difference;
   pointer-events: none;
   opacity: 0;
   transition:
     opacity 200ms var(--ease-out),
-    scale 380ms var(--ease),
-    background-color 380ms var(--ease),
-    border-style 0ms;
+    scale 380ms var(--ease);
 }
+.cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* Крутится всегда, но стоит на паузе: сплошной круг вращения не выдаёт,
+     а с паузы пунктир трогается с того же места, без рывка. */
+  animation: cursor-spin 7s linear infinite paused;
+}
+.cursor circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5;
+  /* Штрих 8 без зазора — сплошная линия; на ховере зазор раскрывается. */
+  stroke-dasharray: 8 0;
+  transition:
+    stroke-dasharray 380ms var(--ease),
+    stroke-width 380ms var(--ease);
+}
+@keyframes cursor-spin { to { rotate: 1turn; } }
+
 .cursor.is-shown { opacity: 1; }
-/* Ховер: кольцо вырастает и заливается — под ним всё инвертируется. */
-.cursor.is-hot { scale: 2; background: #fff; }
-/* Нода: пунктирное кольцо чуть больше — «можно взять». */
-.cursor.is-drag { scale: 1.6; border-style: dashed; }
-.cursor.is-drag.is-hot { background: transparent; }
+/* Ховер: кольцо вырастает, линия рассыпается в пунктир и крутится по
+   часовой. Толщина делится на масштаб, чтобы на экране остались те же 1.5px. */
+.cursor:is(.is-hot, .is-drag) { scale: 2; }
+.cursor:is(.is-hot, .is-drag) svg { animation-play-state: running; }
+.cursor:is(.is-hot, .is-drag) circle { stroke-dasharray: 4.5 3.5; stroke-width: 0.75; }
 .cursor.is-down { scale: 0.7; }
-.cursor.is-hot.is-down { scale: 1.6; }
+.cursor:is(.is-hot, .is-drag).is-down { scale: 1.6; }
 .cursor.is-text { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor svg { animation: none; }
+}
 
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
