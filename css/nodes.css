@@ -346,6 +346,38 @@
   background: var(--bg);
   translate: -50% -50%;
 }
+/* Подсказка «ноды таскаются» (js/hero-nodes.js): призрак кольца-курсора
+   (.cursor в css/home.css) — в том виде, какой оно принимает над нодой:
+   крупное, пунктиром, крутится; на «нажатии» сжимается. */
+.hero__hint {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    scale 380ms var(--ease);
+}
+.hero__hint svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: cursor-spin 7s linear infinite;
+}
+.hero__hint circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.75;
+  stroke-dasharray: 4.5 3.5;
+}
+.hero__hint.is-shown { opacity: 1; scale: 2; }
+.hero__hint.is-down { scale: 1.6; }
 .hero__graph.is-live .wire__flow {
   opacity: 0.9;
   animation: wire-flow 1.4s linear infinite;

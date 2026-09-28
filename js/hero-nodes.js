@@ -352,12 +352,95 @@ function mount(hero) {
     ],
   ]);
 
+  /* Подсказка, что ноды таскаются: через пару секунд после загрузки
+     призрак кольца-курсора берёт случайную нижнюю ноду и чуть относит её.
+     Один раз за загрузку; если ноду уже взяли руками — не показываем, а
+     начатый показ обрывается там, где его застали. Без движения
+     (reduced motion) подсказки нет. */
+  const ghost = el("span", "hero__hint");
+  ghost.setAttribute("aria-hidden", "true");
+  ghost.innerHTML = '<svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" pathLength="96"/></svg>';
+  layer.append(ghost);
+  let touched = false;
+  let hintTimer = 0;
+  let hintRaf = 0;
+  let hintNode = null;
+
+  function stopHint() {
+    clearTimeout(hintTimer);
+    cancelAnimationFrame(hintRaf);
+    hintRaf = 0;
+    ghost.classList.remove("is-shown", "is-down");
+    if (hintNode) hintNode.node.classList.remove("is-dragging");
+    hintNode = null;
+  }
+
+  function hint() {
+    if (touched || reduced || !base) return;
+    touched = true;
+    const n = [out, reel, about][Math.floor(Math.random() * 3)];
+    hintNode = n;
+    const H = hero.getBoundingClientRect();
+    const u = H.width / (phone.matches ? 309 : 912);
+    // Куда отнести: вниз или вбок, но не вверх, к имени; и не за колонку.
+    const ang = -0.3 + Math.random() * (Math.PI + 0.6);
+    const dist = (28 + Math.random() * 18) * u;
+    const left = n.node.offsetLeft;
+    let vx = Math.cos(ang) * dist;
+    const vy = Math.sin(ang) * dist;
+    vx = Math.min(Math.max(vx, -left), H.width - n.node.offsetWidth - left);
+    const from = { dx: n.dx, dy: n.dy };
+    const grab = () => {
+      const R = hero.getBoundingClientRect();
+      const r = n.node.querySelector(".node__body").getBoundingClientRect();
+      return { x: r.left - R.left + r.width * 0.5, y: r.top - R.top + r.height * 0.55 };
+    };
+    const put = (p) => (ghost.style.translate = `${p.x}px ${p.y}px`);
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+    // Кольцо подлетает к ноде из-за правого нижнего угла.
+    const approach = { x: 46 * u, y: 38 * u };
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = now - t0;
+      const g = grab();
+      if (t < 600) {
+        const k = 1 - ease(t / 600);
+        put({ x: g.x + approach.x * k, y: g.y + approach.y * k });
+        ghost.classList.add("is-shown");
+      } else if (t < 850) {
+        put(g);
+        ghost.classList.add("is-down");
+        n.node.classList.add("is-dragging");
+      } else if (t < 1750) {
+        const k = ease((t - 850) / 900);
+        n.dx = from.dx + vx * k;
+        n.dy = from.dy + vy * k;
+        layout();
+        put(grab());
+      } else if (t < 2050) {
+        n.dx = from.dx + vx;
+        n.dy = from.dy + vy;
+        ghost.classList.remove("is-down");
+        n.node.classList.remove("is-dragging");
+      } else {
+        ghost.classList.remove("is-shown");
+        hintNode = null;
+        hintRaf = 0;
+        return;
+      }
+      hintRaf = requestAnimationFrame(step);
+    };
+    hintRaf = requestAnimationFrame(step);
+  }
+
   // Перетаскивание и клик: сдвинул больше чем на 4 px — перетащил, иначе
   // нажал. Сдвиг хранится от расчётного места и переживает пересчёт.
   for (const n of all) {
     n.node.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       e.preventDefault();
+      touched = true;
+      stopHint();
       n.node.setPointerCapture(e.pointerId);
       const start = { x: e.clientX, y: e.clientY, dx: n.dx, dy: n.dy };
       let moved = false;
@@ -393,6 +476,9 @@ function mount(hero) {
   video.addEventListener("loadedmetadata", layout);
   new IntersectionObserver((entries) => {
     const on = entries[0].isIntersecting;
+    // Подсказку ждём, пока первый экран на виду; ушёл — откладываем.
+    clearTimeout(hintTimer);
+    if (on && !touched) hintTimer = setTimeout(hint, 2200);
     layer.classList.toggle("is-live", on && !reduced);
     if (on && !reduced) video.play().catch(() => {});
     else video.pause();
