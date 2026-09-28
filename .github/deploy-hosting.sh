@@ -33,6 +33,13 @@ RewriteRule ^ https://%1%{{REQUEST_URI}} [R=301,L]
 # Короткие ссылки.
 {redirects}
 
+# Адрес с .html — на чистый вариант, это делал cleanUrls на Vercel.
+# THE_REQUEST хранит исходный запрос, поэтому внутренняя подмена ниже сюда не возвращается.
+RewriteCond %{{THE_REQUEST}} \\s/+(.*/)?index\\.html[?\\s]
+RewriteRule ^ /%1 [R=301,L]
+RewriteCond %{{THE_REQUEST}} \\s/+([^?\\s]+)\\.html[?\\s]
+RewriteRule ^ /%1 [R=301,L]
+
 # /work -> work.html
 RewriteCond %{{REQUEST_FILENAME}} !-f
 RewriteCond %{{REQUEST_FILENAME}}.html -f
