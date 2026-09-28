@@ -45,6 +45,7 @@
        вертикальный скролл ведёт ленту вбок (js/lab.js). -->
   <section class="hscroll" data-hscroll>
     <div class="hscroll__pin" data-pin>
+      <div class="dots" data-dots aria-hidden="true"></div>
       <div class="hscroll__track" data-track>
         <header class="lab-intro">
           <p class="label rise">01/ Lab</p>
@@ -93,21 +94,6 @@
   </footer>
 
 </main>
-
-<!-- Просмотр ролика во весь экран. Разметка лежит в html, а не
-     собирается в js: диалог должен существовать до первого клика,
-     иначе фокус некуда возвращать. -->
-<dialog class="viewer" data-viewer aria-label="Lab piece">
-  <button class="viewer__close" type="button" data-close aria-label="Close">&#215;</button>
-  <div class="viewer__stage" data-stage></div>
-  <div class="viewer__side">
-    <p class="viewer__title" data-viewer-title></p>
-    <p class="viewer__meta" data-viewer-meta></p>
-    <p class="viewer__desc" data-viewer-desc></p>
-  </div>
-  <button class="viewer__nav viewer__nav--prev" type="button" data-prev aria-label="Previous">&#8592;</button>
-  <button class="viewer__nav viewer__nav--next" type="button" data-next aria-label="Next">&#8594;</button>
-</dialog>
 
 <script src="js/main.js" defer></script>
 <script src="js/motion.js" type="module"></script>

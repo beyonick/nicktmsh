@@ -3,10 +3,16 @@
    Реф — mersi-architecture.com/projets/naya: закреплённый кадр во всю
    высоту экрана, вертикальный скролл ведёт ленту вбок (js/lab.js). Слева
    вводная панель: метка сверху, текст, крупное [Lab] внизу. Дальше кадры
-   9:16 во всю высоту без подписей — говорит сама работа.
+   9:16 во всю высоту без рамок и подписей — говорит сама работа.
 
-   Заливок-заглушек и графики нет: без файла кадр — пустая рамка с
-   номером. */
+   Попапа нет. На кадре в фокусе (наведение; на таче и с клавиатуры —
+   нажатие, класс .is-open ставит js/lab.js) внизу проявляется строка:
+   название слева, кнопка звука справа. Техника и описание выезжают под
+   строкой, когда курсор в нижней части кадра (класс .is-more).
+   Фон ленты — точки главной.
+
+   Заливок-заглушек и графики нет: без файла в кадре только ярлык
+   «no file yet». */
 
 .hscroll { position: relative; }
 
@@ -66,8 +72,6 @@
   position: relative;
   height: 100%;
   aspect-ratio: 9 / 16;
-  border: var(--line) solid var(--hair);
-  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -90,29 +94,22 @@
   .reel__frame:not(.is-shown) :is(.reel__video, .reel__poster) { transform: none; }
 }
 
-.reel__num {
-  position: absolute;
-  inset-block-start: calc(14 * var(--u));
-  inset-inline-start: calc(16 * var(--u));
-  font-family: var(--mono);
-  font-size: var(--fs-label);
-  line-height: 1;
-  color: color-mix(in srgb, var(--fg) 45%, var(--bg));
-  pointer-events: none;
-}
-
 .reel__video,
 .reel__poster {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform var(--dur-ui) var(--ease);
 }
-.reel:hover .reel__video,
-.reel:hover .reel__poster { transform: scale(1.03); }
 
-/* Ярлык «файла нет» в просмотре работы. */
+/* Кадр без файла: рамки нет, поэтому пустое место подписано ярлыком. */
+.reel__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
 .reel__hold {
   padding: calc(4 * var(--u)) calc(8 * var(--u));
   border: var(--line) solid color-mix(in srgb, var(--accent) 45%, transparent);
@@ -149,7 +146,6 @@
   height: 100%;
   aspect-ratio: 9 / 16;
   padding: calc(16 * var(--u));
-  border: var(--line) solid var(--hair);
   text-align: center;
   font-family: var(--mono);
   font-size: var(--fs-caption);
@@ -162,95 +158,126 @@
   color: var(--bg);
 }
 
-/* --- Просмотр -------------------------------------------------------------
-   Нативный <dialog>: модальность, возврат фокуса и Esc достаются
-   бесплатно и работают правильнее любой самодельной реализации. */
+/* --- Точки ---------------------------------------------------------------- */
 
-.viewer {
-  width: min(calc(100vw - 48px), calc(1100 * var(--u)));
-  max-width: none;
-  max-height: calc(100vh - 48px);
-  padding: 0;
-  border: var(--line) solid var(--hair);
-  border-radius: calc(12 * var(--u));
-  background: var(--bg);
-  color: var(--fg);
-  overflow: hidden;
+/* Точки лежат в закреплённом кадре под лентой и едут вместе с ней
+   (--dx пишет скрипт). Сам узор и подсветка курсором — .dots в home.css. */
+.hscroll__pin > .dots {
+  z-index: 0;
+  background-position: var(--dx, 0) 0;
 }
-.viewer::backdrop {
-  background: color-mix(in srgb, var(--ink) 86%, transparent);
-  backdrop-filter: blur(6px);
+.hscroll__pin > .dots::after { background-position: var(--dx, 0) 0; }
+.hscroll__track { z-index: 1; }
+
+/* --- Подпись внизу кадра ------------------------------------------------
+   Лежит поверх кнопки фокуса (.reel__open) и пропускает щелчок насквозь;
+   ловят его только кнопка звука и строка (на таче она открывает
+   описание). */
+
+.reel__cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  padding: calc(70 * var(--u)) calc(16 * var(--u)) calc(16 * var(--u)) calc(20 * var(--u));
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--ink) 80%, transparent),
+    color-mix(in srgb, var(--ink) 35%, transparent) 60%,
+    transparent);
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 calc(10 * var(--u));
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s linear 0.3s;
+}
+.reel.is-open .reel__cap {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  transition: opacity 0.4s var(--ease-out), translate 0.5s var(--ease-out), visibility 0s;
 }
 
-.viewer[open] {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(300 * var(--u));
-}
-
-.viewer__stage {
-  display: grid;
-  place-items: center;
-  min-height: calc(420 * var(--u));
-  max-height: calc(100vh - 48px);
-  overflow: hidden;
-}
-.viewer__video {
-  max-width: 100%;
-  max-height: calc(100vh - 48px);
-  display: block;
-}
-
-.viewer__side {
-  padding: calc(32 * var(--u));
-  border-inline-start: var(--line) solid var(--hair);
-  align-content: start;
-  display: grid;
+.reel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: calc(12 * var(--u));
 }
-.viewer__title {
+.reel.is-open .reel__row { pointer-events: auto; }
+
+.reel__title {
   font-family: var(--display);
   font-weight: 700;
-  font-size: calc(32 * var(--u));
-  line-height: calc(34 * var(--u));
+  font-size: calc(28 * var(--u));
+  line-height: calc(30 * var(--u));
   letter-spacing: var(--track);
 }
-.viewer__meta {
+
+/* Описание: высота раскрывается от нуля через сетку 0fr → 1fr, текст
+   внутри при этом не перестраивается. */
+.reel__more-info {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+.reel__more-info > div {
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  gap: calc(8 * var(--u));
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.reel.is-more .reel__more-info { grid-template-rows: 1fr; }
+.reel.is-more .reel__more-info > div {
+  opacity: 1;
+  transition: opacity 0.4s var(--ease-out) 0.1s;
+}
+.reel__more-info > div > :first-child { margin-block-start: calc(12 * var(--u)); }
+
+.reel__meta {
   font-family: var(--mono);
   font-size: var(--fs-label);
   line-height: calc(18 * var(--u));
   color: var(--accent);
 }
-.viewer__desc {
+.reel__desc {
   font-family: var(--text);
-  font-size: calc(15 * var(--u));
-  line-height: calc(24 * var(--u));
-  color: color-mix(in srgb, var(--fg) 75%, var(--bg));
+  font-size: calc(14 * var(--u));
+  line-height: calc(21 * var(--u));
+  color: rgb(255 255 255 / 0.8);
 }
 
-.viewer__close,
-.viewer__nav {
-  position: absolute;
-  z-index: 2;
+/* Кнопка звука — круглая, только иконка. */
+.reel__sound {
+  flex: none;
   display: grid;
   place-items: center;
-  width: calc(38 * var(--u));
-  height: calc(38 * var(--u));
+  width: calc(36 * var(--u));
+  height: calc(36 * var(--u));
+  padding: 0;
   border: var(--line) solid currentColor;
-  border-radius: 100px;
-  background: var(--bg);
+  border-radius: 50%;
+  background: none;
   color: var(--accent);
-  font-family: var(--mono);
-  font-size: var(--fs-caption);
-  line-height: 1;
   cursor: pointer;
   transition: background-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease);
 }
-.viewer__close:hover,
-.viewer__nav:hover { background: var(--accent); color: var(--bg); }
+.reel__sound:hover { background: var(--accent); color: var(--bg); }
+.reel__sound:focus-visible { outline: var(--line) solid var(--accent); outline-offset: calc(3 * var(--u)); }
+.reel__sound svg { width: 55%; height: 55%; }
+.reel.no-audio .reel__sound { display: none; }
 
-.viewer__close { inset-block-start: calc(16 * var(--u)); inset-inline-end: calc(16 * var(--u)); }
-.viewer__nav--prev { inset-block-end: calc(16 * var(--u)); inset-inline-start: calc(16 * var(--u)); }
-.viewer__nav--next { inset-block-end: calc(16 * var(--u)); inset-inline-start: calc(62 * var(--u)); }
+.reel__sound .snd-on { display: none; }
+.reel__sound[aria-pressed="true"] .snd-on { display: inline; }
+.reel__sound[aria-pressed="true"] .snd-off { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reel__cap,
+  .reel.is-open .reel__cap,
+  .reel__more-info,
+  .reel__more-info > div { transition: none; }
+}
 
 /* --- Мобильная раскладка --------------------------------------------------- */
 
@@ -260,20 +287,9 @@
   .lab-intro__text { font-size: calc(26 * var(--u)); line-height: calc(38 * var(--u)); }
   .lab-intro__count { font-size: calc(22 * var(--u)); line-height: calc(30 * var(--u)); }
 
-  .viewer {
-    width: 100vw;
-    max-height: 100vh;
-    border: 0;
-    border-radius: 0;
-  }
-  .viewer[open] {
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) auto;
-  }
-  .viewer__stage { min-height: 0; }
-  .viewer__side {
-    border-inline-start: 0;
-    border-block-start: var(--line) solid var(--hair);
-    padding: calc(20 * var(--u));
-  }
+  .reel__cap { padding: calc(110 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u)) calc(32 * var(--u)); }
+  .reel__title { font-size: calc(44 * var(--u)); line-height: calc(48 * var(--u)); }
+  .reel__meta { font-size: calc(22 * var(--u)); line-height: calc(30 * var(--u)); }
+  .reel__desc { font-size: calc(26 * var(--u)); line-height: calc(38 * var(--u)); }
+  .reel__sound { width: calc(72 * var(--u)); height: calc(72 * var(--u)); }
 }
