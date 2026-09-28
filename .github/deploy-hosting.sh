@@ -37,7 +37,7 @@ def version(path):
     return done[path]
 
 pages = 0
-for page in out.glob("*.html"):
+for page in [*out.glob("*.html"), *out.glob("*.php")]:
     text = page.read_text("utf-8")
     def sub(m):
         target = out / m.group(2).lstrip("/")
@@ -92,6 +92,11 @@ RewriteCond %{{REQUEST_FILENAME}} ^(.+?)/?$
 RewriteCond %1.html -f
 RewriteRule ^(.+)/$ /$1 [R=301,L]
 
+# Админка — только после входа: admin-gate.php спрашивает пароль и сам отдаёт admin.html.
+# /admin.html сюда не дойдёт: выше его уже увёл на /admin редирект с .html.
+RewriteRule ^admin$ /admin-gate.php [L]
+RewriteRule ^admin-auth\\.php$ - [F,L]
+
 # /work -> work.html
 RewriteCond %{{REQUEST_FILENAME}} !-f
 RewriteCond %{{REQUEST_FILENAME}}.html -f
@@ -109,6 +114,21 @@ RewriteRule ^(.+?)/?$ $1.html [L]
 """, "utf-8")
 PY
 echo "htaccess: $(grep -c 'R=301' "$OUT/.htaccess") redirects"
+
+# Пароль админки — из секрета ADMIN_PASSWORD; в репозиторий попадает только этот код,
+# на хостинг — соль и хэш PBKDF2. Без секрета файла нет и admin-gate.php никого не пускает.
+if [[ -n "${ADMIN_PASSWORD:-}" ]]; then
+  "$PY" - "$OUT/admin-auth.php" <<'PY'
+import hashlib, os, pathlib, sys
+salt, iterations = os.urandom(16), 200_000
+digest = hashlib.pbkdf2_hmac("sha256", os.environ["ADMIN_PASSWORD"].encode(), salt, iterations).hex()
+pathlib.Path(sys.argv[1]).write_text(
+    f"<?php return ['salt' => '{salt.hex()}', 'iterations' => {iterations}, 'hash' => '{digest}'];\n", "utf-8")
+PY
+  echo "admin: пароль задан"
+else
+  echo "::warning::секрет ADMIN_PASSWORD пуст — вход в /admin закрыт для всех"
+fi
 [[ "${1:-}" == "--upload" ]] || exit 0
 
 if [[ -z "${HOSTING_HOST:-}" ]]; then

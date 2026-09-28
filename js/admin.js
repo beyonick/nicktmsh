@@ -130,10 +130,6 @@ let cloud = null; // { repo, branch, token } в облачном режиме
 const pending = new Map(); // путь → File
 const previews = new Map(); // путь → blob: адрес для миниатюр
 
-function local(path) {
-  return previews.get(path) || path;
-}
-
 /* --- Утилиты --------------------------------------------------------------- */
 
 function slugify(s) {
@@ -974,8 +970,8 @@ function renderPreview() {
     frame.className = "cms-reel";
     if (item.video) {
       const v = document.createElement("video");
-      v.src = item.video;
-      v.poster = local(item.poster || "");
+      v.src = mediaUrl(item.video);
+      v.poster = mediaUrl(item.poster);
       v.muted = true;
       v.loop = true;
       v.autoplay = true;
@@ -983,7 +979,7 @@ function renderPreview() {
       frame.append(v);
     } else if (item.poster) {
       const img = document.createElement("img");
-      img.src = local(item.poster);
+      img.src = mediaUrl(item.poster);
       img.alt = "";
       frame.append(img);
     } else {
@@ -1002,9 +998,28 @@ function renderPreview() {
 
     els.preview.append(frame, t, m);
   } else {
+    // Как card() в js/cards.js: знак по центру, площадь одна при любой
+    // пропорции. Адрес — абсолютный: url() из кастомного свойства браузер
+    // разрешает от таблицы стилей, и «assets/…» уехал бы в css/assets/.
     const box = document.createElement("div");
     box.className = "cms-card";
-    if (item.cover) box.style.backgroundImage = `url("${item.cover}")`;
+    if (item.logo) {
+      const mark = document.createElement("span");
+      const ar = Number(item.logoRatio) || 1;
+      mark.className = "cms-card__logo";
+      mark.style.setProperty("--src", `url("${new URL(mediaUrl(item.logo), document.baseURI).href}")`);
+      mark.style.width = `${Math.min(60, 25 * Math.sqrt(ar))}%`;
+      mark.style.height = `${Math.min(60, 25 / Math.sqrt(ar))}%`;
+      box.append(mark);
+    }
+    // Цвет бренда на сайте виден только в чернилах под курсором — здесь точкой.
+    if (/^#[0-9a-f]{3,8}$/i.test(item.color || "")) {
+      const dot = document.createElement("span");
+      dot.className = "cms-card__brand";
+      dot.style.setProperty("--brand", item.color);
+      dot.title = `цвет бренда ${item.color}`;
+      box.append(dot);
+    }
 
     const t = document.createElement("p");
     t.className = "cms-reel__title";
@@ -1054,6 +1069,8 @@ const cloudButton = $("[data-cloud]");
 function renderCloudButton() {
   if (!cloudButton) return;
   cloudButton.hidden = mode === "local";
+  // Вход есть только на хостинге (admin-gate.php); у dev-сервера выходить некуда.
+  $("[data-logout]").hidden = mode === "local";
   cloudButton.textContent = mode === "cloud" ? `GitHub: ${cloud.repo.split("/")[1]}` : "Подключить GitHub";
   cloudButton.setAttribute("aria-pressed", String(mode === "cloud"));
 }

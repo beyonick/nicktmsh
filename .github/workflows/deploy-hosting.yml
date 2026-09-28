@@ -18,6 +18,7 @@ jobs:
       HOSTING_USER: ${{ vars.HOSTING_USER }}
       HOSTING_DIR: ${{ vars.HOSTING_DIR || 'www/nicktmsh.com' }}
       HOSTING_PASSWORD: ${{ secrets.HOSTING_PASSWORD }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get install -y -qq lftp
