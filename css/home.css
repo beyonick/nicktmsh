@@ -392,6 +392,9 @@ button.pill {
 .ticker__row {
   overflow: hidden;
   height: calc(112 * var(--u));
+  /* Знаки не обрезаются краем экрана, а растворяются к нему. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 32%, #000 68%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 32%, #000 68%, transparent);
 }
 /* Движение управляется скроллом (js/main.js), а не keyframes. */
 .ticker__track {
@@ -409,17 +412,16 @@ button.pill {
 /* Логотипы одноцветные: mask + background-color. Высоты сняты с макета
    поштучно — знаки выровнены на глаз по оптике, а не по одной высоте. */
 /* Логотипы клиентов одного приглушённого тона (#B5B3C8) и проявляются
-   вторым акцентом под курсором. */
+   вторым акцентом под пятном курсора: --p (0..1) считает js/logo-spot.js
+   по близости к указателю, сглаживание тоже там — без transition. */
 .logo {
   flex: none;
   height: var(--h, calc(48 * var(--u)));
   aspect-ratio: var(--ar, 4);
-  background: #B5B3C8;
+  background: color-mix(in srgb, var(--accent-2) calc(var(--p, 0) * 100%), #B5B3C8);
   -webkit-mask: var(--src) center / contain no-repeat;
   mask: var(--src) center / contain no-repeat;
-  transition: background-color var(--dur-ui) var(--ease);
 }
-.logo:hover { background: var(--accent-2); }
 
 .mark-gazprombank { --src: url("../assets/logos/gazprombank.svg"); --ar: 4.74; --h: calc(52 * var(--u)); }
 .mark-sber        { --src: url("../assets/logos/sber.svg");        --ar: 6.04; --h: calc(30 * var(--u)); }
