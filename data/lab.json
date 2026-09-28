@@ -11,9 +11,9 @@
         "Houdini"
       ],
       "series": null,
-      "video": "lab/smoke/smoke-mulrijtx.mp4",
+      "video": "lab/smoke/smoke-mult22ml.mp4",
       "poster": "lab/smoke/smoke-mulrijtx-poster.webp",
-      "sound": false,
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -45,9 +45,9 @@
         "Houdini"
       ],
       "series": null,
-      "video": "lab/splash/splash.mp4",
+      "video": "lab/splash/splash-mulsuuc4.mp4",
       "poster": "lab/splash/fluid-toy-main-0179.webp",
-      "sound": false,
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -63,9 +63,9 @@
         "Houdini"
       ],
       "series": null,
-      "video": "lab/rock/rock-muls1ief.mp4",
+      "video": "lab/rock/rock-mulsvwsd.mp4",
       "poster": "lab/rock/rocks1-side-down-image100-000038.webp",
-      "sound": false,
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -248,9 +248,9 @@
         "Houdini"
       ],
       "series": null,
-      "video": "lab/ribbons/ribbons.mp4",
+      "video": "lab/ribbons/ribbons-mulswlv2.mp4",
       "poster": "lab/ribbons/ribbons-gnivc-main-0155-image100.webp",
-      "sound": false,
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -266,9 +266,9 @@
         "Houdini"
       ],
       "series": "Mardini 2026 — day 21",
-      "video": "work/mardini-2026/day21-food-se.webm",
+      "video": "lab/mardini-food/mardini-food-mulsy2da.mp4",
       "poster": "work/mardini-2026/day21-food-0-00-01-24.webp",
-      "sound": false,
+      "sound": true,
       "description": "Mardini day 21, prompt: food.",
       "published": true,
       "todo": [
@@ -405,9 +405,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-17-liquid-a/17-liquid-a.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-17-liquid-a/interactive-17-liquid-a-mulsyome.mp4",
+      "poster": "lab/interactive-17-liquid-a/interactive-17-liquid-a-mulsyome-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -439,9 +439,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-13-reel-s/13-reel-s.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-13-reel-s/interactive-13-reel-s-mult11w1.mp4",
+      "poster": "lab/interactive-13-reel-s/interactive-13-reel-s-mult11w1-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -456,9 +456,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-14-reel-c/14-reel-c.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-14-reel-c/interactive-14-reel-c-mult0ove.mp4",
+      "poster": "lab/interactive-14-reel-c/interactive-14-reel-c-mult0ove-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -473,9 +473,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-04-post/04-post.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-04-post/interactive-04-post-mult08gy.mp4",
+      "poster": "lab/interactive-04-post/interactive-04-post-mult08gy-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -490,30 +490,12 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-02-post/02-post.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-02-post/interactive-02-post-mult2pyc.mp4",
+      "poster": "lab/interactive-02-post/interactive-02-post-mult2pyc-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
-    },
-    {
-      "slug": "magic-in-motion",
-      "title": "Magic in Motion",
-      "date": null,
-      "tech": [
-        "Houdini"
-      ],
-      "series": null,
-      "video": "lab/magic-in-motion/magic-in-motion.mp4",
-      "poster": "lab/magic-in-motion/magic-in-motion-poster.webp",
-      "sound": false,
-      "description": "",
-      "published": true,
-      "todo": [
-        "Год и техника",
-        "Описание"
-      ]
     },
     {
       "slug": "interactive-06-post",
@@ -525,9 +507,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-06-post/06-post.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-06-post/interactive-06-post-mult3cb7.mp4",
+      "poster": "lab/interactive-06-post/interactive-06-post-mult3cb7-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -542,9 +524,9 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-01-reel/01-reel.mp4",
-      "poster": "",
-      "sound": false,
+      "video": "lab/interactive-01-reel/interactive-01-reel-mult3u9q.mp4",
+      "poster": "lab/interactive-01-reel/interactive-01-reel-mult3u9q-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
