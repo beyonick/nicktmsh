@@ -26,6 +26,11 @@ RewriteEngine On
 # Проверка Let's Encrypt должна дойти до хостинга, иначе сертификат не выпустится.
 RewriteRule ^\\.well-known/acme-challenge/ - [L]
 
+# .ru — служебный домен под превью клиентских сайтов, портфолио живёт на .com.
+# Правило выше www-редиректа, чтобы www.nicktmsh.ru уезжал за один переход, а не за два.
+RewriteCond %{{HTTP_HOST}} ^(www\\.)?nicktmsh\\.ru$ [NC]
+RewriteRule ^ https://nicktmsh.com%{{REQUEST_URI}} [R=301,L]
+
 # Главный адрес — без www.
 RewriteCond %{{HTTP_HOST}} ^www\\.(.+)$ [NC]
 RewriteRule ^ https://%1%{{REQUEST_URI}} [R=301,L]
