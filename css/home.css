@@ -893,8 +893,9 @@ button.pill {
   .pill__long { display: none; }
   .pill__short { display: inline; }
 
-  /* Снизу место под выход графа и ноды рядом с ним (js/hero-nodes.js). */
-  .hero { padding-block: calc(240 * var(--u)) calc(250 * var(--u)); }
+  /* Снизу место под выход графа, шоурил рядом с ним и ряд WORK · ABOUT
+     под ними (js/hero-nodes.js). */
+  .hero { padding-block: calc(240 * var(--u)) calc(310 * var(--u)); }
   /* Имя набирается в одну строку и на телефоне: холст первого экрана
      рисует строку целиком через fillText и переносов не знает. Поэтому
      кегль подбирается под ширину, а не наоборот — 46 единиц дают около

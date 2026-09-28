@@ -1,15 +1,15 @@
 /* Первый экран: имя как нода.
 
-   Над именем — три входа (DESIGN, RENDER, CODE) со значками софта, провода
-   сходятся в порт над именем; под подписью выходит OUTPUT · ON SCREEN с
-   живым роликом из Lab. Клик по выходу переключает ролик. Правее выхода —
-   ещё две ноды: SHOWREEL открывает шоурил, ABOUT ME спускает к блоку
-   «обо мне». Поток сверху вниз — так же, как читается страница: имя
-   занимает всю колонку, и по бокам нодам места нет. Та же нодовая
-   система, что в пайплайне (css/nodes.css): ноды можно таскать, по
-   проводам бежит сигнал, пока экран виден. На телефоне ряд справа от
-   выхода не помещается: шоурил и «обо мне» встают столбиком, и оба
-   подключены к выходу. */
+   Над именем — три входа (DESIGN, RENDER, VIBECODE) со значками софта;
+   у рамки имени три порта сверху, каждый провод приходит в свой; под
+   подписью выходит OUTPUT · ON SCREEN с живым роликом из Lab. Клик по выходу переключает ролик. Правее выхода —
+   SHOWREEL, он открывает шоурил; от него ветка делится надвое: WORK
+   ведёт на /work, под ним ABOUT ME спускает к блоку «обо мне». Поток
+   сверху вниз — так же, как читается страница: имя занимает всю колонку,
+   и по бокам нодам места нет. Та же нодовая система, что в пайплайне
+   (css/nodes.css): ноды можно таскать, по проводам бежит сигнал, пока
+   экран виден. На телефоне третья колонка не помещается: WORK и ABOUT
+   встают рядом вторым рядом, и провода к ним идут вниз от шоурила. */
 
 import { load } from "./store.js";
 
@@ -18,9 +18,9 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const BASE = "https://7b969cfb-7fef-4b50-a362-6bebbf7ab72f.selstorage.ru/nicktmsh/";
 
 const INPUTS = [
-  { type: "01", tool: "Design", icons: ["figma", "illustrator", "photoshop"] },
+  { type: "01", tool: "Design", icons: ["figma", "illustrator", "photoshop", "after-effects", "premiere"] },
   { type: "02", tool: "Render", icons: ["houdini", "cinema-4d", "redshift"] },
-  { type: "03", tool: "Code", text: "JS · WebGL · GLSL" },
+  { type: "03", tool: "Vibecode", icons: ["claude", "codex", "weavy", "higgsfield"] },
 ];
 // Ролики выхода; первый — стилистически ближе всего к первому экрану.
 const VIDEOS = [
@@ -113,26 +113,28 @@ function mount(hero) {
     dy: 0,
   };
   const reel = { node: makeNode({ type: "Showreel", tool: "2025", text: "▶ play the reel" }), dx: 0, dy: 0 };
+  const work = { node: makeNode({ type: "Work", tool: "cases", text: "→ see the projects" }), dx: 0, dy: 0 };
   const about = { node: makeNode({ type: "About", tool: "me", text: "↓ who’s behind this" }), dx: 0, dy: 0 };
   ins.forEach((n) => n.node.querySelector(".node__port--in").classList.add("is-idle"));
-  about.node.querySelector(".node__port--out").classList.add("is-idle");
+  [work, about].forEach((n) => n.node.querySelector(".node__port--out").classList.add("is-idle"));
   out.node.querySelector(".node__port--out").classList.add("is-idle");
-  // Шоурил и «обо мне» подключены сбоку — порты у них слева и справа.
-  [reel, about].forEach((n) => n.node.classList.add("hero-node--side"));
-  // Выход и две ноды правее нажимаются, как кнопки.
-  for (const [n, label] of [[out, "Next video"], [reel, "Play showreel"], [about, "About me"]]) {
+  // Ноды правее выхода подключены сбоку — порты у них слева и справа
+  // (на телефоне WORK и ABOUT переключаются на верх, см. layoutPhone).
+  [reel, work, about].forEach((n) => n.node.classList.add("hero-node--side"));
+  // Выход и ноды правее нажимаются, как кнопки.
+  for (const [n, label] of [[out, "Next video"], [reel, "Play showreel"], [work, "Work"], [about, "About me"]]) {
     n.node.classList.add("hero-node--action");
     n.node.setAttribute("role", "button");
     n.node.setAttribute("aria-label", label);
     n.node.tabIndex = 0;
   }
-  const all = [...ins, out, reel, about];
+  const all = [...ins, out, reel, work, about];
   all.forEach((n) => layer.append(n.node));
 
-  // Порты у имени: вход сверху, выход снизу.
-  const portIn = el("span", "hero__port");
+  // Порты у имени: три входа сверху, по одному на ноду, и выход снизу.
+  const portsIn = ins.map(() => el("span", "hero__port"));
   const portOut = el("span", "hero__port");
-  layer.append(portIn, portOut);
+  layer.append(...portsIn, portOut);
 
   const wire = () => {
     const g = document.createElementNS(NS, "g");
@@ -148,28 +150,56 @@ function mount(hero) {
   const inWires = ins.map(wire);
   const outWire = wire();
   const reelWire = wire();
+  const workWire = wire();
   const aboutWire = wire();
 
   hero.append(layer);
 
-  let base = null; // опорные точки, считаются на раскладке
+  let base = false; // раскладка посчитана, можно ставить порты и провода
 
   const title = name.closest(".hero__title") || name;
   const frame = hero.querySelector(".hero__frame");
 
+  /* Имя с рамкой наклоняется за курсором (js/tilt.js) и сжимается при
+     наведении. Поэтому раскладка нод считается по геометрии без
+     трансформа (offset*), а точки портов живут внутри самой рамки —
+     невидимые якоря на её рёбрах, — и порты графа каждый кадр встают
+     туда, где якоря видны сейчас. Так порты не отрываются от пунктира,
+     а ноды не прыгают вслед за наклоном. */
+  const host = frame || title;
+  const anchorsIn = ins.map(() => el("span", "hero__anchor"));
+  const anchorOut = el("span", "hero__anchor");
+  host.append(...anchorsIn, anchorOut);
+  anchorOut.style.cssText = "left: 50%; top: 100%";
+  // Входы на верхнем ребре: средний по центру, крайние — на шаг в
+  // стороны, в том же порядке, что и ноды над ними.
+  const spread = (step) =>
+    anchorsIn.forEach((a, i) => (a.style.cssText = `left: calc(50% + ${(i - 1) * step}px); top: 0`));
+
+  // Прямоугольник элемента в координатах первого экрана без трансформов.
+  function rest(node) {
+    let x = 0;
+    let y = 0;
+    for (let n = node; n && n !== hero; n = n.offsetParent) {
+      x += n.offsetLeft;
+      y += n.offsetTop;
+    }
+    return { l: x, t: y, r: x + node.offsetWidth, b: y + node.offsetHeight, w: node.offsetWidth };
+  }
+
   function layout() {
     if (phone.matches) return layoutPhone();
-    reel.node.querySelector(".node__port--out").classList.remove("is-idle");
-    const H = hero.getBoundingClientRect();
-    const N = name.getBoundingClientRect();
-    const T = title.getBoundingClientRect();
-    const u = H.width / 912;
-    const cx = N.left - H.left + N.width / 2;
+    reel.node.classList.remove("hero-node--fork");
+    [work, about].forEach((n) => n.node.classList.add("hero-node--side"));
+    const u = hero.clientWidth / 912;
+    const N = rest(name);
+    const T = rest(title);
+    const cx = N.l + N.w / 2;
     // Рёбра рамки имени в покое (отступы — как у .hero__frame в
     // css/nodes.css). Ноды стоят от них и не двигаются, когда рамка
     // сжимается при наведении.
-    const top = T.top - H.top - 26 * u;
-    const bottom = T.bottom - H.top + 24 * u;
+    const top = T.t - 26 * u;
+    const bottom = T.b + 24 * u;
 
     // Входы — ряд над именем, по центру; верх общий, по самой высокой.
     const w = 150 * u;
@@ -182,8 +212,8 @@ function mount(hero) {
       n.node.style.top = `${top - 30 * u - tall + n.dy}px`;
     });
 
-    // Выход — под подписью, по центру; правее — шоурил и «обо мне» на
-    // одной с ним средней линии.
+    // Выход — под подписью, по центру; правее на его средней линии —
+    // шоурил, ещё правее — столбик WORK над ABOUT.
     const ow = 150 * u;
     const oy = bottom + 36 * u;
     out.node.style.width = `${ow}px`;
@@ -191,26 +221,31 @@ function mount(hero) {
     out.node.style.top = `${oy + out.dy}px`;
     const mid = oy + out.node.offsetHeight / 2;
     const sw = 120 * u;
-    [reel, about].forEach((n, i) => {
-      n.node.style.width = `${sw}px`;
-      n.node.style.left = `${cx + ow / 2 + 48 * u + i * (sw + 40 * u) + n.dx}px`;
-      n.node.style.top = `${mid - n.node.offsetHeight / 2 + n.dy}px`;
-    });
+    [reel, work, about].forEach((n) => (n.node.style.width = `${sw}px`));
+    const rx = cx + ow / 2 + 48 * u;
+    reel.node.style.left = `${rx + reel.dx}px`;
+    reel.node.style.top = `${mid - reel.node.offsetHeight / 2 + reel.dy}px`;
+    const vgap = 16 * u;
+    const stack = work.node.offsetHeight + vgap + about.node.offsetHeight;
+    const fx = rx + sw + 40 * u;
+    work.node.style.left = `${fx + work.dx}px`;
+    work.node.style.top = `${mid - stack / 2 + work.dy}px`;
+    about.node.style.left = `${fx + about.dx}px`;
+    about.node.style.top = `${mid - stack / 2 + work.node.offsetHeight + vgap + about.dy}px`;
 
-    base = { pin: { x: cx, y: top }, pout: { x: cx, y: bottom } };
+    spread(110 * u);
+    base = true;
     ports();
   }
 
   // Телефон: колонка 309 макетных единиц (css/base.css, .wrap), наведения
   // нет — рамка имени стоит на месте, и ноды считаются прямо от неё.
   function layoutPhone() {
-    const H = hero.getBoundingClientRect();
-    const F = (frame || title).getBoundingClientRect();
-    const W = H.width;
+    const W = hero.clientWidth;
     const u = W / 309;
-    const cx = F.left - H.left + F.width / 2;
-    const top = F.top - H.top;
-    const bottom = F.bottom - H.top;
+    const F = rest(host);
+    const top = F.t;
+    const bottom = F.b;
 
     const gap = 10 * u;
     const w = (W - 2 * gap) / 3;
@@ -229,49 +264,64 @@ function mount(hero) {
     const mid = oy + out.node.offsetHeight / 2;
     const sx = ow + 30 * u;
     const sw = W - sx;
-    const vgap = 14 * u;
-    [reel, about].forEach((n) => (n.node.style.width = `${sw}px`));
-    const stack = reel.node.offsetHeight + vgap + about.node.offsetHeight;
+    // Шоурил справа от выхода; выход у него снизу — к WORK и ABOUT,
+    // которые стоят рядом вторым рядом.
+    reel.node.classList.add("hero-node--fork");
+    [work, about].forEach((n) => n.node.classList.remove("hero-node--side"));
+    reel.node.style.width = `${sw}px`;
     reel.node.style.left = `${sx + reel.dx}px`;
-    reel.node.style.top = `${mid - stack / 2 + reel.dy}px`;
-    about.node.style.left = `${sx + about.dx}px`;
-    about.node.style.top = `${mid - stack / 2 + reel.node.offsetHeight + vgap + about.dy}px`;
-    reel.node.querySelector(".node__port--out").classList.add("is-idle");
+    reel.node.style.top = `${mid - reel.node.offsetHeight / 2 + reel.dy}px`;
+    const hgap = 14 * u;
+    const bw = (W - hgap) / 2;
+    [work, about].forEach((n) => (n.node.style.width = `${bw}px`));
+    const low = Math.max(oy + out.node.offsetHeight, mid + reel.node.offsetHeight / 2);
+    const by = low + 34 * u;
+    [work, about].forEach((n, i) => {
+      n.node.style.left = `${i * (bw + hgap) + n.dx}px`;
+      n.node.style.top = `${by + n.dy}px`;
+    });
 
-    base = { pin: { x: cx, y: top }, pout: { x: cx, y: bottom } };
+    spread(70 * u);
+    base = true;
     ports();
   }
 
-  // Порты — на верхнем и нижнем ребре рамки, какой она видна сейчас.
-  function ports() {
+  // Порты — там, где якоря на рёбрах рамки видны сейчас, с наклоном и
+  // сжатием. Возвращает, сдвинулось ли что-нибудь.
+  let pins = [];
+  let pout = { x: 0, y: 0 };
+  let seen = "";
+  function ports(force = true) {
     if (!base) return;
-    if (frame && frame.getClientRects().length) {
-      const H = hero.getBoundingClientRect();
-      const F = frame.getBoundingClientRect();
-      base.pin.y = F.top - H.top;
-      base.pout.y = F.bottom - H.top;
-    }
-    portIn.style.left = `${base.pin.x}px`;
-    portIn.style.top = `${base.pin.y}px`;
-    portOut.style.left = `${base.pout.x}px`;
-    portOut.style.top = `${base.pout.y}px`;
+    const H = hero.getBoundingClientRect();
+    const at = (a) => {
+      const r = a.getBoundingClientRect();
+      return { x: r.left - H.left, y: r.top - H.top };
+    };
+    const next = anchorsIn.map(at);
+    const o = at(anchorOut);
+    const key = [...next, o].map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(" ");
+    if (!force && key === seen) return;
+    seen = key;
+    pins = next;
+    pout = o;
+    portsIn.forEach((port, i) => {
+      port.style.left = `${pins[i].x}px`;
+      port.style.top = `${pins[i].y}px`;
+    });
+    portOut.style.left = `${pout.x}px`;
+    portOut.style.top = `${pout.y}px`;
     draw();
   }
 
-  // Рамка сжимается и разжимается переходом — порты и провода догоняют её
-  // каждый кадр, пока он идёт.
-  let until = 0;
+  // Пока первый экран виден, порты сверяются с рамкой каждый кадр: наклон
+  // и сжатие идут своими циклами, а провода должны идти за ними без
+  // задержки. Перерисовка — только когда рамка сдвинулась.
+  let track = 0;
   const follow = () => {
-    ports();
-    if (performance.now() < until) requestAnimationFrame(follow);
+    ports(false);
+    track = requestAnimationFrame(follow);
   };
-  const chase = () => {
-    const idle = performance.now() >= until;
-    until = performance.now() + 700;
-    if (idle) requestAnimationFrame(follow);
-  };
-  title.addEventListener("pointerenter", chase);
-  title.addEventListener("pointerleave", chase);
 
   // Провода: сверху вниз — касательные вертикальные, вбок — горизонтальные.
   const set = (l, d) => {
@@ -302,14 +352,18 @@ function mount(hero) {
         cy: r.top + r.height / 2 - H.top,
       };
     };
-    ins.forEach((n, i) => down({ x: box(n).cx, y: box(n).b }, base.pin, inWires[i]));
+    ins.forEach((n, i) => down({ x: box(n).cx, y: box(n).b }, pins[i], inWires[i]));
     const o = box(out);
-    down(base.pout, { x: o.cx, y: o.t }, outWire);
+    down(pout, { x: o.cx, y: o.t }, outWire);
     const r = box(reel);
     side({ x: o.r, y: o.cy }, { x: r.l, y: r.cy }, reelWire);
-    const a = box(about);
-    const from = phone.matches ? { x: o.r, y: o.cy } : { x: r.r, y: r.cy };
-    side(from, { x: a.l, y: a.cy }, aboutWire);
+    // От шоурила ветка делится: на телефоне — вниз, к верху нод, иначе —
+    // вбок, к левому краю.
+    [[work, workWire], [about, aboutWire]].forEach(([n, l]) => {
+      const b = box(n);
+      if (phone.matches) down({ x: r.cx, y: r.b }, { x: b.cx, y: b.t }, l);
+      else side({ x: r.r, y: r.cy }, { x: b.l, y: b.cy }, l);
+    });
   }
 
   /* Действия нод справа. */
@@ -338,6 +392,7 @@ function mount(hero) {
   const actions = new Map([
     [out.node, nextVideo],
     [reel.node, () => playReel && playReel()],
+    [work.node, () => (location.href = "/work")],
     [
       about.node,
       () => {
@@ -378,7 +433,7 @@ function mount(hero) {
   function hint() {
     if (touched || reduced || !base) return;
     touched = true;
-    const n = [out, reel, about][Math.floor(Math.random() * 3)];
+    const n = [out, reel, work, about][Math.floor(Math.random() * 4)];
     hintNode = n;
     const H = hero.getBoundingClientRect();
     const u = H.width / (phone.matches ? 309 : 912);
@@ -480,6 +535,8 @@ function mount(hero) {
     clearTimeout(hintTimer);
     if (on && !touched) hintTimer = setTimeout(hint, 2200);
     layer.classList.toggle("is-live", on && !reduced);
+    cancelAnimationFrame(track);
+    track = on ? requestAnimationFrame(follow) : 0;
     if (on && !reduced) video.play().catch(() => {});
     else video.pause();
   }).observe(hero);
