@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24",
+  "updated": "2026-09-28",
   "intro": "Ongoing experiments in Houdini and TouchDesigner. Not client work — this is where the techniques come from before they end up in one.",
   "instagram": "https://www.instagram.com/nicktmsh",
   "items": [
@@ -129,7 +129,7 @@
     },
     {
       "slug": "alien-alloy",
-      "title": "Alien Alloy",
+      "title": "Box",
       "date": null,
       "tech": [
         "Houdini"
@@ -163,7 +163,7 @@
     },
     {
       "slug": "rubber-dreams",
-      "title": "Rubber Dreams",
+      "title": "Metal",
       "date": null,
       "tech": [
         "Houdini"
@@ -180,7 +180,7 @@
     },
     {
       "slug": "flowers-on-spline",
-      "title": "Flowers on Spline",
+      "title": "Flowers",
       "date": null,
       "tech": [
         "Houdini"
@@ -230,8 +230,8 @@
       "todo": []
     },
     {
-      "slug": "interactive-01-reel",
-      "title": "Study 01",
+      "slug": "interactive-16-reel-e",
+      "title": "Sun",
       "date": null,
       "tech": [
         "TouchDesigner",
@@ -239,7 +239,7 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-01-reel/01-reel.mp4",
+      "video": "lab/interactive-16-reel-e/16-reel-e.mp4",
       "poster": "",
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
@@ -247,7 +247,7 @@
     },
     {
       "slug": "interactive-13-reel-s",
-      "title": "Study 13",
+      "title": "Smoke",
       "date": null,
       "tech": [
         "TouchDesigner",
@@ -263,7 +263,7 @@
     },
     {
       "slug": "interactive-14-reel-c",
-      "title": "Study 14",
+      "title": "Particles",
       "date": null,
       "tech": [
         "TouchDesigner",
@@ -278,40 +278,8 @@
       "todo": []
     },
     {
-      "slug": "interactive-16-reel-e",
-      "title": "Study 16",
-      "date": null,
-      "tech": [
-        "TouchDesigner",
-        "Notch VFX",
-        "Ableton Live"
-      ],
-      "series": "Interactive 2021",
-      "video": "lab/interactive-16-reel-e/16-reel-e.mp4",
-      "poster": "",
-      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
-      "published": true,
-      "todo": []
-    },
-    {
-      "slug": "interactive-02-post",
-      "title": "Study 02",
-      "date": null,
-      "tech": [
-        "TouchDesigner",
-        "Notch VFX",
-        "Ableton Live"
-      ],
-      "series": "Interactive 2021",
-      "video": "lab/interactive-02-post/02-post.mp4",
-      "poster": "",
-      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
-      "published": true,
-      "todo": []
-    },
-    {
       "slug": "interactive-04-post",
-      "title": "Study 04",
+      "title": "Crush",
       "date": null,
       "tech": [
         "TouchDesigner",
@@ -326,8 +294,24 @@
       "todo": []
     },
     {
+      "slug": "interactive-02-post",
+      "title": "Rings",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-02-post/02-post.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
       "slug": "interactive-06-post",
-      "title": "Study 06",
+      "title": "Flow",
       "date": null,
       "tech": [
         "TouchDesigner",
@@ -336,6 +320,22 @@
       ],
       "series": "Interactive 2021",
       "video": "lab/interactive-06-post/06-post.mp4",
+      "poster": "",
+      "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
+      "published": true,
+      "todo": []
+    },
+    {
+      "slug": "interactive-01-reel",
+      "title": "Pattern",
+      "date": null,
+      "tech": [
+        "TouchDesigner",
+        "Notch VFX",
+        "Ableton Live"
+      ],
+      "series": "Interactive 2021",
+      "video": "lab/interactive-01-reel/01-reel.mp4",
       "poster": "",
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
