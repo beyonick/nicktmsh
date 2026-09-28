@@ -1020,7 +1020,7 @@ function renderPreview() {
   const left = (item.todo || []).length;
   els.hint.textContent = left
     ? `Осталось заполнить: ${item.todo.join("; ")}`
-    : "Ссылка на сайте: " + (tab === "lab" ? `lab.html` : `case.html?p=${item.slug || ""}`);
+    : "Ссылка на сайте: " + (tab === "lab" ? `/lab` : `/case?p=${item.slug || ""}`);
 }
 
 /* --- Запуск ------------------------------------------------------------------ */

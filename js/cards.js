@@ -22,7 +22,7 @@ function asUrl(path) {
 }
 
 export function href(project) {
-  return `case.html?p=${encodeURIComponent(project.slug)}`;
+  return `/case?p=${encodeURIComponent(project.slug)}`;
 }
 
 export function card(project) {

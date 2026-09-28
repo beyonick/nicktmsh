@@ -90,7 +90,7 @@ function render(project, next, base) {
 
   const head = el("section", { class: "page-head wrap" }, [
     el("p", { class: "label rise" }, [
-      el("a", { class: "under", href: "work.html", text: "← work" }),
+      el("a", { class: "under", href: "/work", text: "← work" }),
     ]),
     el("h1", { class: "page-title rise", style: "--delay:80ms", text: project.title }),
     project.summary
@@ -137,7 +137,7 @@ function render(project, next, base) {
   const nextBlock = next
     ? el("section", { class: "case-next wrap" }, [
         el("p", { class: "label", text: "Next" }),
-        el("a", { class: "case-next__link", href: `case.html?p=${next.slug}` }, [
+        el("a", { class: "case-next__link", href: `/case?p=${next.slug}` }, [
           el("span", { class: "case-next__title", text: next.title }),
           el("span", { class: "case-next__arrow", "aria-hidden": "true", text: "→" }),
         ]),
@@ -160,7 +160,7 @@ function notFound() {
   host.replaceChildren(
     el("section", { class: "page-head wrap" }, [
       el("p", { class: "label" }, [
-        el("a", { class: "under", href: "work.html", text: "← work" }),
+        el("a", { class: "under", href: "/work", text: "← work" }),
       ]),
       el("h1", { class: "page-title", text: "No such project" }),
       el("p", {
