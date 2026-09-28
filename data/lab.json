@@ -67,12 +67,13 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
-      "poster": "",
+      "video": "lab/splash/splash.mp4",
+      "poster": "lab/splash/fluid-toy-main-0179.webp",
       "description": "",
       "published": true,
       "todo": [
-        "Нужен ролик Splash (отдельный, не золотая жидкость)"
+        "Год и техника",
+        "Описание"
       ]
     },
     {
@@ -152,7 +153,7 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
+      "video": "lab/ribbons/ribbons.mp4",
       "poster": "lab/ribbons/ribbons-gnivc-main-0155-image100.webp",
       "description": "",
       "published": true,
@@ -308,6 +309,23 @@
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
+    },
+    {
+      "slug": "magic-in-motion",
+      "title": "Magic in Motion",
+      "date": null,
+      "tech": [
+        "Houdini"
+      ],
+      "series": null,
+      "video": "lab/magic-in-motion/magic-in-motion.mp4",
+      "poster": "lab/magic-in-motion/magic-in-motion-poster.webp",
+      "description": "",
+      "published": true,
+      "todo": [
+        "Год и техника",
+        "Описание"
+      ]
     },
     {
       "slug": "interactive-06-post",

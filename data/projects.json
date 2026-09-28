@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24",
+  "updated": "2026-09-28",
   "branches": {
     "web": "Web",
     "branding": "Branding",
@@ -615,17 +615,17 @@
           "src": "work/mardini-2026/day-3-02.webp"
         },
         {
-          "src": "work/mardini-2026/day4_sq.webp",
+          "src": "work/mardini-2026/day4-sq.webp",
           "caption": "Day 4 — Architecture"
         },
         {
           "src": "work/mardini-2026/day-4-04.webp"
         },
         {
-          "src": "work/mardini-2026/day4_11.webp"
+          "src": "work/mardini-2026/day4-11.webp"
         },
         {
-          "src": "work/mardini-2026/day5_6.webp",
+          "src": "work/mardini-2026/day5-6.webp",
           "caption": "Day 5 — Environment"
         },
         {
@@ -635,7 +635,7 @@
           "src": "work/mardini-2026/day-5-02.webp"
         },
         {
-          "src": "work/mardini-2026/day6_-_miniature.webp",
+          "src": "work/mardini-2026/day6-miniature.webp",
           "caption": "Day 6 — Miniature"
         },
         {
@@ -662,17 +662,17 @@
           "caption": "Day 9 — Gooey"
         },
         {
-          "src": "work/mardini-2026/day10-grow_1-se.webm",
+          "src": "work/mardini-2026/day10-grow-1-se.webm",
           "poster": "work/mardini-2026/day10-grow-0-00-07-05.webp",
           "caption": "Day 10 — Grow"
         },
         {
-          "src": "work/mardini-2026/day11-disintegrate_1-se.webm",
+          "src": "work/mardini-2026/day11-disintegrate-1-se.webm",
           "poster": "work/mardini-2026/day11-disintegrate-0-00-00-27.webp",
           "caption": "Day 11 — Disintegrate"
         },
         {
-          "src": "work/mardini-2026/day12-jiggle_1-se.webm",
+          "src": "work/mardini-2026/day12-jiggle-1-se.webm",
           "poster": "work/mardini-2026/day12-jiggle-0-00-05-29.webp",
           "caption": "Day 12 — Jiggle"
         },
@@ -687,7 +687,7 @@
           "src": "work/mardini-2026/frame-23.webp"
         },
         {
-          "src": "work/mardini-2026/day14_4.webp",
+          "src": "work/mardini-2026/day14-4.webp",
           "caption": "Day 14 — Clothing"
         },
         {
@@ -697,8 +697,8 @@
           "src": "work/mardini-2026/frame-30.webp"
         },
         {
-          "src": "work/mardini-2026/day15_fonts-se.webm",
-          "poster": "work/mardini-2026/day15_fonts-0-00-00-28.webp",
+          "src": "work/mardini-2026/day15-fonts-se.webm",
+          "poster": "work/mardini-2026/day15-fonts-0-00-00-28.webp",
           "caption": "Day 15 — Fonts"
         },
         {
@@ -707,12 +707,12 @@
           "caption": "Day 16 — Fractal"
         },
         {
-          "src": "work/mardini-2026/day17-damaged_1-se.webm",
+          "src": "work/mardini-2026/day17-damaged-1-se.webm",
           "poster": "work/mardini-2026/day17-damaged-0-00-05-03.webp",
           "caption": "Day 17 — Damaged"
         },
         {
-          "src": "work/mardini-2026/9_gooey_9.0055.webp",
+          "src": "work/mardini-2026/9-gooey-9.0055.webp",
           "caption": "Day 18 — Organic"
         },
         {
@@ -723,32 +723,32 @@
           "src": "work/mardini-2026/day-19-3.webp"
         },
         {
-          "src": "work/mardini-2026/day_19_2.webp"
+          "src": "work/mardini-2026/day-19-2.webp"
         },
         {
           "src": "work/mardini-2026/stylish-otto.webp",
           "caption": "Day 20 — Stylized"
         },
         {
-          "src": "work/mardini-2026/day20_5.webp"
+          "src": "work/mardini-2026/day20-5.webp"
         },
         {
-          "src": "work/mardini-2026/day21_food-se.webm",
-          "poster": "work/mardini-2026/day21_food-0-00-01-24.webp",
+          "src": "work/mardini-2026/day21-food-se.webm",
+          "poster": "work/mardini-2026/day21-food-0-00-01-24.webp",
           "caption": "Day 21 — Food"
         },
         {
-          "src": "work/mardini-2026/22_transformer_5.webp",
+          "src": "work/mardini-2026/22-transformer-5.webp",
           "caption": "Day 22 — Transformer"
         },
         {
-          "src": "work/mardini-2026/22_transformer_3.webp"
+          "src": "work/mardini-2026/22-transformer-3.webp"
         },
         {
           "src": "work/mardini-2026/day-19-9.webp"
         },
         {
-          "src": "work/mardini-2026/23_orbit.webp",
+          "src": "work/mardini-2026/23-orbit.webp",
           "caption": "Day 23 — Orbit"
         },
         {
@@ -759,12 +759,12 @@
           "src": "work/mardini-2026/frame-37.webp"
         },
         {
-          "src": "work/mardini-2026/day25-dance_1-se.webm",
+          "src": "work/mardini-2026/day25-dance-1-se.webm",
           "poster": "work/mardini-2026/day25-dance-0-00-00-00.webp",
           "caption": "Day 25 — Dance"
         },
         {
-          "src": "work/mardini-2026/day26-collapse_1-se.webm",
+          "src": "work/mardini-2026/day26-collapse-1-se.webm",
           "poster": "work/mardini-2026/day26-collapse-0-00-01-15.webp",
           "caption": "Day 26 — Collapse"
         },
@@ -774,21 +774,21 @@
           "caption": "Day 27 — Talk"
         },
         {
-          "src": "work/mardini-2026/crowds.day28_7.webp",
+          "src": "work/mardini-2026/crowds.day28-7.webp",
           "caption": "Day 28 — Crowds"
         },
         {
-          "src": "work/mardini-2026/day29_volumetric-se.webm",
-          "poster": "work/mardini-2026/day29_volumetric-0-00-01-14.webp",
+          "src": "work/mardini-2026/day29-volumetric-se.webm",
+          "poster": "work/mardini-2026/day29-volumetric-0-00-01-14.webp",
           "caption": "Day 29 — Volumetric"
         },
         {
-          "src": "work/mardini-2026/day30_motion_blur-se.webm",
-          "poster": "work/mardini-2026/day30_motion_blur-0-00-03-07.webp",
+          "src": "work/mardini-2026/day30-motion-blur-se.webm",
+          "poster": "work/mardini-2026/day30-motion-blur-0-00-03-07.webp",
           "caption": "Day 30 — Motion Blur"
         },
         {
-          "src": "work/mardini-2026/day31_refract_v2_l.webp",
+          "src": "work/mardini-2026/day31-refract-v2.webp",
           "caption": "Day 31 — Refract"
         }
       ],
