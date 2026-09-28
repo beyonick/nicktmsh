@@ -22,6 +22,20 @@
       ]
     },
     {
+      "slug": "damaged",
+      "title": "Damaged",
+      "date": "2026-03-17",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 17",
+      "video": "lab/damaged/day17-damaged-1-se.webm",
+      "poster": "lab/damaged/day17-damaged-0-00-05-03.webp",
+      "description": "Mardini day 17, prompt: damaged. Destruction on a fixed budget of one evening.",
+      "published": true,
+      "todo": []
+    },
+    {
       "slug": "splash",
       "title": "Splash",
       "date": null,
@@ -90,6 +104,20 @@
       ]
     },
     {
+      "slug": "volumetric",
+      "title": "Volumetric",
+      "date": "2026-03-29",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 29",
+      "video": "lab/volumetric/day29-volumetric-se.webm",
+      "poster": "lab/volumetric/day29-volumetric-0-00-01-14.webp",
+      "description": "Mardini day 29, prompt: volumetric. Light doing the modelling instead of geometry.",
+      "published": true,
+      "todo": []
+    },
+    {
       "slug": "mardini-explode",
       "title": "Explode",
       "date": "2026-03-08",
@@ -123,6 +151,22 @@
       ]
     },
     {
+      "slug": "mardini-talk",
+      "title": "Talk",
+      "date": "2026-03-27",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 27",
+      "video": "work/mardini-2026/day27-talk-se.webm",
+      "poster": "work/mardini-2026/day27-talk-0-00-03-14.webp",
+      "description": "Mardini day 27, prompt: talk.",
+      "published": true,
+      "todo": [
+        "Описание"
+      ]
+    },
+    {
       "slug": "mardini-disintegrate",
       "title": "Disintegrate",
       "date": "2026-03-11",
@@ -139,20 +183,32 @@
       ]
     },
     {
-      "slug": "mardini-fonts",
-      "title": "Fonts",
-      "date": "2026-03-15",
+      "slug": "avgust",
+      "title": "Avgust",
+      "date": null,
       "tech": [
         "Houdini"
       ],
-      "series": "Mardini 2026 — day 15",
-      "video": "work/mardini-2026/day15-fonts-se.webm",
-      "poster": "work/mardini-2026/day15-fonts-0-00-00-28.webp",
-      "description": "Mardini day 15, prompt: fonts.",
+      "series": null,
+      "video": "lab/avgust/avgust-se.webm",
+      "poster": "",
+      "description": "",
       "published": true,
-      "todo": [
-        "Описание"
-      ]
+      "todo": []
+    },
+    {
+      "slug": "motion-blur",
+      "title": "Motion Blur",
+      "date": "2026-03-30",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 30",
+      "video": "lab/motion-blur/day30-motion-blur-se.webm",
+      "poster": "lab/motion-blur/day30-motion-blur-0-00-03-07.webp",
+      "description": "Mardini day 30, prompt: motion blur. Speed read from a single frame.",
+      "published": true,
+      "todo": []
     },
     {
       "slug": "mardini-fractal",
@@ -214,6 +270,22 @@
       "video": "work/mardini-2026/day25-dance-1-se.webm",
       "poster": "work/mardini-2026/day25-dance-0-00-00-00.webp",
       "description": "Mardini day 25, prompt: dance.",
+      "published": true,
+      "todo": [
+        "Описание"
+      ]
+    },
+    {
+      "slug": "mardini-fonts",
+      "title": "Fonts",
+      "date": "2026-03-15",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 15",
+      "video": "work/mardini-2026/day15-fonts-se.webm",
+      "poster": "work/mardini-2026/day15-fonts-0-00-00-28.webp",
+      "description": "Mardini day 15, prompt: fonts.",
       "published": true,
       "todo": [
         "Описание"
@@ -285,6 +357,22 @@
       ]
     },
     {
+      "slug": "mardini-jiggle",
+      "title": "Jiggle",
+      "date": "2026-03-12",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 12",
+      "video": "work/mardini-2026/day12-jiggle-1-se.webm",
+      "poster": "work/mardini-2026/day12-jiggle-0-00-05-29.webp",
+      "description": "Mardini day 12, prompt: jiggle.",
+      "published": true,
+      "todo": [
+        "Описание"
+      ]
+    },
+    {
       "slug": "interactive-17-liquid-a",
       "title": "Liquid",
       "date": null,
@@ -310,7 +398,7 @@
         "Ableton Live"
       ],
       "series": "Interactive 2021",
-      "video": "lab/interactive-16-reel-e/interactive-16-reel-e-muls3e5k.mp4",
+      "video": "lab/interactive-16-reel-e/interactive-16-reel-e-mulsfh8f.mp4",
       "poster": "lab/interactive-16-reel-e/interactive-16-reel-e-muls3e5k-poster.webp",
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
@@ -558,36 +646,6 @@
       ]
     },
     {
-      "slug": "avgust",
-      "title": "Avgust",
-      "date": null,
-      "tech": [
-        "Houdini"
-      ],
-      "series": null,
-      "video": "lab/avgust/avgust-se.webm",
-      "poster": "",
-      "description": "",
-      "published": true,
-      "todo": []
-    },
-    {
-      "slug": "mardini-jiggle",
-      "title": "Jiggle",
-      "date": "2026-03-12",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 12",
-      "video": "work/mardini-2026/day12-jiggle-1-se.webm",
-      "poster": "work/mardini-2026/day12-jiggle-0-00-05-29.webp",
-      "description": "Mardini day 12, prompt: jiggle.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
       "slug": "mardini-fur",
       "title": "Fur",
       "date": "2026-03-13",
@@ -614,52 +672,6 @@
       "video": "",
       "poster": "work/mardini-2026/day14-4.webp",
       "description": "Mardini day 14, prompt: clothing.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
-      "slug": "damaged",
-      "title": "Damaged",
-      "date": "2026-03-17",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 17",
-      "video": "lab/damaged/day17-damaged-1-se.webm",
-      "poster": "lab/damaged/day17-damaged-0-00-05-03.webp",
-      "description": "Mardini day 17, prompt: damaged. Destruction on a fixed budget of one evening.",
-      "published": true,
-      "todo": []
-    },
-    {
-      "slug": "mardini-organic",
-      "title": "Organic",
-      "date": "2026-03-18",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 18",
-      "video": "",
-      "poster": "work/mardini-2026/9-gooey-9.0055.webp",
-      "description": "Mardini day 18, prompt: organic.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
-      "slug": "mardini-neon",
-      "title": "Neon",
-      "date": "2026-03-19",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 19",
-      "video": "",
-      "poster": "work/mardini-2026/day-19-4.webp",
-      "description": "Mardini day 19, prompt: neon.",
       "published": true,
       "todo": [
         "Описание"
@@ -698,38 +710,6 @@
       ]
     },
     {
-      "slug": "mardini-orbit",
-      "title": "Orbit",
-      "date": "2026-03-23",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 23",
-      "video": "",
-      "poster": "work/mardini-2026/23-orbit.webp",
-      "description": "Mardini day 23, prompt: orbit.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
-      "slug": "mardini-talk",
-      "title": "Talk",
-      "date": "2026-03-27",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 27",
-      "video": "work/mardini-2026/day27-talk-se.webm",
-      "poster": "work/mardini-2026/day27-talk-0-00-03-14.webp",
-      "description": "Mardini day 27, prompt: talk.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
       "slug": "mardini-crowds",
       "title": "Crowds",
       "date": "2026-03-28",
@@ -744,34 +724,6 @@
       "todo": [
         "Описание"
       ]
-    },
-    {
-      "slug": "volumetric",
-      "title": "Volumetric",
-      "date": "2026-03-29",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 29",
-      "video": "lab/volumetric/day29-volumetric-se.webm",
-      "poster": "lab/volumetric/day29-volumetric-0-00-01-14.webp",
-      "description": "Mardini day 29, prompt: volumetric. Light doing the modelling instead of geometry.",
-      "published": true,
-      "todo": []
-    },
-    {
-      "slug": "motion-blur",
-      "title": "Motion Blur",
-      "date": "2026-03-30",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 30",
-      "video": "lab/motion-blur/day30-motion-blur-se.webm",
-      "poster": "lab/motion-blur/day30-motion-blur-0-00-03-07.webp",
-      "description": "Mardini day 30, prompt: motion blur. Speed read from a single frame.",
-      "published": true,
-      "todo": []
     },
     {
       "slug": "mardini-refract",
