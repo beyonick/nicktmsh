@@ -8,6 +8,47 @@ bash .github/deploy-selectel.sh
 OUT=_deploy
 PY=${PYTHON:-python3}
 
+# nginx на Timeweb отдаёт css и js с кэшем на год и заголовки из .htaccess к ним не применяет.
+# Поэтому каждая ссылка на css/js получает ?v=<хэш содержимого>: поменялся файл — поменялся адрес.
+# У js хэш считается после подстановки версий в его импорты, иначе правка в store.js
+# не дошла бы до модулей, которые его импортируют.
+"$PY" - "$OUT" <<'PY'
+import hashlib, pathlib, re, sys
+out = pathlib.Path(sys.argv[1]).resolve()
+IMPORT = re.compile(r"""(\bfrom\s*|\bimport\s*\(?\s*)(["'])(\.{1,2}/[^"'?]+\.js)\2""")
+LINK = re.compile(r"""\b(href|src)="(/?(?:[\w.-]+/)*[\w.-]+\.(?:css|js))\"""")
+done, busy = {}, set()
+
+def version(path):
+    """Хэш файла; для js — после переписывания его собственных импортов."""
+    if path in done:
+        return done[path]
+    if path.suffix == ".js" and path not in busy:
+        busy.add(path)
+        text = path.read_text("utf-8")
+        def sub(m):
+            dep = (path.parent / m.group(3)).resolve()
+            if not dep.is_file():
+                return m.group(0)
+            return f"{m.group(1)}{m.group(2)}{m.group(3)}?v={version(dep)}{m.group(2)}"
+        text = IMPORT.sub(sub, text)
+        path.write_text(text, "utf-8")
+    done[path] = hashlib.sha1(path.read_bytes()).hexdigest()[:10]
+    return done[path]
+
+pages = 0
+for page in out.glob("*.html"):
+    text = page.read_text("utf-8")
+    def sub(m):
+        target = out / m.group(2).lstrip("/")
+        if not target.is_file():
+            return m.group(0)
+        return f'{m.group(1)}="{m.group(2)}?v={version(target.resolve())}"'
+    page.write_text(LINK.sub(sub, text), "utf-8")
+    pages += 1
+print(f"cache-bust: {pages} pages, {len(done)} files versioned")
+PY
+
 # То, что на Vercel делали cleanUrls и redirects из vercel.json, здесь делает Apache.
 "$PY" - "$OUT" <<'PY'
 import json, pathlib, re, sys
