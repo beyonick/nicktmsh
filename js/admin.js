@@ -45,7 +45,7 @@ const TABS = {
       { name: "date", label: "Дата", type: "date" },
       { name: "tech", label: "Техника", type: "list", hint: "через запятую: Houdini, Karma XPU" },
       { name: "series", label: "Серия", type: "text", hint: "например Mardini 2026 — day 17; пусто, если работа сама по себе" },
-      { name: "video", label: "Видео", type: "url", hint: "урл в Selectel — вертикаль 9:16, без звука" },
+      { name: "video", label: "Видео", type: "video", hint: "перетащи ролик — сожмётся и уедет в Selectel, постер снимется сам. Лучше вертикаль 9:16" },
       { name: "poster", label: "Постер", type: "file", hint: "кадр, который стоит в сетке до запуска ролика" },
       { name: "description", label: "Описание", type: "textarea", hint: "1–3 предложения: что исследовал и зачем" },
       { name: "published", label: "Показывать на сайте", type: "bool" },
@@ -435,6 +435,52 @@ async function upload(file, name) {
   return null;
 }
 
+/* Видео не едет ни в репозиторий, ни через «Сохранить»: браузер его сжимает
+   (admin-video.js) и сразу кладёт в бакет Selectel — на хостинге через
+   admin-media.php, у которого ключи бакета, локально через dev-сервер и
+   rclone. В json уходит только путь, и уже «Сохранить» публикует его.
+   Имя файла каждый раз новое: старый адрес мог осесть в кэше браузеров. */
+async function putMedia(path, blob) {
+  const url =
+    mode === "local"
+      ? `/api/media?path=${encodeURIComponent(path)}`
+      : `/admin-media.php?path=${encodeURIComponent(path)}`;
+  let r;
+  try {
+    r = await fetch(url, { method: "PUT", headers: { "Content-Type": blob.type }, body: blob });
+  } catch (e) {
+    throw new Error("нет связи с сервером");
+  }
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 404 && !j.error) throw new Error("заливать некуда — видео грузится из админки на хостинге или с dev-сервера");
+  if (r.status === 413) throw new Error("хостинг не принял такой большой файл");
+  if (!r.ok || !j.ok) throw new Error(j.error || `ответ ${r.status}`);
+  return j.path;
+}
+
+async function takeVideo(file, slug, dir) {
+  if (!slug) throw new Error("сначала заполни название — по нему назовётся папка");
+  const mb = (n) => (n / 1e6).toFixed(1);
+  status(`сжимаю ${file.name}…`, "warn");
+  const { compress } = await import("./admin-video.js");
+  const out = await compress(file, (p) => status(`сжимаю ${file.name}… ${Math.round(p * 100)}%`, "warn"));
+
+  const stamp = Date.now().toString(36);
+  const folder = `${dir}/${slug}`;
+  const posterExt = out.poster.type === "image/webp" ? "webp" : "jpg";
+  const videoExt = out.video.type === "video/webm" ? "webm" : "mp4";
+  status(`заливаю ${mb(out.video.size)} МБ в Selectel…`, "warn");
+  const video = await putMedia(`${folder}/${slug}-${stamp}.${videoExt}`, out.video);
+  const poster = await putMedia(`${folder}/${slug}-${stamp}-poster.${posterExt}`, out.poster);
+
+  previews.set(video, URL.createObjectURL(out.video));
+  previews.set(poster, URL.createObjectURL(out.poster));
+  const note = out.kept
+    ? `${mb(file.size)} МБ — файл уже был сжат под веб, залил как есть`
+    : `${mb(file.size)} → ${mb(out.video.size)} МБ, ${out.width}×${out.height}`;
+  return { video, poster, note };
+}
+
 /* --- Список ----------------------------------------------------------------- */
 
 function renderList() {
@@ -572,6 +618,7 @@ function field(f, item) {
   const value = item[f.name];
 
   if (f.type === "media") return mediaField(f, item);
+  if (f.type === "video") return videoField(f, item);
 
   if (f.type === "bool") {
     const input = document.createElement("input");
@@ -697,6 +744,70 @@ function field(f, item) {
   return row(f.label, input, f.hint);
 }
 
+function videoField(f, item) {
+  const box = document.createElement("div");
+  box.className = "cms-file";
+
+  const path = document.createElement("input");
+  path.type = "text";
+  path.className = "cms-input";
+  path.placeholder = "lab/<slug>/файл.mp4 или полный адрес";
+  path.value = item[f.name] || "";
+  path.oninput = () => commit(item, f.name, path.value);
+
+  const drop = document.createElement("label");
+  drop.className = "cms-drop";
+  drop.textContent = "перетащи ролик сюда или выбери";
+
+  const picker = document.createElement("input");
+  picker.type = "file";
+  picker.accept = "video/*,.mov,.mkv";
+  picker.className = "cms-drop__input";
+
+  let busy = false;
+  const take = async (file) => {
+    if (!file || busy) return;
+    if (!file.type.startsWith("video/") && !/\.(mov|mkv|mp4|webm|m4v)$/i.test(file.name)) {
+      return status(`${file.name} — это не видео`, "err");
+    }
+    busy = true;
+    drop.classList.add("is-busy");
+    drop.firstChild.textContent = "сжимаю и заливаю — не закрывай вкладку";
+    try {
+      const got = await takeVideo(file, item.slug || slugify(item.title), TABS[tab].uploadDir);
+      if (!item.slug) item.slug = slugify(item.title);
+      item[f.name] = got.video;
+      const keptPoster = item.poster && !previews.has(item.poster);
+      if (!keptPoster) item.poster = got.poster;
+      commit(item, f.name, got.video);
+      renderForm();
+      status(`залито: ${got.note}${keptPoster ? " · постер оставил прежний" : ""} · жми «Сохранить», чтобы опубликовать`, "warn");
+    } catch (e) {
+      status(`видео не залилось: ${e.message}`, "err");
+    } finally {
+      busy = false;
+      drop.classList.remove("is-busy");
+      drop.firstChild.textContent = "перетащи ролик сюда или выбери";
+    }
+  };
+
+  picker.onchange = () => take(picker.files[0]);
+  drop.append(picker);
+  drop.ondragover = (e) => {
+    e.preventDefault();
+    drop.classList.add("is-over");
+  };
+  drop.ondragleave = () => drop.classList.remove("is-over");
+  drop.ondrop = (e) => {
+    e.preventDefault();
+    drop.classList.remove("is-over");
+    take(e.dataTransfer.files[0]);
+  };
+
+  box.append(path, drop);
+  return row(f.label, box, f.hint);
+}
+
 /* --- Конструктор галереи -------------------------------------------------------
    Галерея кейса правится вживую: та же сетка на шесть долей, что на
    странице кейса (css/pages.css), файлы перетаскиваются мышью, у каждого —
@@ -728,7 +839,8 @@ function mediaSize(it, i) {
 function mediaThumb(it, cls) {
   const src = mediaUrl(it.src);
   let node;
-  if (MEDIA_VIDEO.test(src)) {
+  // По пути, а не по src: у свежезалитого файла src — blob: без расширения.
+  if (MEDIA_VIDEO.test(it.src)) {
     node = document.createElement("video");
     node.src = src;
     if (it.poster) node.poster = mediaUrl(it.poster);
@@ -815,13 +927,25 @@ function openBuilder(item) {
   picker.multiple = true;
   picker.hidden = true;
   picker.onchange = async () => {
+    let report = null;
     for (const file of picker.files) {
+      if (file.type.startsWith("video/") || /\.(mov|mkv)$/i.test(file.name)) {
+        try {
+          const got = await takeVideo(file, item.slug || slugify(item.title), TABS[tab].uploadDir);
+          media.push({ src: got.video, poster: got.poster });
+          report = [`залито: ${got.note} · жми «Сохранить», чтобы опубликовать`, "warn"];
+        } catch (e) {
+          report = [`${file.name} не залился: ${e.message}`, "err"];
+        }
+        continue;
+      }
       const stem = file.name.replace(/\.[^.]+$/, "");
       const saved = await upload(file, `${item.slug || slugify(item.title)}-${stem}`);
       if (saved) media.push({ src: saved });
     }
     picker.value = "";
     changed();
+    if (report) status(...report);
   };
   addFile.append(picker);
 

@@ -259,6 +259,14 @@
   opacity: 1;
 }
 .cms-drop__input { display: none; }
+.cms-drop.is-busy {
+  border-color: var(--accent);
+  opacity: 1;
+  cursor: progress;
+  animation: cms-busy 1.2s ease-in-out infinite alternate;
+}
+@keyframes cms-busy { to { background: color-mix(in srgb, var(--accent) 14%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .cms-drop.is-busy { animation: none; } }
 
 /* --- Превью -------------------------------------------------------------------
    Не декорация: пропорция кадра здесь та же, что в сетке Lab, поэтому

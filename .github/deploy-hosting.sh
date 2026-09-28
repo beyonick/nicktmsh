@@ -95,7 +95,7 @@ RewriteRule ^(.+)/$ /$1 [R=301,L]
 # Админка — только после входа: admin-gate.php спрашивает пароль и сам отдаёт admin.html.
 # /admin.html сюда не дойдёт: выше его уже увёл на /admin редирект с .html.
 RewriteRule ^admin$ /admin-gate.php [L]
-RewriteRule ^admin-auth\\.php$ - [F,L]
+RewriteRule ^(admin|media)-auth\\.php$ - [F,L]
 
 # /work -> work.html
 RewriteCond %{{REQUEST_FILENAME}} !-f
@@ -128,6 +128,27 @@ PY
   echo "admin: пароль задан"
 else
   echo "::warning::секрет ADMIN_PASSWORD пуст — вход в /admin закрыт для всех"
+fi
+
+# Ключи бакета медиа для admin-media.php: админка заливает сжатые ролики в Selectel через него.
+if [[ -n "${MEDIA_S3_ACCESS_KEY:-}" && -n "${MEDIA_S3_SECRET_KEY:-}" ]]; then
+  "$PY" - "$OUT/media-auth.php" <<'PY'
+import os, pathlib, sys
+q = lambda s: "'" + s.replace("\\", "\\\\").replace("'", "\\'") + "'"
+cfg = {
+    "key": os.environ["MEDIA_S3_ACCESS_KEY"],
+    "secret": os.environ["MEDIA_S3_SECRET_KEY"],
+    "bucket": os.environ.get("MEDIA_BUCKET") or "websites-media",
+    "prefix": os.environ.get("MEDIA_PREFIX") or "nicktmsh/",
+    "endpoint": os.environ.get("MEDIA_S3_ENDPOINT") or "s3.ru-7.storage.selcloud.ru",
+    "region": os.environ.get("MEDIA_S3_REGION") or "ru-7",
+}
+pathlib.Path(sys.argv[1]).write_text(
+    "<?php return [" + ", ".join(f"{q(k)} => {q(v)}" for k, v in cfg.items()) + "];\n", "utf-8")
+PY
+  echo "media: ключи Selectel заданы"
+else
+  echo "::warning::секреты SELECTEL_S3_* пусты — заливка видео из админки выключена"
 fi
 [[ "${1:-}" == "--upload" ]] || exit 0
 

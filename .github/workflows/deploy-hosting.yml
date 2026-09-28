@@ -19,6 +19,9 @@ jobs:
       HOSTING_DIR: ${{ vars.HOSTING_DIR || 'www/nicktmsh.com' }}
       HOSTING_PASSWORD: ${{ secrets.HOSTING_PASSWORD }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      MEDIA_S3_ACCESS_KEY: ${{ secrets.SELECTEL_S3_ACCESS_KEY }}
+      MEDIA_S3_SECRET_KEY: ${{ secrets.SELECTEL_S3_SECRET_KEY }}
+      MEDIA_BUCKET: ${{ vars.MEDIA_BUCKET || 'websites-media' }}
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get install -y -qq lftp
