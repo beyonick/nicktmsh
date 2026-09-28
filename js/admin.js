@@ -520,8 +520,59 @@ function renderList() {
     );
 
     li.append(pick, tools);
+    listDrag(li, i);
     els.items.append(li);
   });
+}
+
+/* Порядок записей мышью: строку тащат и бросают выше или ниже другой.
+   Стрелки остаются — ими удобно сдвинуть на одну позицию и с клавиатуры. */
+let listFrom = -1;
+
+function listDrag(li, i) {
+  li.draggable = true;
+  const half = (e) => {
+    const r = li.getBoundingClientRect();
+    return e.clientY > r.top + r.height / 2;
+  };
+
+  li.ondragstart = (e) => {
+    listFrom = i;
+    li.classList.add("is-dragging");
+    e.dataTransfer.effectAllowed = "move";
+    // Не text/plain: брошенное в поле формы вписалось бы туда цифрой.
+    e.dataTransfer.setData("application/x-cms-order", String(i));
+  };
+  li.ondragend = () => {
+    listFrom = -1;
+    els.items
+      .querySelectorAll(".cms-item")
+      .forEach((x) => x.classList.remove("is-dragging", "is-before", "is-after"));
+  };
+  li.ondragover = (e) => {
+    if (listFrom < 0) return;
+    e.preventDefault();
+    const after = half(e);
+    li.classList.toggle("is-after", after);
+    li.classList.toggle("is-before", !after);
+  };
+  li.ondragleave = () => li.classList.remove("is-before", "is-after");
+  li.ondrop = (e) => {
+    e.preventDefault();
+    if (listFrom < 0) return;
+    let to = i + (half(e) ? 1 : 0);
+    if (listFrom < to) to--;
+    const from = listFrom;
+    listFrom = -1;
+    if (to === from) return li.ondragend();
+    // Открытая запись остаётся открытой, куда бы ни съехала.
+    const current = list[index];
+    const [moved] = list.splice(from, 1);
+    list.splice(to, 0, moved);
+    index = list.indexOf(current);
+    markDirty();
+    renderList();
+  };
 }
 
 function iconButton(glyph, label, onclick) {
@@ -927,8 +978,15 @@ function openBuilder(item) {
   picker.multiple = true;
   picker.hidden = true;
   picker.onchange = async () => {
+    await addFiles([...picker.files]);
+    picker.value = "";
+  };
+  addFile.append(picker);
+
+  // Те же файлы можно бросить прямо в окно конструктора.
+  async function addFiles(files) {
     let report = null;
-    for (const file of picker.files) {
+    for (const file of files) {
       if (file.type.startsWith("video/") || /\.(mov|mkv)$/i.test(file.name)) {
         try {
           const got = await takeVideo(file, item.slug || slugify(item.title), TABS[tab].uploadDir);
@@ -943,11 +1001,30 @@ function openBuilder(item) {
       const saved = await upload(file, `${item.slug || slugify(item.title)}-${stem}`);
       if (saved) media.push({ src: saved });
     }
-    picker.value = "";
     changed();
     if (report) status(...report);
-  };
-  addFile.append(picker);
+  }
+
+  const hasFiles = (e) => e.dataTransfer && [...e.dataTransfer.types].includes("Files");
+  dlg.addEventListener("dragover", (e) => {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    dlg.classList.add("is-over");
+  });
+  dlg.addEventListener("dragleave", (e) => {
+    if (!dlg.contains(e.relatedTarget)) dlg.classList.remove("is-over");
+  });
+  dlg.addEventListener("drop", (e) => {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    dlg.classList.remove("is-over");
+    const files = [...e.dataTransfer.files].filter(
+      (f) => /^(image|video)\//.test(f.type) || /\.(mov|mkv)$/i.test(f.name)
+    );
+    if (files.length) addFiles(files);
+    else status("сюда — только картинки и видео", "warn");
+  });
 
   const done = document.createElement("button");
   done.type = "button";
@@ -960,7 +1037,7 @@ function openBuilder(item) {
   const hint = document.createElement("p");
   hint.className = "cms-hint cms-builder__hint";
   hint.textContent =
-    "Тащи карточку, чтобы поменять порядок. 1/1 — вся строка, 1/2 — половина, 1/3 — треть. Так же встанет на странице кейса. Изменения сохраняются кнопкой «Сохранить» в шапке.";
+    "Тащи карточку, чтобы поменять порядок; файлы с диска можно бросить прямо в это окно. 1/1 — вся строка, 1/2 — половина, 1/3 — треть. Так же встанет на странице кейса. Изменения сохраняются кнопкой «Сохранить» в шапке.";
 
   const grid = document.createElement("ol");
   grid.className = "cms-builder__grid";
@@ -1031,7 +1108,8 @@ function openBuilder(item) {
         dragFrom = i;
         li.classList.add("is-dragging");
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/plain", String(i));
+        // Не text/plain: брошенное в поле формы вписалось бы туда цифрой.
+        e.dataTransfer.setData("application/x-cms-order", String(i));
       };
       li.ondragend = () => {
         dragFrom = -1;
@@ -1176,6 +1254,15 @@ addEventListener("keydown", (e) => {
     e.preventDefault();
     save();
   }
+});
+
+/* Файл, брошенный мимо поля, браузер открыл бы вместо панели — вместе
+   с несохранёнными правками. Мимо полей бросок просто ничего не делает. */
+addEventListener("dragover", (e) => {
+  if ([...e.dataTransfer.types].includes("Files")) e.preventDefault();
+});
+addEventListener("drop", (e) => {
+  if ([...e.dataTransfer.types].includes("Files")) e.preventDefault();
 });
 
 addEventListener("beforeunload", (e) => {
