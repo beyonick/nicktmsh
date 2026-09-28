@@ -45,6 +45,12 @@ RewriteRule ^ /%1 [R=301,L]
 RewriteCond %{{THE_REQUEST}} \\s/+([^?\\s]+)\\.html[?\\s]
 RewriteRule ^ /%1 [R=301,L]
 
+# /admin/ -> /admin: со слэшем относительные пути к css и js уезжают в /admin/css/… и страница ломается.
+RewriteCond %{{REQUEST_FILENAME}} !-d
+RewriteCond %{{REQUEST_FILENAME}} ^(.+?)/?$
+RewriteCond %1.html -f
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
 # /work -> work.html
 RewriteCond %{{REQUEST_FILENAME}} !-f
 RewriteCond %{{REQUEST_FILENAME}}.html -f
