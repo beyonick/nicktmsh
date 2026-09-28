@@ -284,8 +284,10 @@
 @media (max-width: 760px) {
   .hscroll__track { padding-block-start: calc(150 * var(--u)); }
   .lab-intro { width: 78vw; }
-  .lab-intro__text { font-size: calc(26 * var(--u)); line-height: calc(38 * var(--u)); }
-  .lab-intro__count { font-size: calc(22 * var(--u)); line-height: calc(30 * var(--u)); }
+  /* Вводная — обычным моно, как подписи на остальных страницах, а не
+     дисплейным кеглем: иначе она одна занимает весь первый экран. */
+  .lab-intro__text { font-size: calc(15 * var(--u)); line-height: calc(23 * var(--u)); }
+  .lab-intro__count { font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); }
 
   .reel__cap { padding: calc(110 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u)) calc(32 * var(--u)); }
   .reel__title { font-size: calc(44 * var(--u)); line-height: calc(48 * var(--u)); }
