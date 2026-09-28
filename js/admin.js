@@ -36,6 +36,7 @@ const TABS = {
       series: null,
       video: "",
       poster: "",
+      sound: false,
       description: "",
       published: true,
     }),
@@ -47,6 +48,7 @@ const TABS = {
       { name: "series", label: "Серия", type: "text", hint: "например Mardini 2026 — day 17; пусто, если работа сама по себе" },
       { name: "video", label: "Видео", type: "video", hint: "перетащи ролик — сожмётся и уедет в Selectel, постер снимется сам. Лучше вертикаль 9:16" },
       { name: "poster", label: "Постер", type: "file", hint: "кадр, который стоит в сетке до запуска ролика" },
+      { name: "sound", label: "В ролике есть звук", type: "bool", hint: "ставится сам, когда ролик залит через админку; в списке — значок динамика" },
       { name: "description", label: "Описание", type: "textarea", hint: "1–3 предложения: что исследовал и зачем" },
       { name: "published", label: "Показывать на сайте", type: "bool" },
     ],
@@ -478,7 +480,7 @@ async function takeVideo(file, slug, dir) {
   const note = out.kept
     ? `${mb(file.size)} МБ — файл уже был сжат под веб, залил как есть`
     : `${mb(file.size)} → ${mb(out.video.size)} МБ, ${out.width}×${out.height}, звук: ${out.sound}`;
-  return { video, poster, note };
+  return { video, poster, note, hasSound: out.hasSound };
 }
 
 /* --- Список ----------------------------------------------------------------- */
@@ -509,7 +511,9 @@ function renderList() {
     flag.textContent = item.published === false ? "draft" : item.featured ? "home" : "live";
     flag.dataset.kind = item.published === false ? "draft" : item.featured ? "home" : "live";
 
-    pick.append(title, flag);
+    pick.append(title);
+    if (item.sound) pick.append(soundMark());
+    pick.append(flag);
 
     const tools = document.createElement("span");
     tools.className = "cms-item__tools";
@@ -573,6 +577,18 @@ function listDrag(li, i) {
     markDirty();
     renderList();
   };
+}
+
+function soundMark() {
+  const s = document.createElement("span");
+  s.className = "cms-item__sound";
+  s.title = "в ролике есть звук";
+  s.setAttribute("role", "img");
+  s.setAttribute("aria-label", "есть звук");
+  s.innerHTML =
+    '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h2.5L8 3v10L4.5 10H2z" fill="currentColor"/>' +
+    '<path d="M10.5 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6.3 6.3 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+  return s;
 }
 
 function iconButton(glyph, label, onclick) {
@@ -828,6 +844,7 @@ function videoField(f, item) {
       const got = await takeVideo(file, item.slug || slugify(item.title), TABS[tab].uploadDir);
       if (!item.slug) item.slug = slugify(item.title);
       item[f.name] = got.video;
+      item.sound = got.hasSound;
       const keptPoster = item.poster && !previews.has(item.poster);
       if (!keptPoster) item.poster = got.poster;
       commit(item, f.name, got.video);

@@ -74,6 +74,7 @@ export async function compress(file, onProgress) {
     if (kept) video = new Blob([file], { type: /\.webm$/i.test(file.name) ? "video/webm" : "video/mp4" });
     return {
       video, width, height, kept,
+      hasSound: kept ? Boolean(audioTrack) : Boolean(audioCodec),
       sound: kept ? "как в исходнике" : audioCodec ? audioCodec.toUpperCase() : lostSound ? "потерян" : "нет",
       poster: await posterOf(video),
     };

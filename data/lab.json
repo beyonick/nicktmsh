@@ -13,6 +13,7 @@
       "series": null,
       "video": "lab/smoke/smoke-mulrijtx.mp4",
       "poster": "lab/smoke/smoke-mulrijtx-poster.webp",
+      "sound": false,
       "description": "",
       "published": true,
       "todo": [
@@ -31,6 +32,7 @@
       "series": "Mardini 2026 — day 17",
       "video": "lab/damaged/day17-damaged-1-se.webm",
       "poster": "lab/damaged/day17-damaged-0-00-05-03.webp",
+      "sound": true,
       "description": "Mardini day 17, prompt: damaged. Destruction on a fixed budget of one evening.",
       "published": true,
       "todo": []
@@ -45,6 +47,7 @@
       "series": null,
       "video": "lab/splash/splash.mp4",
       "poster": "lab/splash/fluid-toy-main-0179.webp",
+      "sound": false,
       "description": "",
       "published": true,
       "todo": [
@@ -62,6 +65,7 @@
       "series": null,
       "video": "lab/rock/rock-muls1ief.mp4",
       "poster": "lab/rock/rocks1-side-down-image100-000038.webp",
+      "sound": false,
       "description": "",
       "published": true,
       "todo": [
@@ -79,6 +83,7 @@
       "series": null,
       "video": "lab/grass/grass-flow-se.webm",
       "poster": "",
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -96,6 +101,7 @@
       "series": null,
       "video": "lab/alien-alloy/alien-alloy-growth-se.webm",
       "poster": "",
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -113,6 +119,7 @@
       "series": "Mardini 2026 — day 29",
       "video": "lab/volumetric/day29-volumetric-se.webm",
       "poster": "lab/volumetric/day29-volumetric-0-00-01-14.webp",
+      "sound": true,
       "description": "Mardini day 29, prompt: volumetric. Light doing the modelling instead of geometry.",
       "published": true,
       "todo": []
@@ -127,6 +134,7 @@
       "series": "Mardini 2026 — day 8",
       "video": "work/mardini-2026/day8-explode-se.webm",
       "poster": "work/mardini-2026/day8-explode-0-00-02-23.webp",
+      "sound": true,
       "description": "Mardini day 8, prompt: explode.",
       "published": true,
       "todo": [
@@ -143,6 +151,7 @@
       "series": null,
       "video": "lab/flowers-on-spline/flowers-spin-se.webm",
       "poster": "lab/flowers-on-spline/flowers-onspline0049-image100.webp",
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -160,6 +169,7 @@
       "series": "Mardini 2026 — day 27",
       "video": "work/mardini-2026/day27-talk-se.webm",
       "poster": "work/mardini-2026/day27-talk-0-00-03-14.webp",
+      "sound": true,
       "description": "Mardini day 27, prompt: talk.",
       "published": true,
       "todo": [
@@ -176,6 +186,7 @@
       "series": "Mardini 2026 — day 11",
       "video": "work/mardini-2026/day11-disintegrate-1-se.webm",
       "poster": "work/mardini-2026/day11-disintegrate-0-00-00-27.webp",
+      "sound": true,
       "description": "Mardini day 11, prompt: disintegrate.",
       "published": true,
       "todo": [
@@ -192,6 +203,7 @@
       "series": null,
       "video": "lab/avgust/avgust-se.webm",
       "poster": "",
+      "sound": true,
       "description": "",
       "published": true,
       "todo": []
@@ -206,6 +218,7 @@
       "series": "Mardini 2026 — day 30",
       "video": "lab/motion-blur/day30-motion-blur-se.webm",
       "poster": "lab/motion-blur/day30-motion-blur-0-00-03-07.webp",
+      "sound": true,
       "description": "Mardini day 30, prompt: motion blur. Speed read from a single frame.",
       "published": true,
       "todo": []
@@ -220,6 +233,7 @@
       "series": "Mardini 2026 — day 16",
       "video": "work/mardini-2026/day16-fractal-se.webm",
       "poster": "work/mardini-2026/day16-fractal-0-00-00-00.webp",
+      "sound": true,
       "description": "Mardini day 16, prompt: fractal.",
       "published": true,
       "todo": [
@@ -236,6 +250,7 @@
       "series": null,
       "video": "lab/ribbons/ribbons.mp4",
       "poster": "lab/ribbons/ribbons-gnivc-main-0155-image100.webp",
+      "sound": false,
       "description": "",
       "published": true,
       "todo": [
@@ -253,6 +268,7 @@
       "series": "Mardini 2026 — day 21",
       "video": "work/mardini-2026/day21-food-se.webm",
       "poster": "work/mardini-2026/day21-food-0-00-01-24.webp",
+      "sound": false,
       "description": "Mardini day 21, prompt: food.",
       "published": true,
       "todo": [
@@ -269,6 +285,7 @@
       "series": "Mardini 2026 — day 25",
       "video": "work/mardini-2026/day25-dance-1-se.webm",
       "poster": "work/mardini-2026/day25-dance-0-00-00-00.webp",
+      "sound": true,
       "description": "Mardini day 25, prompt: dance.",
       "published": true,
       "todo": [
@@ -285,6 +302,7 @@
       "series": "Mardini 2026 — day 15",
       "video": "work/mardini-2026/day15-fonts-se.webm",
       "poster": "work/mardini-2026/day15-fonts-0-00-00-28.webp",
+      "sound": true,
       "description": "Mardini day 15, prompt: fonts.",
       "published": true,
       "todo": [
@@ -301,6 +319,7 @@
       "series": "Mardini 2026 — day 26",
       "video": "work/mardini-2026/day26-collapse-1-se.webm",
       "poster": "work/mardini-2026/day26-collapse-0-00-01-15.webp",
+      "sound": true,
       "description": "Mardini day 26, prompt: collapse.",
       "published": true,
       "todo": [
@@ -317,6 +336,7 @@
       "series": "Mardini 2026 — day 9",
       "video": "work/mardini-2026/day9-gooey-se.webm",
       "poster": "work/mardini-2026/day9-gooey-0-00-01-14.webp",
+      "sound": true,
       "description": "Mardini day 9, prompt: gooey.",
       "published": true,
       "todo": [
@@ -333,6 +353,7 @@
       "series": "Mardini 2026 — day 10",
       "video": "work/mardini-2026/day10-grow-1-se.webm",
       "poster": "work/mardini-2026/day10-grow-0-00-07-05.webp",
+      "sound": true,
       "description": "Mardini day 10, prompt: grow.",
       "published": true,
       "todo": [
@@ -349,6 +370,7 @@
       "series": null,
       "video": "lab/rubber-dreams/rubber-dreams-in-liquid-gold-se.webm",
       "poster": "",
+      "sound": true,
       "description": "",
       "published": true,
       "todo": [
@@ -366,6 +388,7 @@
       "series": "Mardini 2026 — day 12",
       "video": "work/mardini-2026/day12-jiggle-1-se.webm",
       "poster": "work/mardini-2026/day12-jiggle-0-00-05-29.webp",
+      "sound": true,
       "description": "Mardini day 12, prompt: jiggle.",
       "published": true,
       "todo": [
@@ -384,6 +407,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-17-liquid-a/17-liquid-a.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -400,6 +424,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-16-reel-e/interactive-16-reel-e-mulsfh8f.mp4",
       "poster": "lab/interactive-16-reel-e/interactive-16-reel-e-muls3e5k-poster.webp",
+      "sound": true,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -416,6 +441,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-13-reel-s/13-reel-s.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -432,6 +458,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-14-reel-c/14-reel-c.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -448,6 +475,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-04-post/04-post.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -464,6 +492,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-02-post/02-post.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -478,6 +507,7 @@
       "series": null,
       "video": "lab/magic-in-motion/magic-in-motion.mp4",
       "poster": "lab/magic-in-motion/magic-in-motion-poster.webp",
+      "sound": false,
       "description": "",
       "published": true,
       "todo": [
@@ -497,6 +527,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-06-post/06-post.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []
@@ -513,6 +544,7 @@
       "series": "Interactive 2021",
       "video": "lab/interactive-01-reel/01-reel.mp4",
       "poster": "",
+      "sound": false,
       "description": "Real-time audiovisual piece from the 2021 interactive series: visuals and sound driven live by gesture, faders and pads.",
       "published": true,
       "todo": []

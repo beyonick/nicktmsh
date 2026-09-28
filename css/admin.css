@@ -177,6 +177,13 @@
 .cms-item__flag[data-kind="home"] { color: var(--accent); opacity: 1; }
 .cms-item__flag[data-kind="live"] { opacity: 0.75; }
 
+.cms-item__sound {
+  flex: none;
+  display: inline-flex;
+  color: var(--accent);
+}
+.cms-item__sound svg { width: 0.95rem; height: 0.95rem; }
+
 .cms-item__tools { display: flex; gap: 0.1rem; padding-inline-end: 0.25rem; }
 
 .cms-icon {
