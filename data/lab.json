@@ -76,8 +76,8 @@
         "Houdini"
       ],
       "series": null,
-      "video": "",
-      "poster": "",
+      "video": "lab/smoke/smoke-mulrijtx.mp4",
+      "poster": "lab/smoke/smoke-mulrijtx-poster.webp",
       "description": "",
       "published": true,
       "todo": [
@@ -138,6 +138,22 @@
       ]
     },
     {
+      "slug": "mardini-disintegrate",
+      "title": "Disintegrate",
+      "date": "2026-03-11",
+      "tech": [
+        "Houdini"
+      ],
+      "series": "Mardini 2026 — day 11",
+      "video": "work/mardini-2026/day11-disintegrate-1-se.webm",
+      "poster": "work/mardini-2026/day11-disintegrate-0-00-00-27.webp",
+      "description": "Mardini day 11, prompt: disintegrate.",
+      "published": true,
+      "todo": [
+        "Описание"
+      ]
+    },
+    {
       "slug": "flowers-on-spline",
       "title": "Flowers",
       "date": null,
@@ -152,24 +168,6 @@
       "todo": [
         "На старом сайте слаг beyopillow — уточнить название",
         "Описание"
-      ]
-    },
-    {
-      "slug": "heart",
-      "title": "Heart",
-      "date": null,
-      "tech": [
-        "Houdini"
-      ],
-      "series": null,
-      "video": "",
-      "poster": "",
-      "description": "",
-      "published": true,
-      "todo": [
-        "Год и техника",
-        "Описание",
-        "Видео + постер"
       ]
     },
     {
@@ -472,22 +470,6 @@
       "video": "work/mardini-2026/day10-grow-1-se.webm",
       "poster": "work/mardini-2026/day10-grow-0-00-07-05.webp",
       "description": "Mardini day 10, prompt: grow.",
-      "published": true,
-      "todo": [
-        "Описание"
-      ]
-    },
-    {
-      "slug": "mardini-disintegrate",
-      "title": "Disintegrate",
-      "date": "2026-03-11",
-      "tech": [
-        "Houdini"
-      ],
-      "series": "Mardini 2026 — day 11",
-      "video": "work/mardini-2026/day11-disintegrate-1-se.webm",
-      "poster": "work/mardini-2026/day11-disintegrate-0-00-00-27.webp",
-      "description": "Mardini day 11, prompt: disintegrate.",
       "published": true,
       "todo": [
         "Описание"
